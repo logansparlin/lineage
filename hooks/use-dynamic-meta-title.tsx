@@ -6,14 +6,14 @@ interface UseDynamicMetaTitleProps {
 }
 
 export const useDynamicMetaTitle = ({ title, enabled = false }: UseDynamicMetaTitleProps) => {
-  const defaultTitle = 'Supper'
+  const defaultTitle = 'Lineage'
 
   const originalTitle = useMemo(() => {
     if (typeof window !== 'undefined') {
       return window.document.title
     }
 
-    return 'Supper'
+    return 'Lineage'
   }, [])
 
   const parsedTitle = useMemo(() => {

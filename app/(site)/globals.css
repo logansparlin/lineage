@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 :root {
   --site-x: 14px;
@@ -114,4 +112,12 @@ a:focus-visible, button:focus-visible {
 * {
   text-decoration-thickness: 0.05em;
   text-underline-offset: 3px;
+}
+
+.lenis, .scrollbar-hidden {
+  scrollbar-width: none;
+}
+
+.lenis::-webkit-scrollbar, .scrollbar-hidden::-webkit-scrollbar {
+  display: none;
 }

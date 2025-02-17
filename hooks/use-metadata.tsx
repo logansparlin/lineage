@@ -16,7 +16,7 @@ export const useMetadata = ({
   data,
   useTitleTemplate = true
 }: MetadataFromQuery) => {
-  const defaultTitle = 'Supper'
+  const defaultTitle = 'Lineage'
 
   if (!data) return {
     title: defaultTitle,

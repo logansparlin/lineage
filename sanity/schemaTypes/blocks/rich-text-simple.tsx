@@ -28,8 +28,6 @@ export default defineType({
                 type: 'reference',
                 to: [
                   { type: 'homePage' },
-                  { type: 'projectPage' },
-                  { type: 'worksPage' }
                 ]
               }),
               defineField({

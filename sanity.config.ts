@@ -14,7 +14,7 @@ export default defineConfig({
   basePath: '/studio',
   projectId,
   dataset,
-  title: 'Supper',
+  title: 'Lineage',
   perspective: 'published',
 
   schema: {

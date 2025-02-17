@@ -14,12 +14,8 @@ export default {
     colors: {
       'current': 'currentColor',
       'transparent': 'transparent',
-      'white': '#F9F9F9',
-      'grey-light': '#F0F0F0',
-      'grey': '#9C9C9C',
-      'black': '#1E1E1E',
-      'translucent': 'rgba(217, 217, 217, 0.1)',
-      'overlay': 'rgba(249, 249, 249, 0.97)',
+      'black': 'rgb(0, 0, 0)',
+      'white': 'rgb(255, 255, 255)',
     },
     screens: {
       'md': '900px'

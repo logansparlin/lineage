@@ -28,11 +28,7 @@ import settingsFooter from './settings/settings-footer'
 
 /** Documents */
 import homePage from './documents/home-page'
-import projectPage from './documents/project-page'
-import worksPage from './documents/works-page'
-import client from './documents/client'
-import service from './documents/service'
-import infoPage from './documents/info-page'
+import caseStudy from './documents/case-study'
 
 export const allTypes: SchemaTypeDefinition[] = [
   // Settings
@@ -42,11 +38,7 @@ export const allTypes: SchemaTypeDefinition[] = [
 
   // Documents
   homePage,
-  projectPage,
-  worksPage,
-  client,
-  service,
-  infoPage,
+  caseStudy,
 
   // Blocks
   seo,
@@ -64,13 +56,9 @@ export const singletonTypes: SingletonType[] = [
     singleton: true,
     divider: true,
   },
-  worksPage,
   homePage,
-  infoPage,
 ]
 
 export const hiddenTypes: SchemaTypeDefinition[] = []
 
-export const orderableTypes: SchemaTypeDefinition[] = [
-  projectPage,
-]
+export const orderableTypes: SchemaTypeDefinition[] = []

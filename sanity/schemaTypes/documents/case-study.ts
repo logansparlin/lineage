@@ -2,8 +2,8 @@ import { defineType, defineField } from "sanity";
 import {HomeIcon} from '@sanity/icons'
 
 export default defineType({
-  name: "worksPage",
-  title: "Works Page",
+  name: "caseStudy",
+  title: "Case Studies",
   type: "document",
   icon: HomeIcon,
   fields: [
@@ -16,6 +16,15 @@ export default defineType({
       name: "title",
       title: "Title",
       type: "string",
+    }),
+    defineField({
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      options: {
+        source: "title",
+      },
+      validation: (Rule) => Rule.required(),
     }),
   ],
 });
