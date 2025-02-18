@@ -17,6 +17,7 @@ type SingletonType = SchemaTypeDefinition | SchemaTypeGroup
 // Blocks
 import seo from './blocks/seo'
 import richText from './blocks/rich-text'
+import richTextLegal from './blocks/rich-text-legal'
 import richTextSimple from './blocks/rich-text-simple'
 import externalLink from './blocks/external-link'
 import internalLink from './blocks/internal-link'
@@ -29,6 +30,7 @@ import settingsFooter from './settings/settings-footer'
 /** Documents */
 import homePage from './documents/home-page'
 import caseStudy from './documents/case-study'
+import legalPage from './documents/legal-page'
 
 export const allTypes: SchemaTypeDefinition[] = [
   // Settings
@@ -39,10 +41,12 @@ export const allTypes: SchemaTypeDefinition[] = [
   // Documents
   homePage,
   caseStudy,
+  legalPage,
 
   // Blocks
   seo,
   richText,
+  richTextLegal,
   richTextSimple,
   externalLink,
   internalLink

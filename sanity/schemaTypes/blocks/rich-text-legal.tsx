@@ -2,19 +2,20 @@ import { defineType, defineField, defineArrayMember } from "sanity";
 import { LinkIcon, ArrowTopRightIcon } from '@sanity/icons'
 
 export default defineType({
-  name: 'richTextSimple',
-  title: 'Rich Text (Simple)',
+  name: 'richTextLegal',
+  title: 'Rich Text (Legal)',
   type: 'array',
   of: [
     defineArrayMember({
       type: 'block',
       styles: [
         { title: 'Normal', value: 'normal' },
+        { title: 'Heading', value: 'h2' },
       ],
       marks: {
         decorators: [
           { title: 'Italic', value: 'em' },
-          { title: 'Year', value: 'year', icon: () => 'y', component: () => <>{new Date().getFullYear()}</> }
+          { title: 'Bold', value: 'strong' },
         ],
         annotations: [
           defineField({
@@ -52,7 +53,6 @@ export default defineType({
           })
         ]
       },
-      lists: []
     })
   ]
 })

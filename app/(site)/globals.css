@@ -1,77 +1,117 @@
 @import "tailwindcss";
 
-:root {
-  --site-x: 14px;
-  --site-y: 16px;
+@theme {
+  --color-black: rgb(0, 0, 0);
+  --color-white: rgb(255, 255, 255);
+  --color-off-white: rgb(242, 242, 242);
 
-  --title-lg-font-size: 16px;
-  --title-lg-line-height: 20px;
-  --title-lg-letter-spacing: -0.03em;
+  --color-orange-100: rgb(254, 243, 205);
+  --color-orange-200: rgb(251, 197, 4);
+  --color-orange-300: rgb(254, 152, 7);
+  --color-orange-400: rgb(244, 67, 24);
 
-  --title-font-size: 20px;
-  --title-line-height: 20px;
-  --title-letter-spacing: -0.03em;
+  --color-green-100: rgb(204, 242, 221);
+  --color-green-200: rgb(0, 191, 87);
+  --color-green-300: rgb(0, 140, 95);
+  --color-green-400: rgb(0, 89, 33);
+  
+  --color-blue-100: rgb(204, 243, 255);
+  --color-blue-200: rgba(1, 194, 255, 1);
+  --color-blue-300: rgba(8, 126, 238, 1);
+  --color-blue-400: rgba(14, 59, 221, 1);
 
-  --subtitle-font-size: 14px;
-  --subtitle-line-height: 18px;
-  --subtitle-letter-spacing: -0.03em;
+  --color-pink-100: rgb(254, 229, 243);
+  --color-pink-200: rgba(255, 126, 197, 1);
+  --color-pink-300: rgba(174, 79, 242, 1);
+  --color-pink-400: rgba(89, 0, 255, 1);
 
-  --nav-font-size: 12px;
-  --nav-line-height: 14px;
-  --nav-letter-spacing: -0.03em;
+  --text-94: 94px;
+  --text-94-line-height: 130%;
+  --text-94-letter-spacing: -0.01em;
+  --text-94-font-weight: 400;
 
-  --list-title-font-size: 12px;
-  --list-title-line-height: 15px;
-  --list-title-letter-spacing: -0.05em;
+  --text-83: 83px;
+  --text-83-line-height: 130%;
+  --text-83-letter-spacing: -0.01em;
+  --text-83-font-weight: 400;
 
-  --eyebrow-font-size: 10px;
-  --eyebrow-line-height: 18px;
-  --eyebrow-letter-spacing: -0.03em;
+  --text-74: 74px;
+  --text-74-line-height: 130%;
+  --text-74-letter-spacing: -0.01em;
+  --text-74-font-weight: 400;
 
-  --footer-font-size: 10px;
-  --footer-line-height: 12px;
-  --footer-letter-spacing: 0em;
+  --text-66: 66px;
+  --text-66-line-height: 130%;
+  --text-66-letter-spacing: -0.01em;
+  --text-66-font-weight: 400;
 
-  --grid-columns: 8;
+  --text-58: 58px;
+  --text-58-line-height: 130%;
+  --text-58-letter-spacing: -0.01em;
+  --text-58-font-weight: 400;
+
+  --text-52: 52px;
+  --text-52-line-height: 130%;
+  --text-52-letter-spacing: -0.01em;
+  --text-52-font-weight: 400;
+
+  --text-46: 46px;
+  --text-46-line-height: 130%;
+  --text-46-letter-spacing: -0.01em;
+  --text-46-font-weight: 400;
+
+  --text-41: 41px;
+  --text-41-line-height: 130%;
+  --text-41-letter-spacing: -0.01em;
+  --text-41-font-weight: 400;
+
+  --text-36: 36px;
+  --text-36-line-height: 130%;
+  --text-36-letter-spacing: -0.01em;
+  --text-36-font-weight: 400;
+
+  --text-32: 32px;
+  --text-32-line-height: 130%;
+  --text-32-letter-spacing: -0.01em;
+  --text-32-font-weight: 400;
+
+  --text-29: 29px;
+  --text-29-line-height: 130%;
+  --text-29-letter-spacing: -0.01em;
+  --text-29-font-weight: 400;
+
+  --text-26: 26px;
+  --text-26-line-height: 130%;
+  --text-26-letter-spacing: -0.01em;
+  --text-26-font-weight: 400;
+
+  --text-23: 23px;
+  --text-23-line-height: 130%;
+  --text-23-letter-spacing: -0.01em;
+  --text-23-font-weight: 400;
+
+  --text-20: 20px;
+  --text-20-line-height: 130%;
+  --text-20-letter-spacing: -0.01em;
+  --text-20-font-weight: 400;
+
+  --text-18: 18px;
+  --text-18-line-height: 130%;
+  --text-18-letter-spacing: -0.01em;
+  --text-18-font-weight: 400;
+
+  --text-16: 16px;
+  --text-16-line-height: 126%;
+  --text-16-letter-spacing: -0.02em;
+  --text-16-font-weight: 400;
+  
+  --text-14: 14px;
+  --text-14-line-height: 150%;
+  --text-14-letter-spacing: -0.02em;
+  --text-14-font-weight: 400;
+
+  --spacing: 1px;
 }
-
-@media (min-width: 900px) {
-  :root {
-    --site-x: 20px;
-    --site-y: 20px;
-
-    --title-lg-font-size: 36px;
-    --title-lg-line-height: 42px;
-    --title-lg-letter-spacing: -0.03em;
-
-    --title-font-size: 32px;
-    --title-line-height: 32px;
-    --title-letter-spacing: -0.03em;
-
-    --subtitle-font-size: 20px;
-    --subtitle-line-height: 24px;
-    --subtitle-letter-spacing: -0.03em;
-
-    --nav-font-size: 15px;
-    --nav-line-height: 18px;
-    --nav-letter-spacing: -0.03em;
-
-    --list-title-font-size: 16px;
-    --list-title-line-height: 20px;
-    --list-title-letter-spacing: -0.05em;
-
-    --eyebrow-font-size: 12px;
-    --eyebrow-line-height: 12px;
-    --eyebrow-letter-spacing: -0.03em;
-
-    --footer-font-size: 13px;
-    --footer-line-height: 16px;
-    --footer-letter-spacing: 0em;
-    
-    --grid-columns: 12;
-  }
-}
-
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -92,21 +132,91 @@ a:focus-visible, button:focus-visible {
 }
 
 @layer base {
-  .site-container {
-    @apply px-site-x pb-150;
-  }
-
-  .site-grid {
-    @apply grid grid-cols-6 gap-x-10 md:grid-cols-12 md:gap-x-20;
-  }
-
   .grid-contain {
     @apply grid grid-cols-1 grid-rows-1 *:col-span-1 *:row-span-1 *:col-start-1 *:row-start-1;
   }
+}
 
-  .site-link {
-    @apply text-current hover:underline active:underline focus:underline focus-visible:underline;
+@utility scrollbar-hidden {
+  &::-webkit-scrollbar {
+    display: none;
   }
+}
+
+@utility p-* {
+  padding: --value(integer)px;
+}
+
+@utility px-* {
+  padding-inline: --value(integer)px;
+}
+
+@utility pl-* {
+  padding-left: --value(integer)px;
+}
+
+@utility pr-* {
+  padding-right: --value(integer)px;
+}
+
+@utility py-* {
+  padding-block: --value(integer)px;
+}
+
+@utility pb-* {
+  padding-bottom: --value(integer)px;
+}
+
+@utility pt-* {
+  padding-top: --value(integer)px;
+}
+
+@utility m-* {
+  margin: --value(integer)px;
+}
+
+@utility mx-* {
+  margin-inline: --value(integer)px;
+}
+
+@utility ml-* {
+  margin-left: --value(integer)px;
+}
+
+@utility mr-* {
+  margin-right: --value(integer)px;
+}
+
+@utility my-* {
+  margin-block: --value(integer)px;
+}
+
+@utility mb-* {
+  margin-bottom: --value(integer)px;
+}
+
+@utility mt-* {
+  margin-top: --value(integer)px;
+}
+
+@utility max-w-* {
+  max-width: --value(integer)px;
+}
+
+@utility min-w-* {
+  min-width: --value(integer)px;
+}
+
+@utility gap-* {
+  gap: --value(integer)px;
+}
+
+@utility gap-y-* {
+  row-gap: --value(integer)px;
+}
+
+@utility gap-x-* {
+  column-gap: --value(integer)px;
 }
 
 * {

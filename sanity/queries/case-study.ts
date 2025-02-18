@@ -11,5 +11,6 @@ export const caseStudyQuery = defineQuery(
   groq`*[_type == "caseStudy" && slug.current == $slug][0] {
     ${seoQuery},
     title,
+    palette
   }`
 )

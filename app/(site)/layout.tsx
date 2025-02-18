@@ -13,6 +13,7 @@ import { SetVH } from "@/components/global/SetVH";
 
 import "./globals.css";
 import { Footer } from '@/components/global/footer';
+import { Cursor } from '@/components/global/cursor';
 
 const ArizonaText = localFont({
   src: [
@@ -52,6 +53,7 @@ export default async function RootLayout({
       <body
         className={`${ArizonaText.variable} antialiased font-sans font-normal bg-black text-white`}
       >
+        <Cursor />
         <Header {...settings?.header} />
         <SetVH />
         <SanityLive />
