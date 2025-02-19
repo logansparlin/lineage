@@ -6,9 +6,8 @@ const getFirstTimeline = (container: any, planes: any[]) => {
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: container,
-      start: '200px',
+      start: '100px',
       end: 'bottom top',
-      scrub: true,
     }
   })
 
@@ -41,7 +40,7 @@ const getFirstTimeline = (container: any, planes: any[]) => {
       z: scale,
       duration: 1,
       ease: 'power3.out'
-    }, index === 1 ? '>' : `<+=${index * 0.01}`)
+    }, index === 1 ? '>' : `<+=${index * 0.025}`)
   })
 
   tl.fromTo(title, {
@@ -52,7 +51,7 @@ const getFirstTimeline = (container: any, planes: any[]) => {
     ease: 'power3.out'
   }, '>')
 
-  tl.scrollTrigger.refresh()
+  // tl.scrollTrigger.refresh()
 
   return tl;
 }
@@ -65,7 +64,6 @@ const getSecondTimeline = (container: any, planes: any[]) => {
       trigger: container,
       start: 'top top',
       end: 'bottom top',
-      scrub: true,
       onEnter: () => {
         gsap.to(title, { opacity: 1, y: 0, duration: 0.65, ease: 'power4.out' })
       },
@@ -81,24 +79,78 @@ const getSecondTimeline = (container: any, planes: any[]) => {
     }
   })
 
-  // tl.fromTo(title, {
-  //   opacity: 0,
-  // }, {
-  //   opacity: 1,
-  //   duration: .15,
-  //   ease: 'power3.out'
-  // })
+  planes?.reverse().forEach((plane, index) => {
+    let scale = 0.3 + (index * (0.7 / (planes.length - 1)));
 
-  // tl.fromTo(title, {
-  //   opacity: 1,
-  // }, {
-  //   opacity: 0,
-  //   duration: .15,
-  //   delay: 3,
-  //   ease: 'power3.out'
+    tl.to(plane.scale, {
+      x: scale + 0.7,
+      y: scale + 0.7,
+      z: scale + 0.7,
+      duration: 2,
+      ease: 'power3.out'
+    }, index === 0 ? '<+=0.5' : `<`)
+  })
+
+  // tl.scrollTrigger.refresh()
+
+  gsap.set(title, { opacity: 0, y: 10 })
+
+  return tl;
+}
+
+const getLastTimeline = (container: any, planes: any[]) => {
+  const title = container?.querySelector('.section-title');
+  
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: container,
+      start: 'top top',
+      end: 'bottom bottom',
+      onEnter: () => {
+        gsap.to(title, { opacity: 1, y: 0, duration: 0.65, ease: 'power4.out' })
+      },
+      onEnterBack: () => {
+        gsap.to(title, { opacity: 1, y: 0, duration: 0.65, ease: 'power4.out' })
+      },
+      onLeave: () => {
+        gsap.to(title, { opacity: 0, y: -6, duration: 0.65, ease: 'power4.out' })
+      },
+      onLeaveBack: () => {
+        gsap.to(title, { opacity: 0, y: 6, duration: 0.65, ease: 'power4.out' })
+      }
+    }
+  })
+
+  // planes.forEach((plane) => {
+  //   tl.set(plane.scale, {
+  //     x: 1,
+  //     y: 1,
+  //     z: 1
+  //   })
+  //   // tl.set(plane.position, {
+  //   //   y: 15
+  //   // }, '<')
   // })
 
   // tl.scrollTrigger.refresh()
+
+  planes.reverse().forEach((plane, index) => {
+    let position = (30 + (((planes.length - 1) - index) * .5));
+
+    tl.to(plane.position, {
+      y: position,
+      duration: 2,
+      ease: 'power3.out'
+    }, `<`)
+  })
+
+  planes.forEach((plane, index) => {
+    tl.to(plane.material.uniforms.curveProgress, {
+      value: (index * 0.65),
+      duration: 2,
+      ease: 'power3.out'
+    }, `<`)
+  })
 
   gsap.set(title, { opacity: 0, y: 10 })
 
@@ -116,4 +168,5 @@ export const getIntroTimeline = ({
 }) => {
   if (variant === 'first') return getFirstTimeline(container, planes);
   if (variant === 'second') return getSecondTimeline(container, planes);
+  if (variant === 'last') return getLastTimeline(container, planes);
 }

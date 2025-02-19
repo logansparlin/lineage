@@ -6,13 +6,14 @@ import { useHomeStore } from "@/components/home/hooks/use-home-store";
 import { Canvas, useThree, extend, useFrame } from "@react-three/fiber"
 import { BoxGradient } from "@/shaders/box-gradient";
 import { CurvedPlane } from "@/components/home/intro/curved-plane";
+import { Stats } from "@react-three/drei";
 
 extend({ BoxGradient });
 
 export const TestScene = () => {
   return (
     <div
-      className="sticky top-0 w-full h-screen"
+      className="fixed top-0 left-0 w-full h-screen"
     >
       <Canvas 
         gl={{
@@ -23,6 +24,7 @@ export const TestScene = () => {
         shadows={true}
         className="w-full bg-black"
       >
+        <Stats />
         <Scene />
       </Canvas>
     </div>
@@ -48,18 +50,18 @@ const Scene = () => {
     return 1 / aspect;
   }, [viewport]);
 
-  const steps = Array.from({ length: 6 }, (_, i) => i + 1);
+  const steps = Array.from({ length: 8 }, (_, i) => i + 1);
 
-  useFrame(() => {
-    if (!meshRef.current) return;
+  // useFrame(() => {
+  //   if (!meshRef.current) return;
 
-    mousePosition.current.current = lerp(mousePosition.current.current, mousePosition.current.target, 0.08);
+  //   mousePosition.current.current = lerp(mousePosition.current.current, mousePosition.current.target, 0.08);
 
-    meshRef.current.children.forEach((child) => {
-      child.material.uniforms.curveProgress.value = mousePosition.current.current;
-      child.material.needsUpdate = true;
-    })
-  })
+  //   meshRef.current.children.forEach((child) => {
+  //     child.material.uniforms.curveProgress.value = mousePosition.current.current;
+  //     child.material.needsUpdate = true;
+  //   })
+  // })
 
   // useEffect(() => {
   //   const handleMouseMove = (e: MouseEvent) => {

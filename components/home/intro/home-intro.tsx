@@ -4,6 +4,7 @@ import { useCallback, useRef } from "react";
 
 import { TestScene } from "./test-scene";
 import { IntroSection } from "./intro-section";
+import { ScrollIndicator } from "./scroll-indicator";
 
 export const HomeIntro = ({ titles, description }) => {
   const introRef = useRef<HTMLDivElement>(null);
@@ -18,6 +19,7 @@ export const HomeIntro = ({ titles, description }) => {
   return (
     <div ref={introRef} className="intro-container relative w-full h-fit z-[1]">
         <TestScene />
+        <ScrollIndicator />
         {titles?.map((title, index) => {
           return (
             <IntroSection

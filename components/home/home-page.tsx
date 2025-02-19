@@ -35,7 +35,7 @@ export const HomePage = (props: HomePageProps) => {
     <div className="relative select-none">
       <h1 className="sr-only">{title}</h1>
       <HomeIntro titles={intro.titles} description={intro.description} />
-      <div className="relative z-[3]">
+      <div className="relative z-[3] bg-black">
         {caseStudies?.map(caseStudy => {
           return (
             <div

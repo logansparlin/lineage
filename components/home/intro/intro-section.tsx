@@ -16,9 +16,9 @@ interface IntroSectionProps {
 const introSectionStyles = cva('sticky top-0 text-58 z-[2]', {
   variants: {
     variant: {
-      first: 'mt-[-100svh] min-h-[250svh]',
-      second: 'min-h-[100svh]',
-      last: 'min-h-[200svh]',
+      first: 'min-h-[250svh]',
+      second: 'min-h-[200svh]',
+      last: 'min-h-[300svh]',
       default: 'min-h-[100svh]',
     }
   }

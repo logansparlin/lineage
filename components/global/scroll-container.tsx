@@ -10,7 +10,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 ScrollTrigger.defaults({
   immediateRender: false,
-  markers: true,
   scrub: true,
 })
 
