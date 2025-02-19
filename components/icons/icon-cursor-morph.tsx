@@ -6,7 +6,7 @@ import { gsap } from 'gsap'
 import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin'
 import { useGSAP } from '@gsap/react'
 
-gsap.registerPlugin(MorphSVGPlugin, useGSAP)
+gsap.registerPlugin(MorphSVGPlugin)
 
 // 1: Circle, 2: Ellipse, 3: Sun, 4: Star
 const svgPaths: Record<number, string> = {

@@ -1,0 +1,20 @@
+import { create } from 'zustand';
+
+interface HomeStore {
+  planeRefs: {
+    [key: string]: any;
+  };
+  addPlaneRef: (el: any, index: number) => void;
+}
+
+export const useHomeStore = create<HomeStore>((set) => ({
+  planeRefs: {},
+  addPlaneRef: (el: any, index: number) => set((state) => {
+    if (!el) return state;
+
+    return { planeRefs: {
+      ...state.planeRefs,
+      [index]: el
+    } };
+  }),
+}));

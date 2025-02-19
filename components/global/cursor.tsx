@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState, type FC, cloneElement } from "react";
-import { useMouse, useRafLoop } from 'react-use'
+import { useRafLoop, useMeasure } from 'react-use'
 import { lerp } from "@/lib/lerp";
 
 import { AnimatePresence, motion } from "framer-motion";
@@ -17,45 +17,34 @@ export const Cursor: FC<CursorProps> = (props) => {
   const { hidden = false } = props;
   const [currentStep, setCurrentStep] = useState(1)
   
-  const cursorRef = useRef<any>(null)
+  const cursorRef = useRef<HTMLDivElement>(null)
+
   const cursorPos = useRef({
     current: { x: 0, y: 0 },
     target: { x: 0, y: 0 }
   })
-  
-  const { docX, docY, elW, elH } = useMouse(cursorRef)
-
-  const setTargetPositions = useCallback(() => {
-    cursorPos.current.target.x = docX
-    cursorPos.current.target.y = docY
-  }, [docX, docY])
-
-  const setCurrentPositions = useCallback(() => {
-    cursorPos.current.current.x = docX
-    cursorPos.current.current.y = docY
-  }, [docX, docY])
-
-  useEffect(() => {
-    setTargetPositions()
-  }, [docX, docY])
 
   const [stopLoop, startLoop] = useRafLoop(() => {
+    if (!cursorRef.current) return
+
+    const elW = cursorRef.current?.offsetWidth
+    const elH = cursorRef.current?.offsetHeight
+
     cursorPos.current.current.x = lerp({ start: cursorPos.current.current.x, end: cursorPos.current.target.x, time: DAMPING })
     cursorPos.current.current.y = lerp({ start: cursorPos.current.current.y, end: cursorPos.current.target.y, time: DAMPING })
-
-    if (!cursorRef.current) return
 
     cursorRef.current.style.transform = `translate(${cursorPos.current.current.x - (elW / 2)}px, ${cursorPos.current.current.y - (elH / 2)}px)`
   })
 
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    cursorPos.current.target.x = e.clientX
+    cursorPos.current.target.y = e.clientY
+  }, [])
+
   useEffect(() => {
     if (!hidden) {
       stopLoop()
-      requestAnimationFrame(() => {
-        setTargetPositions()
-        setCurrentPositions()
-        startLoop()
-      })
+      startLoop()
     }
   }, [hidden])
 
@@ -70,9 +59,11 @@ export const Cursor: FC<CursorProps> = (props) => {
   }, [])
 
   useEffect(() => {
+    window.addEventListener('mousemove', handleMouseMove)
     document.addEventListener('click', handleClick)
 
     return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('click', handleClick)
     }
   }, [])
@@ -80,7 +71,7 @@ export const Cursor: FC<CursorProps> = (props) => {
   return (
     <motion.div
       ref={cursorRef}
-      className="absolute top-0 w-40 left-0 z-[50] pointer-events-none cursor-none text-nav hidden md:grid grid-contain text-center place-items-center text-white"
+      className="fixed top-0 w-40 left-0 z-[50] pointer-events-none cursor-none text-nav hidden md:grid grid-contain text-center place-items-center text-white"
       initial={{ opacity: hidden ? 0 : 1 }}
       animate={{ opacity: hidden ? 0 : 1 }}
       transition={{ duration: 0.45 }}

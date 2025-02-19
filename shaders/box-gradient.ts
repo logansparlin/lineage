@@ -61,9 +61,9 @@ export const BoxGradient = shaderMaterial(
     vec2 centeredUV = (vUv - 0.5) * 2.0;
     
     // Create inset coordinates (10% from each edge)
-    vec2 inset = centeredUV / 0.75;
+    vec2 inset = centeredUV / 0.85;
     
-    float roundness = 0.25;
+    float roundness = 0.35;
 
     vec2 size = vec2(1.0, 1.0);
     
@@ -71,7 +71,7 @@ export const BoxGradient = shaderMaterial(
     float sdf = smoothBox(inset, size, roundness);
     
     // Adjust the smoothstep values to control the blur amount
-    float normalizedStep = 0.25;
+    float normalizedStep = 0.4;
     float alpha = smoothstep(-normalizedStep, normalizedStep, sdf);
     alpha = smoothstep(0.0, 1.0, alpha);
     

@@ -5,6 +5,16 @@ export const homePageQuery = defineQuery(
   groq`*[_type == "homePage"][0] {
     ${seoQuery},
     title,
+    intro {
+      titles[] {
+        _key,
+        text,
+        svg {
+          ${imageFields}
+        }
+      },
+      description
+    },
     "caseStudies": *[_type == "caseStudy"] | order(orderRank) {
       _id,
       title,

@@ -51,7 +51,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${ArizonaText.variable} antialiased font-sans font-normal bg-black text-white`}
+        className={`${ArizonaText.variable} antialiased font-sans font-normal bg-black text-off-white cursor-none`}
       >
         <Cursor />
         <Header {...settings?.header} />
