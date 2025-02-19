@@ -24,7 +24,7 @@ export const TestScene = () => {
         shadows={true}
         className="w-full bg-black"
       >
-        <Stats />
+        {/* <Stats /> */}
         <Scene />
       </Canvas>
     </div>
