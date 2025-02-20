@@ -21,7 +21,7 @@ export const ScrollIndicator: FC<ScrollIndicatorProps> = (props) => {
         <motion.div
           className="fixed bottom-40 left-1/2 -translate-x-1/2 z-[10] text-off-white opacity-70"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          animate={{ opacity: 0.7 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5, ease: 'easeInOut' }}
         >

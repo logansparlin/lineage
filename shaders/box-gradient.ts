@@ -6,12 +6,14 @@ import { Color, Vector2 } from "three";
 export const BoxGradient = shaderMaterial(
   {
     colorOne: new Color("#000000"),
-    colorTwo: new Color("#FFFFFF"),
+    colorTwo: new Color("#ffffff"),
+    colorThree: new Color('#ffffff'),
     size: new Vector2(1, 1),
     scale: 1.0,
     aspect: 1.0,
     curveProgress: 0.0,
-    curveIntensity: 4.0
+    curveIntensity: 4.0,
+    inset: 0.85
   },
   // Vertex Shader
   `
@@ -42,13 +44,16 @@ export const BoxGradient = shaderMaterial(
   `,
   // Fragment Shader
   `
+  varying vec2 vUv;
+  varying vec4 vPosition;
+  
   uniform vec2 size;
+  uniform float inset;
   uniform float scale;
   uniform float aspect;
   uniform vec3 colorOne;
   uniform vec3 colorTwo;
-  varying vec2 vUv;
-  varying vec4 vPosition;
+  uniform vec3 colorThree;
 
   float smoothBox(vec2 p, vec2 b, float r) {
     vec2 d = abs(p) - b + r;
@@ -61,21 +66,39 @@ export const BoxGradient = shaderMaterial(
     vec2 centeredUV = (vUv - 0.5) * 2.0;
     
     // Create inset coordinates (10% from each edge)
-    vec2 inset = centeredUV / 0.85;
+    vec2 sdfInset = centeredUV / inset;
     
     float roundness = 0.35;
 
     vec2 size = vec2(1.0, 1.0);
     
     // Use UV-based coordinates for the SDF
-    float sdf = smoothBox(inset, size, roundness);
+    float sdf = smoothBox(sdfInset, size, roundness);
+
+    vec2 innerSize = size * 0.825;
+    float innerSdf = smoothBox(sdfInset, innerSize, roundness);
     
     // Adjust the smoothstep values to control the blur amount
     float normalizedStep = 0.4;
+
+    float normalizedInnerStep = 0.15;
+
+    if (inset > 0.9) {
+      normalizedStep = 0.15;
+    }
+
     float alpha = smoothstep(-normalizedStep, normalizedStep, sdf);
+    float innerAlpha = smoothstep(-normalizedInnerStep, normalizedInnerStep, innerSdf);
     alpha = smoothstep(0.0, 1.0, alpha);
-    
-    gl_FragColor = vec4(mix(colorTwo, colorOne, alpha), 1.0);
+    innerAlpha = smoothstep(0.0, 1.0, innerAlpha);
+
+    vec3 finalColor = mix(colorTwo, colorOne, alpha);
+
+    if (colorThree.r < 0.99) {
+      finalColor = mix(colorThree, finalColor, innerAlpha);
+    }
+
+    gl_FragColor = vec4(finalColor, 1.0);
   }
   `
 )

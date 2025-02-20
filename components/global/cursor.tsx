@@ -30,10 +30,12 @@ export const Cursor: FC<CursorProps> = (props) => {
     const elW = cursorRef.current?.offsetWidth
     const elH = cursorRef.current?.offsetHeight
 
-    cursorPos.current.current.x = lerp({ start: cursorPos.current.current.x, end: cursorPos.current.target.x, time: DAMPING })
-    cursorPos.current.current.y = lerp({ start: cursorPos.current.current.y, end: cursorPos.current.target.y, time: DAMPING })
+    // cursorPos.current.current.x = lerp({ start: cursorPos.current.current.x, end: cursorPos.current.target.x, time: DAMPING })
+    // cursorPos.current.current.y = lerp({ start: cursorPos.current.current.y, end: cursorPos.current.target.y, time: DAMPING })
+    cursorPos.current.current.x = cursorPos.current.target.x
+    cursorPos.current.current.y = cursorPos.current.target.y
 
-    cursorRef.current.style.transform = `translate(${cursorPos.current.current.x - (elW / 2)}px, ${cursorPos.current.current.y - (elH / 2)}px)`
+    cursorRef.current.style.transform = `translate3d(${cursorPos.current.current.x - (elW / 2)}px, ${cursorPos.current.current.y - (elH / 2)}px, 0)`
   })
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
@@ -71,7 +73,7 @@ export const Cursor: FC<CursorProps> = (props) => {
   return (
     <motion.div
       ref={cursorRef}
-      className="fixed top-0 w-40 left-0 z-[50] pointer-events-none cursor-none text-nav hidden md:grid grid-contain text-center place-items-center text-white"
+      className="fixed top-0 w-40 left-0 z-[50] pointer-events-none cursor-none text-nav hidden md:grid grid-contain text-center place-items-center text-white will-change-transform"
       initial={{ opacity: hidden ? 0 : 1 }}
       animate={{ opacity: hidden ? 0 : 1 }}
       transition={{ duration: 0.45 }}

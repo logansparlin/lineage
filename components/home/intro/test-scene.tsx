@@ -1,12 +1,13 @@
 'use client';
 
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useHomeStore } from "@/components/home/hooks/use-home-store";
 
 import { Canvas, useThree, extend, useFrame } from "@react-three/fiber"
 import { BoxGradient } from "@/shaders/box-gradient";
 import { CurvedPlane } from "@/components/home/intro/curved-plane";
 import { Stats } from "@react-three/drei";
+import { Color, Vector3 } from "three";
 
 extend({ BoxGradient });
 
@@ -38,58 +39,56 @@ const lerp = (a, b, t) => {
 const Scene = () => {
   const { viewport } = useThree();
   const meshRef = useRef<any>(null);
+  
   const addPlaneRef = useHomeStore((state) => state.addPlaneRef);
-
-  const mousePosition = useRef({
-    current: 0,
-    target: 0,
-  })
+  const addBottomPlaneRef = useHomeStore((state) => state.addBottomPlaneRef);
 
   const aspectRatio = useMemo(() => {
     const aspect = viewport.height / viewport.width;
     return 1 / aspect;
   }, [viewport]);
 
-  const steps = Array.from({ length: 8 }, (_, i) => i + 1);
-
-  // useFrame(() => {
-  //   if (!meshRef.current) return;
-
-  //   mousePosition.current.current = lerp(mousePosition.current.current, mousePosition.current.target, 0.08);
-
-  //   meshRef.current.children.forEach((child) => {
-  //     child.material.uniforms.curveProgress.value = mousePosition.current.current;
-  //     child.material.needsUpdate = true;
-  //   })
-  // })
-
-  // useEffect(() => {
-  //   const handleMouseMove = (e: MouseEvent) => {
-  //     const mousePos = e.clientY / window.innerHeight;
-  //     mousePosition.current.target = (mousePos * 2 - 1);
-  //   }
-
-  //   window.addEventListener('mousemove', handleMouseMove)
-
-  //   return () => {
-  //     window.removeEventListener('mousemove', handleMouseMove)
-  //   }
-  // }, [])
+  const steps = Array.from({ length: 6 }, (_, i) => i + 1);
+  const bottomSteps = Array.from({ length: 5 }, (_, i) => i + 1);
 
   return (
     <mesh ref={meshRef}>
-      {steps.reverse().map((step, index) => {
+      {steps.map((step, index) => {
         return (
           <CurvedPlane
+            key={`step-${step}`}
             ref={(el) => addPlaneRef(el, index)}
-            key={step}
             width={viewport.width}
             height={viewport.height}
             aspectRatio={aspectRatio}
-            scale={1}
-            curveIntensity={4}
+            curveIntensity={3}
             inner={"#F44318"}
             outer={"#FE9807"}
+            scale={new Vector3(0, 0, 0)}
+            position={new Vector3(0, 0, index * 0.01)}
+          />
+        )
+      })}
+
+      {bottomSteps.map((step, index) => {
+        const bottomPosition = -1 * viewport.height;
+        const aspectOffset = (viewport.height * aspectRatio) - viewport.height;
+        const offsetPosition = bottomPosition - (index * 1.75) - (aspectOffset / 2);
+
+        return (
+          <CurvedPlane
+            key={`bottom-step-${step}`}
+            ref={(el) => addBottomPlaneRef(el, index)}
+            width={viewport.width}
+            height={viewport.height}
+            aspectRatio={aspectRatio}
+            curveIntensity={2.5}
+            inner={"#FE9807"}
+            outer={"#F44318"}
+            center={index === (bottomSteps.length - 1) ? "#000000" : "#FFFFFF"}
+            scale={new Vector3(1, 1, 1)}
+            position={new Vector3(0, offsetPosition, (steps.length - 1) + 0.01 + (index * 0.01))}
+            inset={0.98}
           />
         )
       })}

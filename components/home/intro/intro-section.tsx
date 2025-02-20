@@ -28,18 +28,21 @@ export const IntroSection: FC<IntroSectionProps> = ({ text, svg, description, va
   const sectionRef = useRef<HTMLDivElement>(null);
   const sectionClass = useMemo(() => `intro-section-${variant}`, [variant])
   const planeRefs = useHomeStore((state) => state.planeRefs)
+  const bottomPlaneRefs = useHomeStore((state) => state.bottomPlaneRefs)
   const tlRef = useRef<any>(null);
 
   useGSAP(() => {
     setTimeout(() => {
       const planes = Object.values(planeRefs);
+      const bottomPlanes = Object.values(bottomPlaneRefs);
       
       if (tlRef.current || !planes?.length) return;
 
       tlRef.current = getIntroTimeline({
         variant,
         container: sectionRef.current,
-        planes
+        planes,
+        bottomPlanes,
       })
     }, 10)
   }, {

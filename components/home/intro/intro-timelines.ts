@@ -8,21 +8,28 @@ const getFirstTimeline = (container: any, planes: any[]) => {
       trigger: container,
       start: '100px',
       end: 'bottom top',
+      onEnterBack: () => {
+        gsap.to(title, { opacity: 1, y: 0, duration: 0.65, ease: 'power4.out' })
+      },
+      onLeave: () => {
+        gsap.to(title, { opacity: 0, y: -6, duration: 0.65, ease: 'power4.out' })
+      },
+      onLeaveBack: () => {
+        gsap.to(title, { opacity: 0, y: 6, duration: 0.65, ease: 'power4.out' })
+      }
     }
   })
 
   planes?.forEach((plane, index) => {
-    tl.fromTo(plane.scale, {
-      x: 0,
-      y: 0,
-      z: 0
-    }, {
-      x: 0.3,
-      y: 0.3,
-      z: 0.3,
-      duration: 1.5,
-      ease: 'power3.out'
-    }, `<`)
+    tl.add(
+      tl.to(plane.scale, {
+        x: 0.3,
+        y: 0.3,
+        z: 0.3,
+        duration: 2,
+        ease: 'none'
+      }, 0)
+    )
   })
 
   planes?.reverse().forEach((plane, index) => {
@@ -30,26 +37,16 @@ const getFirstTimeline = (container: any, planes: any[]) => {
 
     const scale = 0.3 + (index * (0.7 / (planes.length - 1)));
 
-    tl.fromTo(plane.scale, {
-      x: 0,
-      y: 0,
-      z: 0
-    }, {
-      x: scale,
-      y: scale,
-      z: scale,
-      duration: 1,
-      ease: 'power3.out'
-    }, index === 1 ? '>' : `<+=${index * 0.025}`)
+    tl.add(
+      tl.to(plane.scale, {
+        x: scale,
+        y: scale,
+        z: scale,
+        duration: 1,
+        ease: 'none'
+      }, index === 1 ? '>' : `<+=${(index - 1) * 0.025}`)
+    )
   })
-
-  tl.fromTo(title, {
-    opacity: 1,
-  }, {
-    opacity: 0,
-    duration: .15,
-    ease: 'power3.out'
-  }, '>')
 
   // tl.scrollTrigger.refresh()
 
@@ -87,25 +84,24 @@ const getSecondTimeline = (container: any, planes: any[]) => {
       y: scale + 0.7,
       z: scale + 0.7,
       duration: 2,
-      ease: 'power3.out'
-    }, index === 0 ? '<+=0.5' : `<`)
+      ease: 'none'
+    }, 0)
   })
-
-  // tl.scrollTrigger.refresh()
 
   gsap.set(title, { opacity: 0, y: 10 })
 
   return tl;
 }
 
-const getLastTimeline = (container: any, planes: any[]) => {
+const getLastTimeline = (container: any, planes: any[], bottomPlanes: any[]) => {
   const title = container?.querySelector('.section-title');
+  const factor = 62.42449535909375;
   
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: container,
       start: 'top top',
-      end: 'bottom bottom',
+      end: 'bottom top',
       onEnter: () => {
         gsap.to(title, { opacity: 1, y: 0, duration: 0.65, ease: 'power4.out' })
       },
@@ -121,36 +117,40 @@ const getLastTimeline = (container: any, planes: any[]) => {
     }
   })
 
-  // planes.forEach((plane) => {
-  //   tl.set(plane.scale, {
-  //     x: 1,
-  //     y: 1,
-  //     z: 1
-  //   })
-  //   // tl.set(plane.position, {
-  //   //   y: 15
-  //   // }, '<')
+  bottomPlanes?.forEach((plane, index) => {
+    tl.add(
+      tl.to(plane.position, {
+        y: plane.position.y + ((window.innerHeight / factor) * 1.75),
+        duration: 2,
+        ease: 'none'
+      }, `<`)
+    )
+
+    tl.add(
+      tl.to(plane.material.uniforms.curveProgress, {
+        value: (index * 1),
+        duration: 1.5
+      }, '<')
+    )
+  })
+
+  // planes.reverse().forEach((plane, index) => {
+  //   let position = -1 * (20 - (( index) * 1));
+
+  //   tl.to(plane.position, {
+  //     y: position,
+  //     duration: 2,
+  //     ease: 'none'
+  //   }, `<`)
   // })
 
-  // tl.scrollTrigger.refresh()
-
-  planes.reverse().forEach((plane, index) => {
-    let position = (30 + (((planes.length - 1) - index) * .5));
-
-    tl.to(plane.position, {
-      y: position,
-      duration: 2,
-      ease: 'power3.out'
-    }, `<`)
-  })
-
-  planes.forEach((plane, index) => {
-    tl.to(plane.material.uniforms.curveProgress, {
-      value: (index * 0.65),
-      duration: 2,
-      ease: 'power3.out'
-    }, `<`)
-  })
+  // planes.forEach((plane, index) => {
+  //   tl.to(plane.material.uniforms.curveProgress, {
+  //     value: (((planes.length - 1) - index) * 0.65),
+  //     duration: 1.5,
+  //     ease: 'none'
+  //   }, index === 0 ? `<+=0.25` : '<')
+  // })
 
   gsap.set(title, { opacity: 0, y: 10 })
 
@@ -160,13 +160,15 @@ const getLastTimeline = (container: any, planes: any[]) => {
 export const getIntroTimeline = ({
   variant,
   container,
-  planes
+  planes,
+  bottomPlanes,
 }: {
   variant: 'first' | 'second' | 'last' | 'default',
   container: any,
-  planes: any[]
+  planes: any[],
+  bottomPlanes: any[],
 }) => {
   if (variant === 'first') return getFirstTimeline(container, planes);
   if (variant === 'second') return getSecondTimeline(container, planes);
-  if (variant === 'last') return getLastTimeline(container, planes);
+  if (variant === 'last') return getLastTimeline(container, planes, bottomPlanes);
 }

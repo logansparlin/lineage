@@ -1,31 +1,50 @@
-import React, { useMemo, useRef } from 'react'
-import { Color, Vector2 } from 'three'
+import { type FC, useMemo, useRef, type RefObject, RefCallback } from 'react'
+import { Color, Object3D, Vector2, Vector3 } from 'three'
 
-export const CurvedPlane = ({ 
+interface CurvedPlaneProps {
+  aspectRatio?: number;
+  segments?: number;
+  width?: number;
+  height?: number;
+  curveIntensity?: number;
+  outer?: string;
+  inner?: string;
+  center?: string;
+  ref?: RefCallback<Object3D>;
+  scale?: Vector3;
+  position?: Vector3;
+  inset?: number;
+}
+
+export const CurvedPlane: FC<CurvedPlaneProps> = ({ 
+  ref,
   aspectRatio = 1,
-  scale = 1,
   segments = 128,
   width = 10,
   height = 10,
   curveIntensity = 3,
   outer = "#FE9807",
   inner = "#F44318",
-  ref
+  center = '#FFFFFF',
+  position = new Vector3(0, 0, 0),
+  scale = new Vector3(1, 1, 1),
+  inset = 0.85
 }) => {
-  const meshRef = useRef<any>(null);
-
   const colorOne = useMemo(() => new Color(outer).convertLinearToSRGB(), [outer])
   const colorTwo = useMemo(() => new Color(inner).convertLinearToSRGB(), [inner])
+  const colorThree = useMemo(() => center ? new Color(center).convertLinearToSRGB() : null, [center])
 
   return (
-    <mesh ref={ref} scale={[0, 0, 0]}>
+    <mesh ref={ref} scale={scale} position={position}>
       <planeGeometry args={[width, height, segments, segments]} />
       {/* @ts-ignore */}
       <boxGradient
+        inset={inset}
         colorOne={colorOne}
         colorTwo={colorTwo}
-        size={new Vector2(width, height)}
+        colorThree={colorThree}
         aspect={aspectRatio}
+        size={new Vector2(width, height)}
         curveIntensity={curveIntensity}
       />
     </mesh>
