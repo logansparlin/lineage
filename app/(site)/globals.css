@@ -26,92 +26,81 @@
   --color-pink-400: rgba(89, 0, 255, 1);
 
   --text-94: 94px;
-  --text-94-line-height: 130%;
-  --text-94-letter-spacing: -0.01em;
-  --text-94-font-weight: 400;
+  --text-94--line-height: 130%;
+  --text-94--letter-spacing: -0.01em;
 
   --text-83: 83px;
-  --text-83-line-height: 130%;
-  --text-83-letter-spacing: -0.01em;
-  --text-83-font-weight: 400;
+  --text-83--line-height: 130%;
+  --text-83--letter-spacing: -0.01em;
 
   --text-74: 74px;
-  --text-74-line-height: 130%;
-  --text-74-letter-spacing: -0.01em;
-  --text-74-font-weight: 400;
+  --text-74--line-height: 130%;
+  --text-74--letter-spacing: -0.01em;
 
   --text-66: 66px;
-  --text-66-line-height: 130%;
-  --text-66-letter-spacing: -0.01em;
-  --text-66-font-weight: 400;
+  --text-66--line-height: 130%;
+  --text-66--letter-spacing: -0.01em;
 
   --text-58: 58px;
-  --text-58-line-height: 130%;
-  --text-58-letter-spacing: -0.01em;
-  --text-58-font-weight: 400;
+  --text-58--line-height: 130%;
+  --text-58--letter-spacing: -0.01em;
 
   --text-52: 52px;
-  --text-52-line-height: 130%;
-  --text-52-letter-spacing: -0.01em;
-  --text-52-font-weight: 400;
+  --text-52--line-height: 130%;
+  --text-52--letter-spacing: -0.01em;
 
   --text-46: 46px;
-  --text-46-line-height: 130%;
-  --text-46-letter-spacing: -0.01em;
-  --text-46-font-weight: 400;
+  --text-46--line-height: 130%;
+  --text-46--letter-spacing: -0.01em;
 
   --text-41: 41px;
-  --text-41-line-height: 130%;
-  --text-41-letter-spacing: -0.01em;
-  --text-41-font-weight: 400;
+  --text-41--line-height: 130%;
+  --text-41--letter-spacing: -0.01em;
 
   --text-36: 36px;
-  --text-36-line-height: 130%;
-  --text-36-letter-spacing: -0.01em;
-  --text-36-font-weight: 400;
+  --text-36--line-height: 130%;
+  --text-36--letter-spacing: -0.01em;
 
   --text-32: 32px;
-  --text-32-line-height: 130%;
-  --text-32-letter-spacing: -0.01em;
-  --text-32-font-weight: 400;
+  --text-32--line-height: 130%;
+  --text-32--letter-spacing: -0.01em;
 
   --text-29: 29px;
-  --text-29-line-height: 130%;
-  --text-29-letter-spacing: -0.01em;
-  --text-29-font-weight: 400;
+  --text-29--line-height: 130%;
+  --text-29--letter-spacing: -0.01em;
 
   --text-26: 26px;
-  --text-26-line-height: 130%;
-  --text-26-letter-spacing: -0.01em;
-  --text-26-font-weight: 400;
+  --text-26--line-height: 130%;
+  --text-26--letter-spacing: -0.01em;
 
   --text-23: 23px;
-  --text-23-line-height: 130%;
-  --text-23-letter-spacing: -0.01em;
-  --text-23-font-weight: 400;
+  --text-23--line-height: 130%;
+  --text-23--letter-spacing: -0.01em;
 
   --text-20: 20px;
-  --text-20-line-height: 130%;
-  --text-20-letter-spacing: -0.01em;
-  --text-20-font-weight: 400;
+  --text-20--line-height: 130%;
+  --text-20--letter-spacing: -0.01em;
 
   --text-18: 18px;
-  --text-18-line-height: 130%;
-  --text-18-letter-spacing: -0.01em;
-  --text-18-font-weight: 400;
+  --text-18--line-height: 130%;
+  --text-18--letter-spacing: -0.01em;
 
   --text-16: 16px;
-  --text-16-line-height: 126%;
-  --text-16-letter-spacing: -0.02em;
-  --text-16-font-weight: 400;
+  --text-16--line-height: 126%;
+  --text-16--letter-spacing: -0.02em;
   
   --text-14: 14px;
-  --text-14-line-height: 150%;
-  --text-14-letter-spacing: -0.02em;
-  --text-14-font-weight: 400;
+  --text-14--line-height: 150%;
+  --text-14--letter-spacing: -0.02em;
 
   --spacing: 1px;
 }
+
+@theme inline {
+  --font-sans: var(--font-pp-neue-montreal), sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), monospace;
+}
+
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -119,16 +108,6 @@
 
 i, em {
   font-style: normal;
-}
-
-a:focus, button:focus {
-  outline: none;
-  border: none;
-}
-
-a:focus-visible, button:focus-visible {
-  outline: 1px dashed currentColor;
-  outline-offset: 4px;
 }
 
 @layer base {

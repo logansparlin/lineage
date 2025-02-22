@@ -6,30 +6,59 @@ import { useMetadata } from "@/hooks/use-metadata";
 import { draftMode } from "next/headers";
 import localFont from "next/font/local";
 
+import { IBM_Plex_Mono } from "next/font/google";
+
 import { LayoutTransition } from "@/components/global/layout-transition";
-import { ReactLenis } from "lenis/react";
 import { Header } from "@/components/global/header";
 import { SetVH } from "@/components/global/SetVH";
 
-import "./globals.css";
 import { Footer } from '@/components/global/footer';
 import { Cursor } from '@/components/global/cursor';
 
-const ArizonaText = localFont({
+import "./globals.css";
+
+const PPNeueMontreal = localFont({
   src: [
     {
-      path: '../fonts/ABCArizonaText-Regular.woff2',
+      path: '../fonts/PPNeueMontreal-Book.woff',
       weight: '400',
       style: 'normal'
     },
     {
-      path: '../fonts/ABCArizonaText-RegularItalic.woff2',
+      path: '../fonts/PPNeueMontreal-Book.woff2',
+      weight: '400',
+      style: 'normal'
+    },
+    {
+      path: '../fonts/PPNeueMontreal-BookItalic.woff',
       weight: '400',
       style: 'italic'
-    }
+    },
+    {
+      path: '../fonts/PPNeueMontreal-BookItalic.woff2',
+      weight: '400',
+      style: 'italic'
+    },
+    {
+      path: '../fonts/PPNeueMontreal-Medium.woff',
+      weight: '500',
+      style: 'normal'
+    },
+    {
+      path: '../fonts/PPNeueMontreal-Medium.woff2',
+      weight: '500',
+      style: 'normal'
+    },
   ],
   display: 'swap',
-  variable: '--font-arizona-text'
+  variable: '--font-pp-neue-montreal'
+})
+
+const IBMPlexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['400'],
+  variable: '--font-ibm-plex-mono'
 })
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -51,7 +80,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${ArizonaText.variable} antialiased font-sans font-normal bg-black text-off-white cursor-none`}
+        className={`${PPNeueMontreal.variable} ${IBMPlexMono.variable} antialiased font-sans font-normal bg-black text-off-white cursor-none`}
       >
         <Cursor />
         <Header {...settings?.header} />

@@ -5,15 +5,18 @@ import { Color, Vector2 } from "three";
 
 export const BoxGradient = shaderMaterial(
   {
-    colorOne: new Color("#000000"),
-    colorTwo: new Color("#ffffff"),
-    colorThree: new Color('#ffffff'),
+    innerColor: new Color("#000000"),
+    outerColor: new Color("#ffffff"),
+    centerColor: new Color('#ffffff'),
+    innerColorNext: new Color("#000000"),
+    outerColorNext: new Color("#000000"),
     size: new Vector2(1, 1),
     scale: 1.0,
     aspect: 1.0,
     curveProgress: 0.0,
     curveIntensity: 4.0,
-    inset: 0.85
+    inset: 0.85,
+    colorProgress: 0.0,
   },
   // Vertex Shader
   `
@@ -51,9 +54,12 @@ export const BoxGradient = shaderMaterial(
   uniform float inset;
   uniform float scale;
   uniform float aspect;
-  uniform vec3 colorOne;
-  uniform vec3 colorTwo;
-  uniform vec3 colorThree;
+  uniform vec3 innerColor;
+  uniform vec3 outerColor;
+  uniform vec3 centerColor;
+  uniform vec3 innerColorNext;
+  uniform vec3 outerColorNext;
+  uniform float colorProgress;
 
   float smoothBox(vec2 p, vec2 b, float r) {
     vec2 d = abs(p) - b + r;
@@ -92,10 +98,19 @@ export const BoxGradient = shaderMaterial(
     alpha = smoothstep(0.0, 1.0, alpha);
     innerAlpha = smoothstep(0.0, 1.0, innerAlpha);
 
-    vec3 finalColor = mix(colorTwo, colorOne, alpha);
+    vec3 finalColor = mix(outerColor, innerColor, alpha);
+    vec3 finalColorNext = mix(outerColorNext, innerColorNext, alpha);
 
-    if (colorThree.r < 0.99) {
-      finalColor = mix(colorThree, finalColor, innerAlpha);
+    if (centerColor.r < 0.99) {
+      finalColor = mix(centerColor, finalColor, innerAlpha);
+    }
+
+    if (colorProgress > 0.0) {
+      if (centerColor.r < 0.99) {
+        finalColor = mix(centerColor, mix(finalColor, finalColorNext, colorProgress), innerAlpha);
+      } else {
+       finalColor = mix(finalColor, finalColorNext, colorProgress);
+      }
     }
 
     gl_FragColor = vec4(finalColor, 1.0);

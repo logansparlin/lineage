@@ -14,9 +14,7 @@ const getFirstTimeline = (container: any, planes: any[]) => {
       onLeave: () => {
         gsap.to(title, { opacity: 0, y: -6, duration: 0.65, ease: 'power4.out' })
       },
-      onLeaveBack: () => {
-        gsap.to(title, { opacity: 0, y: 6, duration: 0.65, ease: 'power4.out' })
-      }
+      
     }
   })
 
@@ -130,27 +128,9 @@ const getLastTimeline = (container: any, planes: any[], bottomPlanes: any[]) => 
       tl.to(plane.material.uniforms.curveProgress, {
         value: (index * 1),
         duration: 1.5
-      }, '<')
+      }, `<+=${index * 0.01}`)
     )
   })
-
-  // planes.reverse().forEach((plane, index) => {
-  //   let position = -1 * (20 - (( index) * 1));
-
-  //   tl.to(plane.position, {
-  //     y: position,
-  //     duration: 2,
-  //     ease: 'none'
-  //   }, `<`)
-  // })
-
-  // planes.forEach((plane, index) => {
-  //   tl.to(plane.material.uniforms.curveProgress, {
-  //     value: (((planes.length - 1) - index) * 0.65),
-  //     duration: 1.5,
-  //     ease: 'none'
-  //   }, index === 0 ? `<+=0.25` : '<')
-  // })
 
   gsap.set(title, { opacity: 0, y: 10 })
 

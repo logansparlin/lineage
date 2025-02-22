@@ -22,6 +22,8 @@ export const ScrollContainer: FC<ScrollContainerProps> = ({ children, ...props }
     const update = (time) => {
       // time * 1000 converts to milliseconds
       lenisRef.current?.lenis?.raf(time * 1000);
+
+      ScrollTrigger.refresh();
     }
 
     lenisRef.current?.lenis?.on('scroll', ScrollTrigger.update);

@@ -38,29 +38,53 @@ export const HomePage = (props: HomePageProps) => {
 
       {/* Info Section */}
 
-      <div className="w-full min-h-screen flex flex-col items-center relative z-[3] -mt-[20svh]">
+      <div className="w-full flex flex-col items-center relative z-[3] -mt-[20svh]">
         <h2 className="text-58 text-center max-w-700">The operating system that makes brand matter</h2>
       </div>
 
       {/* Projects */}
       <div className="relative z-[3] bg-black">
-        {caseStudies?.map(caseStudy => {
-          return (
-            <div
-              key={caseStudy._id}
-              className={`h-screen sticky top-0 flex items-center justify-center text-58 perspective-[1200px]`}
-            >
-              <Link
-                href={`/case-study/${caseStudy.slug}`}
-                className={`flex items-center justify-center translate-z-[-50vh] translate-y-[-50vh] w-full h-full ${colorMap[caseStudy.palette]} rotate-x-[-90deg]`}
-              >
-                {caseStudy.title}
-              </Link>
-            </div>
-          )
-        })}
+        <div className="sticky z-[5] w-full h-screen top-0 left-0 perspective-[3500px]">
+          <div className="w-full h-full translate-z-[-50vh] translate-y-[-50vh] rotate-x-[-90deg] overflow-hidden">
+            <ProjectSection caseStudies={caseStudies} />
+          </div>
+        </div>
+        
+        <div className="sticky z-[5] w-full h-screen top-0 bottom-0 perspective-[3500px]">
+          <div className="w-full h-full translate-z-[-50vh] translate-y-[50vh] rotate-x-[90deg]">
+            <ProjectSection caseStudies={caseStudies} />
+          </div>
+        </div>
+
+        <div className="w-full h-auto perspective-[3500px]">
+          <div className="relative z-[3] translate-z-[-100vh] mt-[-175vh] origin-top">
+            <ProjectSection caseStudies={caseStudies} />
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
+const ProjectSection = (props) => {
+  const { caseStudies } = props
+
+  return (
+    <div className="w-full bg-[red]">
+      {caseStudies?.map(caseStudy => {
+        return (
+          <div
+            key={caseStudy._id}
+            className={`h-screen relative flex items-center justify-center text-58`}
+          >
+            <Link
+              href={`/case-study/${caseStudy.slug}`}
+            >
+              {caseStudy.title}
+            </Link>
+          </div>
+        )
+      })}
+    </div>
+  )
+}

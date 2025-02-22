@@ -13,7 +13,7 @@ interface IntroSectionProps {
   variant?: 'first' | 'second' | 'last' | 'default';
 }
 
-const introSectionStyles = cva('sticky top-0 text-58 z-[2]', {
+const introSectionStyles = cva('sticky top-0 text-58 z-[2] font-medium', {
   variants: {
     variant: {
       first: 'min-h-[250svh]',
