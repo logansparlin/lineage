@@ -1,5 +1,5 @@
 import { defineQuery, groq } from "next-sanity";
-import { mediaFields, videoFields, imageFields, seoQuery } from "./fragments";
+import { seoQuery, modulesFields } from "./fragments";
 
 export const caseStudyPathsQuery = defineQuery(
   groq`*[_type == "caseStudy"] {
@@ -11,6 +11,12 @@ export const caseStudyQuery = defineQuery(
   groq`*[_type == "caseStudy" && slug.current == $slug][0] {
     ${seoQuery},
     title,
-    palette
+    step,
+    featuredImage,
+    shortDescription,
+    description,
+    content[] {
+      ${modulesFields}
+    }
   }`
 )

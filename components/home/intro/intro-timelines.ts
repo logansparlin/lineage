@@ -116,6 +116,8 @@ const getLastTimeline = (container: any, planes: any[], bottomPlanes: any[]) => 
   })
 
   bottomPlanes?.forEach((plane, index) => {
+    if (!plane.material?.uniforms?.curveProgress) return;
+    
     tl.add(
       tl.to(plane.position, {
         y: plane.position.y + ((window.innerHeight / factor) * 1.75),

@@ -32,6 +32,13 @@ import homePage from './documents/home-page'
 import caseStudy from './documents/case-study'
 import legalPage from './documents/legal-page'
 
+/** Modules */
+import quote from './modules/quote'
+import mediaBlock from './modules/media-block'
+import textBlock from './modules/text-block'
+import diptych from './modules/diptych'
+import offsetMedia from './modules/offset-media'
+
 export const allTypes: SchemaTypeDefinition[] = [
   // Settings
   settingsSeo,
@@ -42,6 +49,13 @@ export const allTypes: SchemaTypeDefinition[] = [
   homePage,
   caseStudy,
   legalPage,
+
+  // Modules
+  quote,
+  mediaBlock,
+  textBlock,
+  diptych,
+  offsetMedia,
 
   // Blocks
   seo,
@@ -65,4 +79,6 @@ export const singletonTypes: SingletonType[] = [
 
 export const hiddenTypes: SchemaTypeDefinition[] = []
 
-export const orderableTypes: SchemaTypeDefinition[] = []
+export const orderableTypes: SchemaTypeDefinition[] = [
+  caseStudy
+]

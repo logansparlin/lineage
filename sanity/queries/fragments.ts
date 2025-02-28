@@ -1,7 +1,7 @@
 import { groq } from "next-sanity";
 
 export const imageFields = groq`
-  _id,
+  _key,
   _type,
   asset,
   alt,
@@ -46,4 +46,95 @@ seo {
     ${imageFields}
   }
 }
+`
+
+export const modulesFields = groq`
+  _type == 'quote' => {
+    _type,
+    _key,
+    text,
+    attribution,
+    size,
+    image
+  },
+  _type == 'mediaBlock' => {
+    _type,
+    _key,
+    mediaType,
+    size,
+    caption,
+    image,
+    video {
+      asset-> {
+        _ref,
+        url
+      }
+    },
+    videoThumbnail,
+  },
+  _type == 'textBlock' => {
+    _type,
+    _key,
+    headline,
+    text,
+    hasSecondColumn,
+    secondColumnText
+  },
+  _type == 'diptych' => {
+    _type,
+    _key,
+    reversed,
+    firstMedia {
+      mediaType,
+      image,
+      video {
+        asset-> {
+          _ref,
+          url
+        }
+      },
+      videoThumbnail,
+      caption
+    },
+    secondMedia {
+      mediaType,
+      image,
+      video {
+        asset-> {
+          _ref,
+          url
+        }
+      },
+      videoThumbnail,
+      caption
+    }
+  },
+  _type == 'offsetMedia' => {
+    _type,
+    _key,
+    firstMedia {
+      mediaType,
+      image,
+      video {
+        asset-> {
+          _ref,
+          url
+        }
+      },
+      videoThumbnail,
+      text
+    },
+    secondMedia {
+      mediaType,
+      image,
+      video {
+        asset-> {
+          _ref,
+          url
+        }
+      },
+      videoThumbnail,
+      text
+    }
+  }
 `

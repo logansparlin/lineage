@@ -1,6 +1,5 @@
 import { CaseStudies } from "./case-studies/case-studies";
 import { HomeIntro } from "./intro/home-intro";
-import Link from "next/link";
 
 export interface HomePageProps {
   title: string
@@ -17,6 +16,9 @@ export interface HomePageProps {
     title: string
     slug: string
     palette: string
+    featuredImage: any
+    shortDescription: string
+    isMain?: boolean
   }[]
 }
 

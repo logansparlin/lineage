@@ -25,6 +25,10 @@
   --color-pink-300: rgba(174, 79, 242, 1);
   --color-pink-400: rgba(89, 0, 255, 1);
 
+  --text-case-title: 93px;
+  --text-case-title--line-height: 90%;
+  --text-case-title--letter-spacing: -0.01em;
+
   --text-94: 94px;
   --text-94--line-height: 130%;
   --text-94--letter-spacing: -0.01em;
@@ -94,6 +98,26 @@
   --text-14--letter-spacing: -0.02em;
 
   --spacing: 1px;
+
+  --aspect-video: 1.65;
+  --aspect-portrait-video: 0.56;
+}
+
+:root {
+  --margin: 80px;
+  --grid-columns: 16;
+  --grid-gap: 24px;
+
+  --column-width: calc(calc(100vw - var(--margin)) / var(--grid-columns));
+}
+
+
+@media (max-width: 1024px) {
+  :root {
+    --margin: 20px;
+    --grid-columns: 2;
+    --grid-gap: 16px;
+  }
 }
 
 @theme inline {
@@ -114,12 +138,45 @@ i, em {
   .grid-contain {
     @apply grid grid-cols-1 grid-rows-1 *:col-span-1 *:row-span-1 *:col-start-1 *:row-start-1;
   }
+
+  .container {
+    @apply px-20 lg:px-80 max-w-screen;
+  }
+
+  .site-grid {
+    @apply grid grid-cols-2 gap-x-16 lg:grid-cols-16 lg:gap-x-24;
+  }
+
+  .card {
+    @apply relative;
+  }
+
+  .card-link::after {
+    @apply absolute inset-0 w-full h-full cursor-none z-[2];
+    content: '';
+  }
+}
+
+@utility w-column-* {
+  width: calc(var(--column-width) * --value(integer));
+}
+
+@utility max-w-column-* {
+  max-width: calc(var(--column-width) * --value(integer));
+}
+
+@utility gap-x-column-* {
+  column-gap: calc(var(--column-width) * --value(integer) + var(--grid-gap));
 }
 
 @utility scrollbar-hidden {
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+@utility rounded-* {
+  border-radius: --value(integer)px;
 }
 
 @utility p-* {
@@ -196,6 +253,18 @@ i, em {
 
 @utility gap-x-* {
   column-gap: --value(integer)px;
+}
+
+@utility grid-cols-* {
+  grid-template-columns: repeat(--value(integer), minmax(0, 1fr));
+}
+
+@utility col-start-* {
+  grid-column-start: --value(integer);
+}
+
+@utility col-span-* {
+  grid-column: span --value(integer) / span --value(integer);
 }
 
 * {

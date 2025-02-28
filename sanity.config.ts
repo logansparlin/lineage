@@ -18,7 +18,9 @@ export default defineConfig({
   perspective: 'published',
 
   schema: {
-    types: allTypes,
+    types: [
+      ...allTypes,
+    ],
   },
   plugins: [
     structureTool({

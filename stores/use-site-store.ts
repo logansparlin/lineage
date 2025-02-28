@@ -1,19 +1,15 @@
 import { create } from "zustand";
 
 interface SiteStore {
-  informationOpen: boolean;
-  setInformationOpen: (open: boolean) => void;
-  contactOpen: boolean;
-  setContactOpen: (open: boolean) => void;
-  mobileMenuOpen: boolean;
-  setMobileMenuOpen: (open: boolean) => void;
+  menuOpen: boolean;
+  setMenuOpen: (open: boolean) => void;
+  colorButtonVisible: boolean;
+  setColorButtonVisible: (visible: boolean) => void;
 }
 
 export const useSiteStore = create<SiteStore>((set) => ({
-  informationOpen: false,
-  setInformationOpen: (open: boolean) => set({ informationOpen: open }),
-  contactOpen: false,
-  setContactOpen: (open: boolean) => set({ contactOpen: open }),
-  mobileMenuOpen: false,
-  setMobileMenuOpen: (open: boolean) => set({ mobileMenuOpen: open }),
+  menuOpen: false,
+  setMenuOpen: (open: boolean) => set({ menuOpen: open }),
+  colorButtonVisible: false,
+  setColorButtonVisible: (visible: boolean) => set({ colorButtonVisible: visible }),
 }))

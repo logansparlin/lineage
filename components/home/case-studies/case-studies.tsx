@@ -4,7 +4,7 @@ import { type FC, useRef } from 'react';
 import { useLenis } from 'lenis/react';
 import { useMeasure } from 'react-use';
 
-import { CaseStudiesSection } from './case-studies-section';
+import { CaseStudiesContent } from './case-studies-content';
 import { clamp } from '../../../lib/clamp';
 
 interface CaseStudiesProps {
@@ -13,6 +13,9 @@ interface CaseStudiesProps {
     title: string
     slug: string
     palette: string
+    featuredImage: any
+    shortDescription: string
+    isMain?: boolean
   }[]
 }
 
@@ -45,25 +48,39 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
 
   return (
     <div ref={containerRef} className="relative z-[3] mb-[-100vh]" style={{ height: `${height}px` }}>
-      <div className="w-full h-screen overflow-hidden sticky top-0 perspective-[5000px]">
+      <div className="w-full h-screen overflow-hidden sticky top-0 perspective-[2500px]">
         <div className="w-full h-screen transform-3d">
 
           {/* Top */}
-          <div inert ref={topRef} className="absolute will-change-auto w-full h-screen top-0 left-0 pointer-events-none translate-z-[-50vh] translate-y-[-50vh] rotate-x-[-90deg] overflow-hidden">
-            <CaseStudiesSection items={items} className="w-full pt-[200vh]" />
+          <div 
+            inert
+            ref={topRef}
+            className="absolute will-change-auto w-full h-screen top-0 left-0 pointer-events-none translate-z-[-50vh] translate-y-[-50vh] rotate-x-[-90deg] overflow-hidden"
+            style={{
+              maskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 50%, black 100%)'
+            }}
+          >
+            <CaseStudiesContent items={items} className="w-full pt-[200vh]" />
           </div>
 
           {/* Bottom */}
-          <div inert ref={bottomRef} className="absolute will-change-auto w-full h-screen bottom-0 left-0 pointer-events-none translate-z-[-50vh] translate-y-[50vh] rotate-x-[90deg] overflow-hidden">
-            <CaseStudiesSection items={items} />
+          <div
+            inert
+            ref={bottomRef}
+            className="absolute will-change-auto w-full h-screen bottom-0 left-0 pointer-events-none translate-z-[-50vh] translate-y-[50vh] rotate-x-[90deg] overflow-hidden"
+            style={{
+              maskImage: 'linear-gradient(to top, rgba(0, 0, 0, 0.35) 50%, black 100%)'
+            }}
+          >
+            <CaseStudiesContent items={items} />
           </div>
 
           {/* Primary */}
           <div
             ref={mainRef}
-            className="will-change-auto w-full h-screen translate-z-[calc(-1*100vh)] overflow-hidden pt-[100vh]"
+            className="will-change-auto w-full h-screen translate-z-[-100vh] overflow-hidden pt-[100vh]"
           >
-            <CaseStudiesSection ref={contentRef} isMain items={items} />
+            <CaseStudiesContent ref={contentRef} isMain items={items} />
           </div>
         </div>
       </div>

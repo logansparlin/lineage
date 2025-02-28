@@ -26,8 +26,6 @@ export const ScrollContainer: FC<ScrollContainerProps> = ({ children, ...props }
       ScrollTrigger.refresh();
     }
 
-    lenisRef.current?.lenis?.on('scroll', ScrollTrigger.update);
-
     gsap.ticker.add(update);
     gsap.ticker.lagSmoothing(0);
 
