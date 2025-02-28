@@ -10,7 +10,7 @@ import { ScrollIndicator } from "./scroll-indicator";
 
 export const HomeIntro = ({ titles, description }) => {
   const introRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(introRef, { once: true });
+  const inView = useInView(introRef, { once: false });
   const setColorButtonVisible = useSiteStore((state) => state.setColorButtonVisible);
   
   useEffect(() => {
