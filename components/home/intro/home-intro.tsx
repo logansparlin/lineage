@@ -1,6 +1,8 @@
 'use client';
 
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
+import { useInView } from "motion/react";
+import { useSiteStore } from "@/stores/use-site-store";
 
 import { TestScene } from "./test-scene";
 import { IntroSection } from "./intro-section";
@@ -8,7 +10,18 @@ import { ScrollIndicator } from "./scroll-indicator";
 
 export const HomeIntro = ({ titles, description }) => {
   const introRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(introRef, { once: true });
+  const colorButtonVisible = useSiteStore((state) => state.colorButtonVisible);
+  const setColorButtonVisible = useSiteStore((state) => state.setColorButtonVisible);
+  
+  useEffect(() => {
+    if (inView) {
+      setColorButtonVisible(true);
+    }
 
+    return () => setColorButtonVisible(false);
+  }, [inView]);
+  
   const getFormattedVariant = useCallback((index: number) => {
     if (index === 0) return 'first';
     if (index === 1) return 'second';
