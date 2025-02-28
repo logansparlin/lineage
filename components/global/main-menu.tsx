@@ -98,7 +98,7 @@ const MenuItem = ({ label, url = undefined, type, index, onClick, total, offset 
   const baseTransition = { duration: 0.75, ease: easings.outExpo }
   return (
     <motion.li
-      className="will-change-auto"
+      className="will-change-auto transform-gpu"
       initial={{ opacity: 0, y: 8 }}
       animate={{ 
         opacity: 1,
@@ -117,7 +117,7 @@ const MenuItem = ({ label, url = undefined, type, index, onClick, total, offset 
         }
       }}
     >
-      {type === 'text' ? label : <Link href={url} onClick={onClick}>{label}</Link>}
+      {type === 'text' ? label : <Link className="transform-gpu" href={url} onClick={onClick}>{label}</Link>}
     </motion.li>
   )
 }
