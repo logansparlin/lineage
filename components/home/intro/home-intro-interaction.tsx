@@ -181,16 +181,16 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
 
     lastSectionTl.to(description, {
       height: 'auto',
-      duration: 1.75,
-      ease: 'power1.inOut'
-    }, '>-=0.25')
+      duration: 2,
+      ease: 'none'
+    }, '>')
 
-    lastSectionTl.set({}, {}, '+=0')
+    lastSectionTl.set({}, {}, '+=0.5')
 
     topPlanes?.forEach((plane, index) => {
       lastSectionTl.to(plane.position, {
         y: (((viewport.height * aspectRatio) - viewport.height) / 2) + (viewport.height - (viewport.height * (100 / window.innerHeight))),
-        duration: 1.75 + TITLE_DURATION,
+        duration: TITLE_DURATION * 1.75,
         ease: 'none'
       }, '<')
     })
