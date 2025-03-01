@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useRef } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { useHomeStore } from "@/components/home/hooks/use-home-store";
 import { getGradient } from "@/lib/gradients";
 
@@ -10,14 +10,15 @@ import { CurvedPlane } from "@/components/home/intro/curved-plane";
 import { Vector3, Color } from "three";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
+import { HomeIntroInteraction } from "./home-intro-interaction";
 extend({ BoxGradient });
 
-export const TestScene = () => {
+export const TestScene = memo(() => {
   return (
     <div
       className="fixed top-0 left-0 w-full h-screen"
     >
-      <Canvas 
+      <Canvas
         gl={{
           antialias: true,
         }}
@@ -31,14 +32,12 @@ export const TestScene = () => {
       </Canvas>
     </div>
   )
-}
+})
 
 const Scene = () => {
-  const { viewport } = useThree();
+  const { viewport, scene } = useThree();
   const meshRef = useRef<any>(null);
   
-  const addPlaneRef = useHomeStore((state) => state.addPlaneRef);
-  const addBottomPlaneRef = useHomeStore((state) => state.addBottomPlaneRef);
   const setIsColorChanging = useHomeStore((state) => state.setIsColorChanging);
   
   const gradient = useHomeStore((state) => state.gradient);
@@ -94,47 +93,49 @@ const Scene = () => {
   const bottomSteps = Array.from({ length: 5 }, (_, i) => i + 1);
 
   return (
-    <mesh ref={meshRef}>
-      {steps.map((step, index) => {
-        return (
-          <CurvedPlane
-            key={`step-${step}`}
-            ref={(el) => addPlaneRef(el, index)}
-            width={viewport.width}
-            height={viewport.height}
-            aspectRatio={aspectRatio}
-            curveIntensity={3}
-            inner={gradientData.inner}
-            outer={gradientData.outer}
-            scale={new Vector3(0, 0, 0)}
-            position={new Vector3(0, 0, index * 0.01)}
-          />
-        )
-      })}
+    <>
+      <HomeIntroInteraction scene={scene} viewport={viewport} aspectRatio={aspectRatio} />
+      <mesh ref={meshRef} name="intro-mesh">
+        {steps.map((step, index) => {
+          return (
+            <CurvedPlane
+              key={`step-${step}`}
+              name={`top-step-${step}`}
+              width={viewport.width}
+              height={viewport.height}
+              aspectRatio={aspectRatio}
+              curveIntensity={3}
+              inner={gradientData.inner}
+              outer={gradientData.outer}
+              scale={new Vector3(0, 0, 0)}
+              position={new Vector3(0, 0, index * 0.01)}
+            />
+          )
+        })}
 
-      {bottomSteps.map((step, index) => {
-        const bottomPosition = -1 * viewport.height;
-        const aspectOffset = (viewport.height * aspectRatio) - viewport.height;
-        const offsetPosition = bottomPosition - (index * 1) - (aspectOffset / 2);
+        {bottomSteps.map((step, index) => {
+          const bottomPosition = -1 * viewport.height;
+          const aspectOffset = (viewport.height * aspectRatio) - viewport.height;
+          const offsetPosition = bottomPosition - index - (aspectOffset / 2);
 
-        return (
-          <CurvedPlane
-            name={`bottom-step-${step}`}
-            key={`bottom-step-${step}`}
-            ref={(el) => addBottomPlaneRef(el, index)}
-            width={viewport.width}
-            height={viewport.height}
-            aspectRatio={aspectRatio}
-            curveIntensity={2.5}
-            inner={gradientData.outer}
-            outer={gradientData.inner}
-            center={index === (bottomSteps.length - 1) ? "#000000" : "#FFFFFF"}
-            scale={new Vector3(1, 1, 1)}
-            position={new Vector3(0, offsetPosition, (steps.length - 1) + 0.01 + (index * 0.01))}
-            inset={0.98}
-          />
-        )
-      })}
-    </mesh>
+          return (
+            <CurvedPlane
+              name={`bottom-step-${step}`}
+              key={`bottom-step-${step}`}
+              width={viewport.width}
+              height={viewport.height}
+              aspectRatio={aspectRatio}
+              curveIntensity={2.5}
+              inner={gradientData.outer}
+              outer={gradientData.inner}
+              center={index === (bottomSteps.length - 1) ? "#000000" : "#FFFFFF"}
+              scale={new Vector3(1, 1, 1)}
+              position={new Vector3(0, offsetPosition, (steps.length - 1) + 0.01 + (index * 0.01))}
+              inset={0.98}
+            />
+          )
+        })}
+      </mesh>
+    </>
   )
 }

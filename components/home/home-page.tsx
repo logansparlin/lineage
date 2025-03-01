@@ -1,4 +1,5 @@
 import { CaseStudies } from "./case-studies/case-studies";
+import { HomeScrim } from "./home-scrim";
 import { HomeIntro } from "./intro/home-intro";
 
 export interface HomePageProps {
@@ -30,11 +31,12 @@ export const HomePage = (props: HomePageProps) => {
   return (
     <div className="relative select-none">
       <h1 className="sr-only">{title}</h1>
+      <HomeScrim />
+
       <HomeIntro titles={intro.titles} description={intro.description} />
 
       {/* Info Section */}
-
-      <div className="w-full flex flex-col items-center relative z-[3] -mt-[20svh]">
+      <div className="w-full flex flex-col items-center relative z-[3] -mt-[100svh]">
         <h2 className="text-58 text-center max-w-700">The operating system that makes brand matter</h2>
       </div>
 
