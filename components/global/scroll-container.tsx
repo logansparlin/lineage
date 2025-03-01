@@ -38,7 +38,10 @@ export const ScrollContainer: FC<ScrollContainerProps> = ({ children, ...props }
     <ReactLenis
       root
       ref={lenisRef}
-      options={{ autoRaf: false }}
+      options={{ 
+        autoRaf: false,
+        syncTouch: true,
+      }}
       className="overflow-auto"
     >
       {children}
