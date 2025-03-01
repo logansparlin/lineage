@@ -26,9 +26,6 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = ({ _id, title, sl
         </Link>
       <div
         className="relative z-[1] overflow-hidden w-[63%] aspect-video rounded-[20px] flex items-center justify-center"
-        // style={{
-        //   boxShadow: '0px 0px 150px 150px var(--color-pink-300)'
-        // }}
       >
         <Image
           image={featuredImage}

@@ -185,15 +185,14 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
       ease: 'none'
     }, '>')
 
-    lastSectionTl.set({}, {}, '+=0.5')
-
-    topPlanes?.forEach((plane, index) => {
-      lastSectionTl.to(plane.position, {
-        y: (((viewport.height * aspectRatio) - viewport.height) / 2) + (viewport.height - (viewport.height * (100 / window.innerHeight))),
-        duration: TITLE_DURATION * 1.75,
-        ease: 'none'
-      }, '<')
-    })
+    
+    lastSectionTl.to(topPlanes[0]?.position, {
+      y: (((viewport.height * aspectRatio) - viewport.height) / 2),
+      duration: lastSectionTl.duration() / 2,
+      ease: 'none'
+    }, 0)
+    
+    lastSectionTl.set({}, {}, '+=1.5')
 
     /** Exit Timeline */
     const exitTl = gsap.timeline({
@@ -204,6 +203,14 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
       }
     })
 
+    exitTl.to(topPlanes[0]?.position, {
+      y: (((viewport.height * aspectRatio) - viewport.height) / 2) + (viewport.height),
+      duration: 0.4,
+      ease: 'none'
+    }, 0.45)
+
+    //  (viewport.height - (viewport.height * (100 / window.innerHeight)))
+
     bottomPlanes?.forEach((plane, index) => {
       if (!plane.material?.uniforms?.curveProgress) return;
       
@@ -212,14 +219,15 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
           y: plane.position.y + ((window.innerHeight / factor) * 1.55),
           duration: 2,
           ease: 'none'
-        }, `<`)
+        }, 0)
       )
 
       exitTl.add(
         exitTl.to(plane.material.uniforms.curveProgress, {
-          value: (index * 1),
-          duration: 1.5,
-        }, `<+=${index * 0.015}`)
+          value: (index * 1.75),
+          duration: 1,
+          ease: 'none',
+        }, 0.25)
       )
     })
 

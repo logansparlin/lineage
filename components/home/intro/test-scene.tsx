@@ -125,7 +125,7 @@ const Scene = () => {
               width={viewport.width}
               height={viewport.height}
               aspectRatio={aspectRatio}
-              curveIntensity={2.5}
+              curveIntensity={2}
               inner={gradientData.outer}
               outer={gradientData.inner}
               center={index === (bottomSteps.length - 1) ? "#000000" : "#FFFFFF"}
