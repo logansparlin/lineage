@@ -107,7 +107,9 @@ export const HomeIntro = ({ titles, description }) => {
             )
           })}
         </div>
+        
         <div className="intro-section-exit h-[400svh] -mt-[100svh]"></div>
+        
         <TestScene />
       </div>
     </section>

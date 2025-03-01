@@ -1,6 +1,7 @@
 import { CaseStudies } from "./case-studies/case-studies";
 import { HomeScrim } from "./home-scrim";
 import { HomeIntro } from "./intro/home-intro";
+import { StepsSection } from "./steps/steps-section";
 
 export interface HomePageProps {
   title: string
@@ -21,27 +22,47 @@ export interface HomePageProps {
     shortDescription: string
     isMain?: boolean
   }[]
+  steps: {
+    intro: {
+      heading: string
+      subheading: string
+      description: any
+    }
+    one: {
+      title: string
+      description: any
+    },
+    two: {
+      title: string
+      description: any
+    },
+    three: {
+      title: string
+      description: any
+    },
+    four: {
+      title: string
+      description: any
+    }
+  }
 }
 
 export const HomePage = (props: HomePageProps) => {
   if (!props) return null
 
-  const { title, intro, caseStudies } = props
+  const { title, intro, caseStudies, steps } = props
 
   return (
     <div className="relative select-none">
       <h1 className="sr-only">{title}</h1>
-      <HomeScrim />
 
       <HomeIntro titles={intro.titles} description={intro.description} />
 
-      {/* Info Section */}
-      <div className="w-full flex flex-col items-center relative z-[3] -mt-[120svh]">
-        <h2 className="text-58 text-center max-w-700">The operating system that makes brand matter</h2>
-      </div>
+      <StepsSection {...steps} />
 
-      {/* Projects */}
       <CaseStudies items={caseStudies} />
+      
+      <HomeScrim />
     </div>
   );
 };

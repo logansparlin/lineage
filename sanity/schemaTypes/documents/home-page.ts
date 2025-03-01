@@ -8,6 +8,7 @@ export default defineType({
   icon: HomeIcon,
   groups: [
     { title: 'Intro', name: 'intro' },
+    { title: 'Steps', name: 'steps' },
   ],
   fields: [
     defineField({
@@ -70,6 +71,128 @@ export default defineType({
           title: 'Description',
           type: 'text',
           rows: 8,
+        })
+      ]
+    }),
+    defineField({
+      name: 'steps',
+      title: 'Steps Section',
+      type: 'object',
+      group: 'steps',
+      fields: [
+        defineField({
+          name: 'intro',
+          title: 'Intro',
+          type: 'object',
+          options: {
+            collapsible: true,
+            collapsed: false,
+          },
+          fields: [
+            defineField({
+              name: 'heading',
+              title: 'Heading',
+              type: 'string',
+            }),
+            defineField({
+              name: 'subheading',
+              title: 'Subheading',
+              type: 'string'
+            }),
+            defineField({
+              name: 'description',
+              title: 'Description',
+              type: 'richTextSimple',
+            })
+          ]
+        }),
+        defineField({
+          name: 'one',
+          title: 'Step One',
+          type: 'object',
+          options: {
+            collapsible: true,
+            collapsed: false,
+          },
+          fields: [
+            defineField({
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+            }),
+            defineField({
+              name: 'description',
+              title: 'Description',
+              type: 'text',
+              rows: 2,
+            })
+          ]
+        }),
+        defineField({
+          name: 'two',
+          title: 'Step Two',
+          type: 'object',
+          options: {
+            collapsible: true,
+            collapsed: false,
+          },
+          fields: [
+            defineField({
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+            }),
+            defineField({
+              name: 'description',
+              title: 'Description',
+              type: 'text',
+              rows: 2,
+            })
+          ]
+        }),
+        defineField({
+          name: 'three',
+          title: 'Step Three',
+          type: 'object',
+          options: {
+            collapsible: true,
+            collapsed: false,
+          },
+          fields: [
+            defineField({
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+            }),
+            defineField({
+              name: 'description',
+              title: 'Description',
+              type: 'text',
+              rows: 2,
+            })
+          ]
+        }),
+        defineField({
+          name: 'four',
+          title: 'Step Four',
+          type: 'object',
+          options: {
+            collapsible: true,
+            collapsed: false,
+          },
+          fields: [
+            defineField({
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+            }),
+            defineField({
+              name: 'description',
+              title: 'Description',
+              type: 'text',
+              rows: 2,
+            })
+          ]
         })
       ]
     })

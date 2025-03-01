@@ -47,7 +47,7 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
   if (!items) return null
 
   return (
-    <div ref={containerRef} className="relative z-[3] mb-[-100vh]" style={{ height: `${height}px` }}>
+    <section ref={containerRef} className="relative z-[3] mb-[-100vh]" style={{ height: `${height}px` }}>
       <div className="w-full h-screen overflow-hidden sticky top-0 perspective-[3500px]">
         <div className="w-full h-screen transform-3d">
 
@@ -84,6 +84,6 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }

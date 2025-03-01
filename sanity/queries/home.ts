@@ -24,6 +24,29 @@ export const homePageQuery = defineQuery(
         ${imageFields}
       },
       shortDescription
+    },
+    steps {
+      intro {
+        heading,
+        subheading,
+        description
+      },
+      one {
+        title,
+        description
+      },
+      two {
+        title,
+        description
+      },
+      three {
+        title,
+        description
+      },
+      four {
+        title,
+        description
+      }
     }
   }`
 )

@@ -7,7 +7,7 @@ interface SitePortableTextProps {
 
 const siteComponents: PortableTextComponents = {
   block: {
-    normal: ({ children }) => <p className="text-18 lg:text-23 pb-24 lg:pb-32 font-medium">{children}</p>
+    normal: ({ children }) => <p className="text-inherit pb-[1.1em]">{children}</p>
   }
 }
 
