@@ -13,6 +13,8 @@ ScrollTrigger.defaults({
   scrub: true,
 })
 
+ScrollTrigger.normalizeScroll(true)
+
 interface ScrollContainerProps extends ComponentProps<'div'> {}
 
 export const ScrollContainer: FC<ScrollContainerProps> = ({ children, ...props }) => {
@@ -41,6 +43,7 @@ export const ScrollContainer: FC<ScrollContainerProps> = ({ children, ...props }
       options={{ 
         autoRaf: false,
         syncTouch: true,
+        touchMultiplier: 2,
       }}
       className="overflow-auto"
     >
