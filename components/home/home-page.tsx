@@ -1,3 +1,4 @@
+import { Footer } from "../global/footer";
 import { CaseStudies } from "./case-studies/case-studies";
 import { HomeScrim } from "./home-scrim";
 import { HomeIntro } from "./intro/home-intro";
@@ -69,6 +70,8 @@ export const HomePage = (props: HomePageProps) => {
       <CaseStudies items={caseStudies} />
       
       <HomeScrim />
+
+      <Footer />
     </div>
   );
 };

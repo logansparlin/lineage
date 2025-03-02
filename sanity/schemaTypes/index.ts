@@ -31,6 +31,8 @@ import settingsFooter from './settings/settings-footer'
 import homePage from './documents/home-page'
 import caseStudy from './documents/case-study'
 import legalPage from './documents/legal-page'
+import teamPage from './documents/team'
+import teamMember from './documents/team-member'
 
 /** Modules */
 import quote from './modules/quote'
@@ -49,6 +51,8 @@ export const allTypes: SchemaTypeDefinition[] = [
   homePage,
   caseStudy,
   legalPage,
+  teamPage,
+  teamMember,
 
   // Modules
   quote,
@@ -75,10 +79,12 @@ export const singletonTypes: SingletonType[] = [
     divider: true,
   },
   homePage,
+  teamPage,
 ]
 
 export const hiddenTypes: SchemaTypeDefinition[] = []
 
 export const orderableTypes: SchemaTypeDefinition[] = [
-  caseStudy
+  caseStudy,
+  teamMember
 ]

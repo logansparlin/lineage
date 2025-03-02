@@ -88,7 +88,6 @@ export default async function RootLayout({
         <SanityLive />
         <LayoutTransition>
             {children}
-            <Footer {...footerSettings} />
         </LayoutTransition>
         {(await draftMode()).isEnabled && <VisualEditing />}
       </body>

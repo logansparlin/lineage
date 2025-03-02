@@ -25,6 +25,9 @@
   --color-pink-300: rgba(174, 79, 242, 1);
   --color-pink-400: rgba(89, 0, 255, 1);
 
+  --shadow-team: 0 0px 200px rgba(244, 67, 24, 0);
+  --shadow-team-hover: 0 0px 200px rgba(244, 67, 24, 1);
+
   --text-case-title: 93px;
   --text-case-title--line-height: 90%;
   --text-case-title--letter-spacing: -0.01em;
