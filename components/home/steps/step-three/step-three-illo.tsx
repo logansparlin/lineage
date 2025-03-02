@@ -1,6 +1,6 @@
 export const StepThreeIllo = () => {
   return (
-    <div className="col-span-full w-full px-60 flex justify-center">
+    <div className="step-illo col-span-full w-full px-60 flex justify-center">
       <svg className="max-w-full" width="1207" height="1060" viewBox="0 0 1207 1060" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M0.725694 818.601H275.038V1058.81H0.725694V818.601ZM276.49 1058.14V818.292L497.101 689.963V903.855L276.49 1058.14ZM2.75933 817.149L228.785 689.427H495.136L275.568 817.149H2.75933Z" fill="black" stroke="#505050" strokeWidth="1.45139"/>
         <path opacity="0.2" d="M353.265 130.596H627.517V1058.24H353.265V130.596ZM628.968 1057.57V130.288L849.53 1.98698V903.32L628.968 1057.57ZM355.298 129.145L581.273 1.45112H847.566L628.047 129.145H355.298Z" fill="url(#paint0_linear_22_358)" stroke="url(#paint1_linear_22_358)" strokeWidth="1.45107"/>

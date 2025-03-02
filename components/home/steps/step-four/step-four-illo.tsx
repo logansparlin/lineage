@@ -1,7 +1,7 @@
 export const StepFourIllo = () => {
   return (
-    <div className="col-span-full w-full flex justify-center">
-      <svg className="w-full" width="1672" height="876" viewBox="0 0 1672 876" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div className="col-span-full h-auto w-full flex justify-center">
+      <svg className="h-full w-auto" width="1672" height="876" viewBox="0 0 1672 876" fill="none" xmlns="http://www.w3.org/2000/svg">
         <mask id="mask0_22_401" maskUnits="userSpaceOnUse" x="0" y="0" width="1672" height="876">
         <rect width="1672" height="876" fill="#D9D9D9"/>
         </mask>

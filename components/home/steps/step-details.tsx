@@ -12,12 +12,12 @@ export const StepDetails: FC<StepDetailsProps> = (props) => {
   const { step, title, description, icon, className, ...rest } = props
 
   return (
-    <>
-      <div className="sticky top-180 col-start-2 row-start-1 self-start flex items-center gap-x-24">
+    <div className="step-details relative w-full grid grid-cols-2 gap-0">
+      <div className="relative col-start-2 row-start-1 self-start flex items-center gap-x-24">
         <span className="block -translate-x-1/2 -translate-y-[calc(50%-16px)]">{icon}</span>
       </div>
-      <div className="col-start-2 row-start-1 flex items-start gap-x-24 pl-50">
-        <div className="w-150 h-1 mt-15 bg-white" />
+      <div className="col-start-2 row-start-1 flex items-start gap-x-24 pl-[4vw]">
+        <div className="w-180 h-1 mt-15 bg-white" />
         <div className="flex flex-col items-start gap-y-20 max-w-330">
           <StepBadge step={step} />
           <div className="flex flex-col gap-y-10">
@@ -26,6 +26,6 @@ export const StepDetails: FC<StepDetailsProps> = (props) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }

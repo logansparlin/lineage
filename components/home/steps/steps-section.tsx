@@ -1,9 +1,10 @@
 import { SitePortableText } from '@/components/global/site-portable-text';
 import { type FC, type ComponentProps } from 'react';
-import { StepOne } from './step-one';
-import { StepTwo } from './step-two';
-import { StepThree } from './step-three';
-import { StepFour } from './step-four';
+import { StepOne } from './step-one/step-one';
+import { StepTwo } from './step-two/step-two';
+import { StepThree } from './step-three/step-three';
+import { StepFour } from './step-four/step-four';
+import { StepsIntro } from './steps-intro';
 
 interface StepsSectionProps extends ComponentProps<'section'> {
   intro: {
@@ -42,49 +43,26 @@ export const StepsSection: FC<StepsSectionProps> = (props) => {
 
   return (
     <section className="w-full flex flex-col items-center relative z-[3] -mt-[130svh]" {...rest}>
-      {/* Intro */}
-      <div className="flex flex-col gap-y-60">
-        <div className="w-full flex flex-col items-center justify-center gap-y-40">
-          <h2 className="text-58 text-center w-full max-w-650">{intro.heading}</h2>
-          <p className="text-18 lg:text-29 w-full max-w-820">{intro.subheading}</p>
-        </div>
-
-        {intro.splitDescription ? (
-          <div className="flex items-center justify-center">
-            <div className="flex flex-col items-center justify-center gap-18">
-              <h3 className="text-32 lg:text-36">{intro.splitDescription.headingOne}</h3>
-              <p className="text-14 font-mono max-w-250 text-center">{intro.splitDescription.descriptionOne}</p>
-            </div>
-            <div className="flex flex-col items-center justify-center gap-18">
-              <h3 className="text-32 lg:text-36">{intro.splitDescription.headingTwo}</h3>
-              <p className="text-14 font-mono max-w-250 text-center">{intro.splitDescription.descriptionTwo}</p>
-            </div>
-          </div>
-        ) : null}
-
-        <div className="w-full max-w-820 text-18 lg:text-29">
-          <SitePortableText value={intro.description} />
-        </div>
-      </div>
+      {intro ? <StepsIntro {...intro} /> : null}
 
       <div className="w-full relative flex flex-col items-center gap-y-250 pt-100">
         <StepOne
-          className="relative w-full grid grid-cols-2 gap-x-0 gap-y-180"
+          className="relative w-full flex flex-col gap-y-180"
           {...one}
         />
 
         <StepTwo
-          className="relative w-full grid grid-cols-2 gap-x-0 gap-y-180"
+          className="relative w-full flex flex-col gap-y-180"
           {...two}
         />
 
         <StepThree
-          className="relative w-full grid grid-cols-2 gap-x-0 gap-y-180"
+          className="relative w-full flex flex-col gap-y-180"
           {...three}
         />
 
         <StepFour
-          className="relative w-full grid grid-cols-2 gap-x-0 gap-y-180"
+          className="relative w-full flex flex-col gap-y-180"
           {...four}
         />
       </div>
