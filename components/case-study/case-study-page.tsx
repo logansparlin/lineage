@@ -1,5 +1,5 @@
 import { Modules } from "../modules"
-import { StepText } from "./step-text"
+import { StepText } from "../steps/step-text"
 
 export const CaseStudyPage = (props) => {
   const { content, title, step, description } = props;

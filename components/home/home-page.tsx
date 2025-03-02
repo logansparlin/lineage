@@ -26,6 +26,12 @@ export interface HomePageProps {
     intro: {
       heading: string
       subheading: string
+      splitDescription: {
+        headingOne: string
+        descriptionOne: string
+        headingTwo: string
+        descriptionTwo: string
+      }
       description: any
     }
     one: {

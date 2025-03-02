@@ -13,8 +13,6 @@ ScrollTrigger.defaults({
   scrub: true,
 })
 
-ScrollTrigger.normalizeScroll(true)
-
 interface ScrollContainerProps extends ComponentProps<'div'> {}
 
 export const ScrollContainer: FC<ScrollContainerProps> = ({ children, ...props }) => {
@@ -25,7 +23,7 @@ export const ScrollContainer: FC<ScrollContainerProps> = ({ children, ...props }
       // time * 1000 converts to milliseconds
       lenisRef.current?.lenis?.raf(time * 1000);
 
-      ScrollTrigger.refresh();
+      ScrollTrigger.update();
     }
 
     gsap.ticker.add(update);
@@ -42,7 +40,7 @@ export const ScrollContainer: FC<ScrollContainerProps> = ({ children, ...props }
       ref={lenisRef}
       options={{ 
         autoRaf: false,
-        syncTouch: true,
+        syncTouch: false,
         touchMultiplier: 2,
       }}
       className="overflow-auto"

@@ -29,6 +29,12 @@ export const homePageQuery = defineQuery(
       intro {
         heading,
         subheading,
+        splitDescription {
+          headingOne,
+          descriptionOne,
+          headingTwo,
+          descriptionTwo
+        },
         description
       },
       one {

@@ -14,6 +14,8 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
     const TITLE_DURATION = 0.55;
     const TITLE_EASE = 'power2.inOut';
     const TITLE_END_TIME = `>-=${TITLE_DURATION}`;
+    
+    ScrollTrigger.normalizeScroll(true)
 
     const introMesh = scene?.children?.find((child) => child.name === "intro-mesh");
 

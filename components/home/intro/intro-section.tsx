@@ -8,13 +8,13 @@ interface IntroSectionProps {
   variant?: 'first' | 'second' | 'last' | 'default';
 }
 
-const introSectionStyles = cva('sticky top-0 z-[2]', {
+const introSectionStyles = cva('relative z-[2]', {
   variants: {
     variant: {
       default: 'min-h-[200svh]',
       first: 'min-h-[250svh] -mt-[100svh]',
-      second: 'min-h-[250svh] -mt-[100px]',
-      last: 'min-h-[250svh] -mt-[100px]',
+      second: 'min-h-[250svh]',
+      last: 'min-h-[250svh]',
     }
   }
 })

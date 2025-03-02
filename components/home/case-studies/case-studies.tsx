@@ -48,7 +48,8 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
 
   return (
     <section ref={containerRef} className="relative z-[3] mb-[-100vh]" style={{ height: `${height}px` }}>
-      <div className="w-full h-screen overflow-hidden sticky top-0 perspective-[3500px]">
+      <div className="absolute inset-0 z-[4] bg-pink-400" />
+      <div className="w-full h-screen overflow-hidden sticky z-[5] top-0 perspective-[3500px]">
         <div className="w-full h-screen transform-3d">
 
           {/* Top */}

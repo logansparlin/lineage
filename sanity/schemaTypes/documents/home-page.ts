@@ -100,6 +100,35 @@ export default defineType({
               type: 'string'
             }),
             defineField({
+              name: 'splitDescription',
+              title: 'Split Description',
+              type: 'object',
+              fields: [
+                defineField({
+                  name: 'headingOne',
+                  title: 'Heading One',
+                  type: 'string',
+                }),
+                defineField({
+                  name: 'descriptionOne',
+                  title: 'Description One',
+                  type: 'text',
+                  rows: 2
+                }),
+                defineField({
+                  name: 'headingTwo',
+                  title: 'Heading Two',
+                  type: 'string',
+                }),
+                defineField({
+                  name: 'descriptionTwo',
+                  title: 'Description Two',
+                  type: 'text',
+                  rows: 2
+                })
+              ]
+            }),
+            defineField({
               name: 'description',
               title: 'Description',
               type: 'richTextSimple',
