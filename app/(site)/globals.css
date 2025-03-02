@@ -25,8 +25,17 @@
   --color-pink-300: rgba(174, 79, 242, 1);
   --color-pink-400: rgba(89, 0, 255, 1);
 
-  --shadow-team: 0 0px 200px rgba(244, 67, 24, 0);
-  --shadow-team-hover: 0 0px 200px rgba(244, 67, 24, 1);
+  --shadow-orange: 0 0px 100px 40px rgba(244, 67, 24, 0);
+  --shadow-orange-hover: 0 0px 100px 40px rgba(244, 67, 24, 1);
+
+  --shadow-green: 0 0px 100px 40px rgba(0, 89, 33, 0);
+  --shadow-green-hover: 0 0px 100px 40px rgba(0, 89, 33, 1);
+
+  --shadow-blue: 0 0px 100px 40px rgba(14, 59, 221, 0);
+  --shadow-blue-hover: 0 0px 100px 40px rgba(14, 59, 221, 1);
+
+  --shadow-pink: 0 0px 100px 40px rgba(89, 0, 255, 0);
+  --shadow-pink-hover: 0 0px 100px 40px rgba(89, 0, 255, 1);
 
   --text-case-title: 93px;
   --text-case-title--line-height: 90%;
