@@ -11,6 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.defaults({
   immediateRender: false,
   scrub: true,
+  invalidateOnRefresh: true,
 })
 
 interface ScrollContainerProps extends ComponentProps<'div'> {}

@@ -41,7 +41,7 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
     mainTl.to(icon, {
       scrollTrigger: {
         trigger: icon,
-        start: `top ${iconPinTop}px`,
+        start: () => `top ${iconPinTop}px`,
         end: 'bottom bottom',
         endTrigger: stepTwoRef.current,
         scrub: true,

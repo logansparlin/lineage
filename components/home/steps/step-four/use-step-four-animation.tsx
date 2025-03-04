@@ -35,7 +35,7 @@ export const useStepFourAnimation = (stepFourRef: RefObject<HTMLDivElement>) => 
       zIndex: 5,
       scrollTrigger: {
         trigger: icon,
-        start: `top ${iconPinTop}px`,
+        start: () => `top ${iconPinTop}px`,
         end: 'bottom bottom',
         endTrigger: stepFourRef.current,
         scrub: true,

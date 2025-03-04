@@ -21,6 +21,7 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
 
   const nextGradientData = useMemo(() => getGradient(nextGradient), [nextGradient]);
 
+  /** Set Gradient Colors */
   useGSAP(() => {
     const introMesh = scene?.children?.find((child) => child.name === "intro-mesh");
 
@@ -58,7 +59,7 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
     dependencies: [nextGradientData]
   })
   
-  
+  /** Scrolling Animation */
   useGSAP(() => {
     const Y_OFFSET = 20;
     const TITLE_DURATION = 0.55;
@@ -124,7 +125,7 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
   
         tl.to(title, {
           opacity: 0,
-          y: -1 * Y_OFFSET,
+          y: () => -1 * Y_OFFSET,
           duration: TITLE_DURATION,
           ease: TITLE_EASE,
           delay: 1,
@@ -162,9 +163,9 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
   
       firstSectionTl.add(
         firstSectionTl.to(plane.scale, {
-          x: scale,
-          y: scale,
-          z: scale,
+          x: () => scale,
+          y: () => scale,
+          z: () => scale,
           duration: 1,
           ease: 'none'
         }, index === 1 ? '>' : `<+=${(index - 1) * 0.025}`)
@@ -198,9 +199,9 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
       let scale = 0.3 + (index * (0.7 / (topPlanes.length - 1)));
   
       secondSectionTl.to(plane.scale, {
-        x: scale + 0.7,
-        y: scale + 0.7,
-        z: scale + 0.7,
+        x: () => scale + 0.7,
+        y: () => scale + 0.7,
+        z: () => scale + 0.7,
         duration: 2,
         ease: 'none'
       }, 0)
@@ -208,7 +209,7 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
 
     secondSectionTl.to(secondTitle, {
       opacity: 0,
-      y: -1 * Y_OFFSET,
+      y: () => -1 * Y_OFFSET,
       duration: TITLE_DURATION,
       ease: TITLE_EASE
     }, TITLE_END_TIME)
@@ -239,7 +240,7 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
 
     
     lastSectionTl.to(topPlanes[0]?.position, {
-      y: (((viewport.height * aspectRatio) - viewport.height) / 2),
+      y: () => (((viewport.height * aspectRatio) - viewport.height) / 2),
       duration: lastSectionTl.duration() / 2,
       ease: 'none'
     }, 0)
@@ -256,7 +257,7 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
     })
 
     exitTl.to(topPlanes[0]?.position, {
-      y: (((viewport.height * aspectRatio) - viewport.height) / 2) + (viewport.height),
+      y: () => (((viewport.height * aspectRatio) - viewport.height) / 2) + (viewport.height),
       duration: 0.4,
       ease: 'none'
     }, 0.45)
@@ -268,7 +269,7 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
       
       exitTl.add(
         exitTl.to(plane.position, {
-          y: plane.position.y + ((window.innerHeight / factor) * 1.55),
+          y: () => plane.position.y + ((window.innerHeight / factor) * 1.55),
           duration: 2,
           ease: 'none'
         }, 0)
@@ -276,7 +277,7 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
 
       exitTl.add(
         exitTl.to(plane.material.uniforms.curveProgress, {
-          value: (index * 1.75),
+          value: () => (index * 1.75),
           duration: 1,
           ease: 'none',
         }, 0.25)

@@ -29,7 +29,7 @@ export const useStepOneAnimation = (stepOneRef: RefObject<HTMLDivElement>) => {
       zIndex: 5,
       scrollTrigger: {
         trigger: icon,
-        start: `top ${iconPinTop}px`,
+        start: () => `top ${iconPinTop}px`,
         end: 'bottom bottom',
         endTrigger: stepOneRef.current,
         scrub: true,
@@ -76,7 +76,7 @@ export const useStepOneAnimation = (stepOneRef: RefObject<HTMLDivElement>) => {
       }, '<')
 
       illoTl.to(circle, {
-        opacity: index < circles.length - 1 ? 0 : 1,
+        opacity: () => index < circles.length - 1 ? 0 : 1,
         duration: 1,
         ease: 'power3.inOut',
       }, '>')

@@ -37,8 +37,8 @@ export const useStepThreeAnimation = (stepThreeRef: RefObject<HTMLDivElement>) =
     mainTl.to(icon, {
       scrollTrigger: {
         trigger: icon,
-        start: `top ${iconPinTop}px`,
-        end: `bottom top+=${pinR * 4}px`,
+        start: () => `top ${iconPinTop}px`,
+        end: () => `bottom top+=${pinR * 4}px`,
         endTrigger: stepThreeRef.current,
         scrub: true,
         pin: true,
@@ -53,8 +53,8 @@ export const useStepThreeAnimation = (stepThreeRef: RefObject<HTMLDivElement>) =
       scrollTrigger: {
         trigger: trackingCirclesContainer,
         endTrigger: stepThreeRef.current,
-        start: `top ${trackingPinTop}px`,
-        end: `bottom top+=${pinR * 4}px`,
+        start: () => `top ${trackingPinTop}px`,
+        end: () => `bottom top+=${pinR * 4}px`,
         scrub: true,
         pin: true,
         pinSpacing: false,
@@ -71,8 +71,8 @@ export const useStepThreeAnimation = (stepThreeRef: RefObject<HTMLDivElement>) =
         duration: 0.2,
         scrollTrigger: {
           trigger: illo,
-          start: `top top+=${trackingPinTop + (pinR / 2)}px`,
-          end: `top top-=${pinR * 2}px`
+          start: () => `top top+=${trackingPinTop + (pinR / 2)}px`,
+          end: () => `top top-=${pinR * 2}px`
         }
       }, 0)
     })

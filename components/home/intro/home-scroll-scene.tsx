@@ -2,15 +2,14 @@
 
 import { memo, useMemo, useRef } from "react";
 import { useHomeStore } from "@/components/home/hooks/use-home-store";
-import { getGradient, getRandomGradient } from "@/lib/gradients";
+import { getRandomGradient } from "@/lib/gradients";
 
 import { Canvas, useThree, extend } from "@react-three/fiber"
 import { BoxGradient } from "@/shaders/box-gradient";
 import { CurvedPlane } from "@/components/home/intro/curved-plane";
-import { Vector3, Color } from "three";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "gsap";
 import { HomeIntroInteraction } from "./home-intro-interaction";
+import { Vector3 } from "three";
+
 extend({ BoxGradient });
 
 export const HomeScrollScene = memo(() => {
@@ -27,7 +26,6 @@ export const HomeScrollScene = memo(() => {
         shadows={true}
         className="w-full bg-black"
       >
-        {/* <Stats /> */}
         <Scene />
       </Canvas>
     </div>

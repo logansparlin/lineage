@@ -2,6 +2,7 @@ import { Footer } from "../global/footer";
 import { CaseStudies } from "./case-studies/case-studies";
 import { HomeScrim } from "./home-scrim";
 import { HomeIntro } from "./intro/home-intro";
+import { HomeScrollScene } from "./intro/home-scroll-scene";
 import { StepsSection } from "./steps/steps-section";
 
 export interface HomePageProps {
@@ -67,11 +68,15 @@ export const HomePage = (props: HomePageProps) => {
 
       <StepsSection {...steps} />
 
+      <div className="h-[200svh] w-full bg-transparent" />
+
       <CaseStudies items={caseStudies} />
       
-      <HomeScrim />
+      <HomeScrollScene />
 
       <Footer />
+      
+      <HomeScrim />
     </div>
   );
 };
