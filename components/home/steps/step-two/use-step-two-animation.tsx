@@ -1,7 +1,6 @@
 import { type RefObject } from "react";
 import { gsap } from "gsap/gsap-core";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
   useGSAP(() => {
@@ -14,13 +13,10 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
 
     const pinRect = pin.getBoundingClientRect();
     const iconRect = icon.getBoundingClientRect();
-
-    console.log(pinRect)
     
     const iconPinTop = (pinRect.height / 2) - (iconRect.height / 2) + 40;
 
-    const iconScaleX = pinRect.width / iconRect.width;
-    const iconScaleY = pinRect.height / iconRect.height;
+    const iconScale = pinRect.width / iconRect.width;
 
     const groupOneHighlights = gsap.utils.toArray(illo.querySelectorAll('.group-one .highlight'));
     const groupTwoHighlights = gsap.utils.toArray(illo.querySelectorAll('.group-two .highlight'));
@@ -31,14 +27,13 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
         trigger: stepTwoRef.current,
         start: `top top`,
         end: 'bottom top',
-        markers: true,
         scrub: true,
       }
     })
 
     mainTl.to(icon, {
-      scale: iconScaleX,
-      duration: 0.15,
+      scale: iconScale,
+      duration: 0.5,
     }, 0)
 
     mainTl.to({}, {}, '+=1')

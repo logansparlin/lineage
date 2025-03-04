@@ -1,7 +1,6 @@
 import { type RefObject } from "react";
 import { gsap } from "gsap/gsap-core";
 import { useGSAP } from "@gsap/react";
-import { getPositionBetween } from "@/lib/get-position-between";
 
 export const useStepOneAnimation = (stepOneRef: RefObject<HTMLDivElement>) => {
   useGSAP(() => {
@@ -16,7 +15,6 @@ export const useStepOneAnimation = (stepOneRef: RefObject<HTMLDivElement>) => {
     const iconRect = icon.getBoundingClientRect();
 
     const iconPinTop = (pinRect.height / 2) - (iconRect.height / 2) + 40;
-
 
     const mainTl = gsap.timeline({
       scrollTrigger: {

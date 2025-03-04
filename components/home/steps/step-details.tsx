@@ -12,7 +12,7 @@ export const StepDetails: FC<StepDetailsProps> = (props) => {
   const { step, title, description, icon, className, ...rest } = props
 
   return (
-    <div className="step-details relative w-full grid grid-cols-2 gap-0">
+    <div className="step-details relative z-[3] w-full grid grid-cols-2 gap-0">
       <div className="relative col-start-2 row-start-1 self-start flex items-center gap-x-24">
         <span className="block -translate-x-1/2 -translate-y-[calc(50%-16px)]">{icon}</span>
       </div>

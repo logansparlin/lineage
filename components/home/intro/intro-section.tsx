@@ -25,7 +25,7 @@ export const IntroSection: FC<IntroSectionProps> = ({ text, variant }) => {
 
   return (
     <div ref={sectionRef} className={`${introSectionStyles({ variant })} ${sectionClass}`}>
-      <div className={`section-title sticky top-0 flex items-center justify-center min-h-[100svh]`}>
+      <div className={`section-title relative flex items-center justify-center min-h-[100svh]`}>
         <h2 className={'sr-only'}>{text}</h2>
       </div>
     </div>

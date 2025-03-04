@@ -6,6 +6,8 @@ import { useSiteStore } from "@/stores/use-site-store";
 import { useClickAway } from "react-use";
 import { getRandomGradient } from "@/lib/gradients";
 
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import { AnimatePresence, motion } from "framer-motion";
 import { Logo } from "./logo";
 import { IconDice } from "../icons/icon-dice";

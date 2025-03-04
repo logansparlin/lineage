@@ -1,10 +1,8 @@
 'use client'
 
-import { type FC, type ComponentProps, useRef } from "react";
+import { type FC, type ComponentProps } from "react";
 import { useSiteStore } from "@/stores/use-site-store";
-import { useClickAway } from "react-use";
 import { useKeyPress } from "@/hooks/use-key-press";
-import { useLenis } from "lenis/react";
 import { easings } from "@/lib/easings";
 
 import { AnimatePresence, motion } from "framer-motion";

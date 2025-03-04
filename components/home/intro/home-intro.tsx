@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useInView } from "motion/react";
 import { useSiteStore } from "@/stores/use-site-store";
 
-import { TestScene } from "./test-scene";
+import { HomeScrollScene } from "./home-scroll-scene";
 import { IntroSection } from "./intro-section";
 import { ScrollIndicator } from "./scroll-indicator";
 import { Image } from "@/components/global/image";
@@ -110,7 +110,7 @@ export const HomeIntro = ({ titles, description }) => {
         
         <div className="intro-section-exit h-[400svh] -mt-[100svh]"></div>
         
-        <TestScene />
+        <HomeScrollScene />
       </div>
     </section>
   )

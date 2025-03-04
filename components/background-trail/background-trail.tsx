@@ -195,6 +195,7 @@ export const BackgroundTrail: FC<BackgroundTrailProps> = ({
         // Clone the material and set its color
         const material = particleMaterial.clone()
         const color = interpolateColor(colorRatio)
+        console.log(color)
         material.uniforms.color.value = color
         
         // Create mesh and add to scene

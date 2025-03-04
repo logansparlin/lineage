@@ -26,12 +26,12 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = ({ _id, title, sl
       </Link>
       
       <div
-        className="relative w-[63%] aspect-video flex items-center justify-center rounded-20"
+        className="relative w-[60%] aspect-video flex items-center justify-center rounded-20"
         style={{
-          boxShadow: '0 0 120px 60px rgba(174, 79, 242, 1)'
+          boxShadow: '0 0 100px 60px rgba(174, 79, 242, 1)'
         }}
       >
-        <div className="relative z-[1] overflow-hidden w-full h-full rounded-20 flex items-center justify-center">
+        <div className="absolute inset-0 z-[1] overflow-hidden w-full h-full rounded-20 flex items-center justify-center">
           <Image
             image={featuredImage}
             alt={title}

@@ -1,6 +1,6 @@
 'use client';
 
-import { type FC, type ComponentProps, useEffect, useRef } from "react";
+import { type FC, type ComponentProps, useEffect, useRef, memo } from "react";
 import { gsap } from "gsap";
 
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -15,14 +15,13 @@ ScrollTrigger.defaults({
 
 interface ScrollContainerProps extends ComponentProps<'div'> {}
 
-export const ScrollContainer: FC<ScrollContainerProps> = ({ children, ...props }) => {
+export const ScrollContainer: FC<ScrollContainerProps> = memo(({ children, ...props }) => {
   const lenisRef = useRef<any>(null);
 
   useEffect(() => {
     const update = (time) => {
       // time * 1000 converts to milliseconds
       lenisRef.current?.lenis?.raf(time * 1000);
-
       ScrollTrigger.update();
     }
 
@@ -48,4 +47,4 @@ export const ScrollContainer: FC<ScrollContainerProps> = ({ children, ...props }
       {children}
     </ReactLenis>
   )
-}
+})

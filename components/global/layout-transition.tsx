@@ -77,7 +77,6 @@ export function LayoutTransition({
   transition = defaultTransition,
 }: LayoutTransitionProps) {
   const segment = useSelectedLayoutSegment();
-  const pathname = usePathname();
   const lenis = useLenis();
 
   const scrollToTop = useCallback(() => {

@@ -29,7 +29,7 @@ export const StepTwo: FC<StepTwoProps> = ({ title, description, className = '', 
           </div>
         )}
       />
-      <div className="relative w-full min-h-[200svh] flex items-start">
+      <div className="relative w-full min-h-[150svh] flex items-start">
         <StepTwoIllo />
       </div>
     </section>
