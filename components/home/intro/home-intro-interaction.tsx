@@ -314,16 +314,16 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
       scrollTrigger: {
         trigger: caseEnterSection,
         start: 'top bottom',
-        end: 'bottom top',
+        end: 'bottom bottom',
       }
     })
 
-    exitPlanes?.forEach((plane) => {
+    exitPlanes?.forEach((plane, index) => {
       if (!plane.material?.uniforms?.curveProgress) return;
       
       enterTl.add(
         enterTl.to(plane.position, {
-          y: () => plane.position.y + (normalizedSize * 1.25),
+          y: () => plane.position.y + (normalizedSize),
           duration: 1,
           ease: 'none'
         }, 0)

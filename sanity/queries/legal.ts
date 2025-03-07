@@ -1,5 +1,5 @@
 import { defineQuery, groq } from "next-sanity";
-import { mediaFields, videoFields, imageFields, seoQuery } from "./fragments";
+import { seoQuery } from "./fragments";
 
 export const legalPagePathsQuery = defineQuery(
   groq`*[_type == "legalPage"] {
