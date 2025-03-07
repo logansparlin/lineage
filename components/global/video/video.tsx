@@ -63,18 +63,14 @@ export const Video: FC<VideoProps> = (props) => {
         onClick={togglePlay}
       >
         <MuxPlayer
-          preload="none"
+          preload="auto"
           ref={playerRef}
           className="will-change-auto transform-gpu"
           loading="viewport"
           playbackId={playbackId}
-          autoPlay={autoPlay}
-          muted={muted}
+          streamType="on-demand"
           loop={loop}
-          startTime={1}
-          poster={`https://image.mux.com/${playbackId}/thumbnail.jpg?time=50`}
-          minResolution="720p"
-          maxResolution="1080p"
+          crossOrigin="anonymous"
           volume={volume}
           onPlay={() => {
             setIsPlaying(true)

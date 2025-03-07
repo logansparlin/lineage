@@ -1,4 +1,4 @@
-import { type RefObject, useState, useEffect, useRef } from "react";
+import { type RefObject, useState, useEffect, useRef, useMemo, useCallback } from "react";
 
 interface UseVideoControlsProps {
   playerRef: RefObject<any>
@@ -17,7 +17,7 @@ export const useVideoControls = (props: UseVideoControlsProps) => {
   const [volume, setVolume] = useState(1)
   const [timeout, setTimeoutRef] = useState<NodeJS.Timeout | null>(null)
 
-  const showControls = () => {
+  const showControls = useCallback(() => {
     setControlsVisible(true);
     if (timeout) {
       clearTimeout(timeout);
@@ -28,34 +28,36 @@ export const useVideoControls = (props: UseVideoControlsProps) => {
     }, 1500);
     
     setTimeoutRef(newTimeout);
-  };
+  }, [timeout]);
   
-  const handleMouseMove = () => {
+  const handleMouseMove = useCallback(() => {
     showControls();
-  };
+  }, [showControls]);
   
-  const handleMouseEnter = () => {
+  const handleMouseEnter = useCallback(() => {
     showControls();
-  };
+  }, [showControls]);
   
-  const handleMouseLeave = () => {
+  const handleMouseLeave = useCallback(() => {
     if (!timeout) {
       setControlsVisible(false);
     }
-  };
+  }, [timeout]);
   
-  const handleTouchStart = () => {
+  const handleTouchStart = useCallback(() => {
     showControls();
-  };
+  }, [showControls]);
 
   // Clean up timeout on unmount
   useEffect(() => {
+    if (!controlsVisible) return;
+
     return () => {
       if (timeout) {
         clearTimeout(timeout);
       }
     };
-  }, [timeout]);
+  }, [timeout, controlsVisible]);
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -77,35 +79,36 @@ export const useVideoControls = (props: UseVideoControlsProps) => {
     }
   }, [])
 
-  const handlePlay = () => {
+  const handlePlay = useCallback((e?: any) => {
+    e?.preventDefault();
+    e?.stopPropagation();
     if (playerRef.current?.paused) {
-      playerRef.current?.play();
-      if (isMuted) {
-        playerRef.current.muted = true
-      } else {
-        playerRef.current.muted = false
-      }
+      playerRef.current?.play()
       if (!hasPlayed) {
         setHasPlayed(true)
       }
     }
-  }
+  }, [playerRef, isMuted, hasPlayed]);
 
-  const handlePause = () => {
+  const handlePause = useCallback((e?: any) => {
+    e?.preventDefault();
+    e?.stopPropagation();
     if (!playerRef.current?.paused) {
       playerRef.current?.pause()
     }
-  }
+  }, [playerRef]);
 
-  const togglePlay = () => {
+  const togglePlay = useCallback((e?: any) => {
+    e?.preventDefault();
+    e?.stopPropagation();
     if (playerRef.current?.paused) {
-      handlePlay()
+      handlePlay(e);
     } else {
-      handlePause()
+      handlePause(e);
     }
-  }
+  }, [handlePlay, handlePause, playerRef]);
 
-  const toggleMute = () => {
+  const toggleMute = useCallback(() => {
     if (!playerRef.current) return
 
     if (playerRef.current.muted) {
@@ -115,43 +118,42 @@ export const useVideoControls = (props: UseVideoControlsProps) => {
       playerRef.current.muted = true
       setIsMuted(true)
     }
-  }
+  }, [playerRef]);
 
-  const handleProgress = (currentTime: number) => {
+  const handleProgress = useCallback((currentTime: number) => {
     const progressPercentage = (currentTime / playerRef.current?.duration) * 100
     setProgress(progressPercentage)
-  }
+  }, [playerRef]);
 
-  const handleFullscreen = () => {
+  const handleFullscreen = useCallback(() => {
     if (document.fullscreenElement === null) {
       containerRef.current?.requestFullscreen()
     } else {
       document.exitFullscreen()
     }
-  }
+  }, [containerRef]);
 
   useEffect(() => {
     if (!isPlaying) return;
-    
+
     intervalRef.current = setInterval(() => {
       if (!playerRef.current) return;
       handleProgress(playerRef.current?.currentTime)
-      console.log(playerRef.current?.currentTime)
     }, 10)
 
     return () => {
       clearInterval(intervalRef.current)
     }
-  }, [isPlaying])
+  }, [isPlaying, playerRef, handleProgress])
 
-  const containerProps = {
+  const containerProps = useMemo(() => ({
     onMouseMove: handleMouseMove,
     onMouseEnter: handleMouseEnter,
     onMouseLeave: handleMouseLeave,
     onTouchStart: handleTouchStart,
-  };
+  }), [handleMouseMove, handleMouseEnter, handleMouseLeave, handleTouchStart]);
 
-  return {
+  const memoizedReturnValue = useMemo(() => ({
     hasPlayed,
     isPlaying,
     isMuted,
@@ -166,5 +168,11 @@ export const useVideoControls = (props: UseVideoControlsProps) => {
     togglePlay,
     toggleMute,
     handleFullscreen,
-  }
+  }), [
+    hasPlayed, isPlaying, isMuted, volume, progress, 
+    controlsVisible, containerProps, handlePlay, handlePause, 
+    togglePlay, toggleMute, handleFullscreen
+  ]);
+
+  return memoizedReturnValue;
 }

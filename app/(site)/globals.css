@@ -383,11 +383,19 @@ body.fullscreen .site-cursor {
   display: none;
 }
 
-mux-player {
+mux-player,
+mux-video {
   width: 100%;
   height: 100%;
   transform: translateZ(0) skew(0deg);
   --media-object-fit: cover;
   --media-object-position: center;
   --controls: none;
+}
+
+mux-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
