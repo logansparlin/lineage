@@ -320,10 +320,13 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
 
     exitPlanes?.forEach((plane, index) => {
       if (!plane.material?.uniforms?.curveProgress) return;
+
+      const yScale = 1.25;
+      const yPosition = ((((normalizedSize * yScale) - viewport.height) / 2) + viewport.height)
       
       enterTl.add(
         enterTl.to(plane.position, {
-          y: () => plane.position.y + (normalizedSize * 1.25),
+          y: () => yPosition + ((index - 1) * (normalizedSize * 0.15)),
           duration: 1,
           ease: 'none'
         }, 0)
