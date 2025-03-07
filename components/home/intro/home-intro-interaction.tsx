@@ -314,7 +314,7 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
       scrollTrigger: {
         trigger: caseEnterSection,
         start: 'top bottom',
-        end: 'bottom bottom',
+        end: 'bottom top',
       }
     })
 
@@ -323,7 +323,7 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
       
       enterTl.add(
         enterTl.to(plane.position, {
-          y: () => plane.position.y + (normalizedSize),
+          y: () => plane.position.y + (normalizedSize * 1.25),
           duration: 1,
           ease: 'none'
         }, 0)
