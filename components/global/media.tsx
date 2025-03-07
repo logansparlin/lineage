@@ -1,41 +1,41 @@
-import { FC, useMemo } from "react";
+import { ComponentProps, FC, useMemo } from "react";
 import { Image } from "./image";
-import { MediaType } from "@/sanity/types";
+import { Video } from "./video/video";
 
-export interface MediaProps {
-  mediaType: MediaType
-  alt?: string
+export interface MediaProps extends ComponentProps<'div'> {
+  mediaType: 'image' | 'video'
+  caption?: string
   image?: any
   video?: any
-  fit?: 'contain' | 'cover'
-  position?: 'center' | 'bottom' | 'top'
+  aspectRatio?: string
+  rounded?: boolean
 }
 
 export const Media: FC<MediaProps> = (props) => {
-  const { mediaType, image, video, fit = 'cover', alt, position = 'center' } = props
-
-  const fitClasses = useMemo(() => {
-    const fitClass = fit === 'contain' ? 'object-contain' : 'object-cover';
-    const positionClass = position === 'center' ? 'object-center' : position === 'bottom' ? 'object-bottom' : 'object-top';
-
-    return [fitClass, positionClass].join(' ');
-  }, [fit, position])
+  const { mediaType, image, video, caption, aspectRatio = '16/9', rounded = true, ...rest } = props
 
   return (
-    <div className="w-full h-full flex items-center justify-center">
-      {mediaType === 'image' ? <Image className={`w-full h-full ${fitClasses}`} image={image} alt={alt} /> : null}
-      {mediaType === 'video' ? (
-        <div className="w-full h-full">
-          <video
-            className={`w-full h-full ${fitClasses}`}
-            src={video.url}
-            autoPlay
-            muted
-            loop
-            playsInline
-          />
-          {alt ? <span className="sr-only">{alt}</span> : null}
-        </div>
+    <div {...rest}>
+      <div className={`w-full relative ${rounded ? 'rounded-10 lg:rounded-30 border-1 border-white/30 overflow-hidden' : ''}`} style={{ aspectRatio }}>
+        {mediaType === 'image' && image ? (
+          <div className="absolute inset-0 w-full h-full">
+            <Image
+              image={image}
+              alt=""
+              sizes="100vw"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ) : null}
+
+        {mediaType === 'video' && video ? (
+          <div className="absolute inset-0 w-full h-full">
+            <Video {...video} className="w-full h-full" />
+          </div>
+        ) : null}
+      </div>
+      {caption ? (
+        <p className="col-span-full text-23 text-center">{caption}</p>
       ) : null}
     </div>
   )

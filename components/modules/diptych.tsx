@@ -1,15 +1,15 @@
 import { type FC } from 'react'
 import { Image } from '@/components/global/image'
 import { cva } from 'class-variance-authority'
+import { Video } from '../global/video/video'
 
 interface MediaItem {
   mediaType: 'image' | 'video'
   image?: any
   video?: {
-    asset: {
-      _ref: string
-      url: string
-    }
+    playbackId: string
+    duration?: number
+    aspectRatio?: string
   }
   videoThumbnail?: any
   caption?: string
@@ -75,17 +75,7 @@ export const Diptych: FC<DiptychProps> = ({
           ) : null}
 
           {media.mediaType === 'video' && media.video ? (
-            <video
-              src={media.video.asset.url}
-              poster={media.videoThumbnail ? media.videoThumbnail.asset.url : undefined}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover"
-            >
-              <source src={media.video.asset.url} type="video/mp4" />
-            </video>
+            <Video className="w-full h-full" {...media.video} />
           ) : null}
         </div>
         

@@ -21,6 +21,7 @@ import richTextLegal from './blocks/rich-text-legal'
 import richTextSimple from './blocks/rich-text-simple'
 import externalLink from './blocks/external-link'
 import internalLink from './blocks/internal-link'
+import media from './blocks/media'
 
 /** Settings */
 import settingsSeo from './settings/settings-seo'
@@ -40,6 +41,7 @@ import mediaBlock from './modules/media-block'
 import textBlock from './modules/text-block'
 import diptych from './modules/diptych'
 import offsetMedia from './modules/offset-media'
+import mediaCarousel from './modules/media-carousel'
 
 export const allTypes: SchemaTypeDefinition[] = [
   // Settings
@@ -60,14 +62,16 @@ export const allTypes: SchemaTypeDefinition[] = [
   textBlock,
   diptych,
   offsetMedia,
-
+  mediaCarousel,
+  
   // Blocks
   seo,
   richText,
   richTextLegal,
   richTextSimple,
   externalLink,
-  internalLink
+  internalLink,
+  media
 ]
 
 export const singletonTypes: SingletonType[] = [

@@ -1,16 +1,17 @@
 import { type FC } from 'react'
-import { Image } from '@/components/global/image'
-import { SitePortableText } from '@/components/global/site-portable-text'
 import { cva } from 'class-variance-authority'
+
+import { Image } from '@/components/global/image'
+import { Video } from '@/components/global/video/video'
+import { SitePortableText } from '@/components/global/site-portable-text'
 
 interface MediaItem {
   mediaType: 'image' | 'video'
   image?: any
   video?: {
-    asset: {
-      _ref: string
-      url: string
-    }
+    playbackId: string
+    duration?: number
+    aspectRatio?: string
   }
   videoThumbnail?: any
   text?: any
@@ -37,7 +38,7 @@ export const OffsetMedia: FC<OffsetMediaProps> = ({
   const renderMedia = (media: MediaItem, className: string) => {
     return (
       <div className={className}>
-        <div className={`aspect-video h-full rounded-10 lg:rounded-30 overflow-hidden border-1 border-white/30`}>
+        <div className={`aspect-video relative h-full rounded-10 lg:rounded-30 overflow-hidden border-1 border-white/30`}>
           {media.mediaType === 'image' && media.image ? (
             <Image
               image={media.image}
@@ -47,17 +48,7 @@ export const OffsetMedia: FC<OffsetMediaProps> = ({
           ) : null}
 
           {media.mediaType === 'video' && media.video ? (
-            <video
-              src={media.video.asset.url}
-              poster={media.videoThumbnail ? media.videoThumbnail.asset.url : undefined}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover"
-            >
-              <source src={media.video.asset.url} type="video/mp4" />
-            </video>
+            <Video className="w-full h-full" playbackId={media.video.playbackId} />
           ) : null}
         </div>
         

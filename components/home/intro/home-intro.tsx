@@ -51,7 +51,7 @@ export const HomeIntro = ({ titles, description }) => {
         <div ref={introRef} className="home-intro-container relative w-full h-fit z-[1]">
           <ScrollIndicator />
           
-          <div className="home-intro-main w-full h-[100svh] sticky top-0 grid-contain z-[5] text-white place-items-center">
+          <div className="home-intro-main w-full h-screen sticky top-0 grid-contain z-[5] text-white place-items-center">
             {titles?.map((title, index) => {
               const variant = getFormattedVariant(index);
 
@@ -107,7 +107,7 @@ export const HomeIntro = ({ titles, description }) => {
           })}
         </div>
         
-        <div className="intro-section-exit h-[400svh] -mt-[100svh]"></div>
+        <div className="intro-section-exit h-screen-200"></div>
       </div>
     </section>
   )

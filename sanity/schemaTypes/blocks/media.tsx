@@ -1,24 +1,10 @@
-export default {
-  name: 'mediaBlock',
-  title: 'Single Media',
+import { defineField, defineType } from "sanity";
+
+export default defineType({
+  name: 'media',
+  title: 'Media',
   type: 'object',
   fields: [
-    {
-      name: 'size',
-      title: 'Size',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Full Bleed', value: 'full' },
-          { title: 'Large', value: 'large' },
-          { title: 'Medium', value: 'medium' },
-          { title: 'Small', value: 'small' },
-        ],
-        layout: 'radio',
-        direction: 'horizontal',
-      },
-      initialValue: 'full',
-    },
     {
       name: 'mediaType',
       title: 'Media Type',
@@ -70,15 +56,17 @@ export default {
       mediaType: 'mediaType',
       image: 'image',
       videoThumbnail: 'videoThumbnail',
-      size: 'size',
+      playbackId: 'video.playbackId',
       caption: 'caption'
     },
-    prepare({ mediaType, image, videoThumbnail, size, caption }) {
+    prepare({ mediaType, image, videoThumbnail, caption, playbackId }) {
       return {
-        title: `Single ${mediaType === 'image' ? 'Image' : 'Video'} - ${size === 'full' ? 'Full Bleed' : size === 'large' ? 'Large' : size === 'medium' ? 'Medium' : 'Small'}`,
+        title: mediaType === 'image' ? 'Image' : 'Video',
         subtitle: caption,
-        media: mediaType === 'image' ? image : videoThumbnail
+        media: mediaType === 'image' ? image : videoThumbnail ? videoThumbnail : playbackId ? (
+          <img src={`https://image.mux.com/${playbackId}/thumbnail.png?time=1`} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        ) : null
       }
     }
   }
-} 
+})

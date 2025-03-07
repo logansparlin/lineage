@@ -35,7 +35,7 @@ export const IconCursorMorph: FC<IconCursorMorphProps> = ({ step, ...props }) =>
   })
 
   return (
-    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32.8 25.4" {...props}>
+    <svg className="w-full h-auto" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32.8 25.4" {...props}>
       <path ref={pathRef} d={svgPaths[1]} fill="currentColor" />
   </svg>
 

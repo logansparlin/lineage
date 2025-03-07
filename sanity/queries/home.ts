@@ -20,6 +20,7 @@ export const homePageQuery = defineQuery(
       title,
       "slug": slug.current,
       palette,
+      step,
       featuredImage {
         ${imageFields}
       },

@@ -11,13 +11,14 @@ interface CaseStudiesContentProps extends ComponentProps<'div'> {
     _id: string
     title: string
     slug: string
-    palette: string
+    step: string
     featuredImage: any
     shortDescription: string
   }[]
+  setCurrentStep?: (step: string) => void
 }
 
-export const CaseStudiesContent: FC<CaseStudiesContentProps> = ({ items, ref = () => {}, isMain = false, className = '', ...rest }) => {
+export const CaseStudiesContent: FC<CaseStudiesContentProps> = ({ items, ref = () => {}, isMain = false, className = '', setCurrentStep, ...rest }) => {
   if (!items) return null
 
   return (
@@ -27,7 +28,7 @@ export const CaseStudiesContent: FC<CaseStudiesContentProps> = ({ items, ref = (
       {...rest}
     >
       {items?.map(caseStudy => {
-        return <CaseStudiesSection key={caseStudy._id} {...caseStudy} isMain={isMain} />
+        return <CaseStudiesSection key={caseStudy._id} {...caseStudy} isMain={isMain} setCurrentStep={setCurrentStep} />
       })}
     </div>
   )

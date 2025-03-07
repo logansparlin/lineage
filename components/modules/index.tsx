@@ -3,6 +3,7 @@ import { MediaBlock } from "./media-block";
 import { TextBlock } from "./text-block";
 import { Diptych } from "./diptych";
 import { OffsetMedia } from "./offset-media";
+import { MediaCarousel } from "./media-carousel";
 
 export const Modules = ({ modules }: { modules: any[] }) => {
   if (!modules) return null;
@@ -15,6 +16,7 @@ export const Modules = ({ modules }: { modules: any[] }) => {
         {module._type === 'textBlock' ? <TextBlock {...module} /> : null}
         {module._type === 'diptych' ? <Diptych {...module} /> : null}
         {module._type === 'offsetMedia' ? <OffsetMedia {...module} /> : null}
+        {module._type === 'mediaCarousel' ? <MediaCarousel {...module} /> : null}
       </div>
     )
   })

@@ -1,9 +1,9 @@
 'use client';
 
-import { type FC, useRef } from 'react';
+import { type FC, useMemo, useRef, useState } from 'react';
 import { useLenis } from 'lenis/react';
 import { useMeasure } from 'react-use';
-
+import { getStepColors } from '@/lib/get-step-colors';
 import { CaseStudiesContent } from './case-studies-content';
 import { clamp } from '../../../lib/clamp';
 
@@ -12,18 +12,11 @@ interface CaseStudiesProps {
     _id: string
     title: string
     slug: string
-    palette: string
+    step: string
     featuredImage: any
     shortDescription: string
     isMain?: boolean
   }[]
-}
-
-const colorMap = {
-  orange: 'bg-orange-400',
-  green: 'bg-green-400',
-  blue: 'bg-blue-400',
-  pink: 'bg-pink-400',
 }
 
 export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
@@ -31,6 +24,7 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
   const mainRef = useRef<HTMLDivElement>(null);
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const [currentStep, setCurrentStep] = useState<string>(items?.[0]?.step ?? 'one')
 
   const [contentRef, { height }] = useMeasure();
 
@@ -44,11 +38,26 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
     topRef.current.scrollTop = bottomRef.current.scrollTop = mainRef.current.scrollTop = offset;
   })
 
+  const stepColors = useMemo(() => {
+    return getStepColors(currentStep)
+  }, [currentStep])
+
   if (!items) return null
 
   return (
-    <section ref={containerRef} className="relative z-[3] mb-[-100vh]" style={{ height: `${height}px` }}>
-      <div className="absolute inset-0 z-[4] bg-pink-400" />
+    <section
+      id="case-studies"
+      ref={containerRef} className="relative z-[3] mb-[-100vh] transition-colors duration-1000 ease"
+      style={{ 
+        height: `${height}px`, 
+        backgroundColor: stepColors[400],
+        '--step-color-100': stepColors[100],
+        '--step-color-200': stepColors[200],
+        '--step-color-300': stepColors[300],
+        '--step-color-400': stepColors[400],
+      } as React.CSSProperties}
+    >
+      <div className="absolute inset-0 z-[4]" />
       <div className="w-full h-screen overflow-hidden sticky z-[5] top-0 perspective-[3500px]">
         <div className="w-full h-screen transform-3d">
 
@@ -81,7 +90,7 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
             ref={mainRef}
             className="will-change-auto w-full h-screen translate-z-[-100vh] overflow-hidden pt-[100vh]"
           >
-            <CaseStudiesContent ref={contentRef} isMain items={items} />
+            <CaseStudiesContent ref={contentRef} isMain items={items} setCurrentStep={setCurrentStep} />
           </div>
         </div>
       </div>

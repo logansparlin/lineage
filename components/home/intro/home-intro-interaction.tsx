@@ -30,6 +30,8 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
     setIsColorChanging(true);
 
     introMesh.children?.forEach((child) => {
+      if (child.name.includes('exit-plane')) return;
+
       if (child.name.includes('bottom')) {
         child.material.uniforms.innerColorNext.value = new Color(nextGradientData.outer).convertLinearToSRGB();
         child.material.uniforms.outerColorNext.value = new Color(nextGradientData.inner).convertLinearToSRGB();
@@ -65,6 +67,7 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
     const TITLE_DURATION = 0.55;
     const TITLE_EASE = 'power2.inOut';
     const TITLE_END_TIME = `>-=${TITLE_DURATION}`;
+    const normalizedSize = Math.max(viewport.width, viewport.height);
     
     ScrollTrigger.normalizeScroll(true)
 
@@ -74,6 +77,7 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
 
     const topPlanes = introMesh.children.filter((child) => child.name.startsWith("top-step-"));
     const bottomPlanes = introMesh.children.filter((child) => child.name.startsWith("bottom-step-"));
+    const exitPlanes = introMesh.children.filter((child) => child.name.startsWith("exit-plane-"));
     
     const defaultTitles = document.querySelectorAll('.intro-title-default');
     const firstTitle = document.querySelector('.intro-title-first');
@@ -85,8 +89,10 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
     const secondSection = document.querySelector('.intro-section-second');
     const lastSection = document.querySelector('.intro-section-last');
     const exitSection = document.querySelector('.intro-section-exit');
-
+    const caseEnterSection = document.querySelector('.case-enter-section');
     const description = document.querySelector('.home-intro-description');
+
+    console.log(exitPlanes?.[0]?.position)
 
     gsap.set(secondTitle, { opacity: 0, y: Y_OFFSET })
     gsap.set(lastTitle, { opacity: 0, y: Y_OFFSET })
@@ -221,7 +227,7 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
       scrollTrigger: {
         trigger: lastSection,
         start: 'top top',
-        end: 'bottom top',
+        end: 'bottom bottom',
       }
     })
 
@@ -238,60 +244,110 @@ export const HomeIntroInteraction = ({ scene, viewport, aspectRatio }: HomeIntro
       ease: 'none'
     }, '>')
 
+
+    const getBottomPosition = (additionalOffset = 0, scale = 1) => {
+      return () => (((normalizedSize * scale) - viewport.height) / 2) + additionalOffset
+    }
     
     lastSectionTl.to(topPlanes[0]?.position, {
-      y: () => (((viewport.height * aspectRatio) - viewport.height) / 2),
+      y: getBottomPosition(),
       duration: lastSectionTl.duration() / 2,
       ease: 'none'
     }, 0)
-    
-    lastSectionTl.set({}, {}, '+=1.5')
 
     /** Exit Timeline */
     const exitTl = gsap.timeline({
       scrollTrigger: {
         trigger: exitSection,
         start: 'top bottom',
-        end: 'bottom top',
+        end: 'bottom top-=300%',
       }
     })
 
     exitTl.to(topPlanes[0]?.position, {
-      y: () => (((viewport.height * aspectRatio) - viewport.height) / 2) + (viewport.height),
-      duration: 0.4,
+      y: getBottomPosition(normalizedSize * 1.5),
+      duration: 1,
       ease: 'none'
-    }, 0.45)
-
-    //  (viewport.height - (viewport.height * (100 / window.innerHeight)))
+    }, 0)
 
     bottomPlanes?.forEach((plane, index) => {
       if (!plane.material?.uniforms?.curveProgress) return;
       
       exitTl.add(
         exitTl.to(plane.position, {
-          y: () => plane.position.y + ((window.innerHeight / factor) * 1.55),
-          duration: 2,
+          y: () => plane.position.y + (normalizedSize * 1.5),
+          duration: 1,
           ease: 'none'
         }, 0)
       )
 
       exitTl.add(
         exitTl.to(plane.material.uniforms.curveProgress, {
-          value: () => (index * 1.75),
+          value: () => (index * 1),
           duration: 1,
           ease: 'none',
-        }, 0.25)
+        }, 0)
+      )
+    })
+
+    exitTl.to({}, {}, '+=0.5')
+
+    const preEnterTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: caseEnterSection,
+        start: 'top bottom+=100%',
+        end: 'top bottom',
+      }
+    })
+
+    exitPlanes?.forEach((plane, index) => {
+      preEnterTl.add(
+        preEnterTl.to(plane.position, {
+          z: () => plane.position.z + 1,
+          duration: 1,
+          ease: 'none'
+        }, 0)
+      )
+    })
+
+    const enterTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: caseEnterSection,
+        start: 'top bottom',
+        end: 'bottom top',
+      }
+    })
+
+    exitPlanes?.forEach((plane) => {
+      if (!plane.material?.uniforms?.curveProgress) return;
+      
+      enterTl.add(
+        enterTl.to(plane.position, {
+          y: () => plane.position.y + (normalizedSize * 1.25),
+          duration: 1,
+          ease: 'none'
+        }, 0)
+      )
+
+      enterTl.add(
+        enterTl.to(plane.material.uniforms.curveProgress, {
+          value: () => 0,
+          duration: 1,
+          ease: 'none',
+        }, 0)
       )
     })
 
     ScrollTrigger.refresh();
 
-    defaultSectionTls.length && mainTl.add(defaultSectionTls, 0)
+    defaultSectionTls?.length && mainTl.add(defaultSectionTls, 0)
     
     mainTl.add(firstSectionTl, 0)
     mainTl.add(secondSectionTl, 0)
     mainTl.add(lastSectionTl, 0)
     mainTl.add(exitTl, 0)
+    mainTl.add(preEnterTl, 0)
+    mainTl.add(enterTl, 0)
   }, {
     scope: '#home-intro',
     dependencies: [scene]

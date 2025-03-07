@@ -1,6 +1,6 @@
+'use client'
 
-
-import { ComponentProps, type FC } from 'react';
+import { ComponentProps, type FC, useEffect, useRef } from 'react';
 import { Image } from '@/components/global/image';
 import Link from 'next/link';
 
@@ -8,15 +8,46 @@ interface CaseStudiesSectionProps extends ComponentProps<'div'> {
   _id: string
   title: string
   slug: string
-  palette: string
+  step: string
   featuredImage: any
   shortDescription: string
   isMain?: boolean
+  setCurrentStep?: (step: string) => void
 }
 
-export const CaseStudiesSection: FC<CaseStudiesSectionProps> = ({ _id, title, slug, palette, featuredImage, shortDescription, isMain = false, className = '', ...rest }) => {
+export const CaseStudiesSection: FC<CaseStudiesSectionProps> = ({ _id, title, slug, step, featuredImage, shortDescription, isMain = false, className = '', setCurrentStep, ...rest }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!setCurrentStep) return;
+
+    const intersectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setCurrentStep(step);
+        }
+      })
+    }, {
+      rootMargin: '0px',
+      threshold: 0,
+    });
+
+    if (containerRef.current) {
+      intersectionObserver.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        intersectionObserver.disconnect();
+      }
+    }
+  }, [])
+
   return (
-    <div className={`${className} card min-h-screen relative flex flex-col items-center justify-center gap-20 py-[20vh]`} >
+    <div
+      ref={containerRef}
+      className={`${className} card min-h-screen relative flex flex-col items-center justify-center gap-20 py-[20vh]`}
+    >
       <Link
         href={`/case-study/${slug}`}
         scroll={false}
@@ -26,9 +57,9 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = ({ _id, title, sl
       </Link>
       
       <div
-        className="relative w-[60%] aspect-video flex items-center justify-center rounded-20"
+        className="relative w-[60%] aspect-video flex items-center justify-center rounded-20 transition-[box-shadow] duration-1000 ease"
         style={{
-          boxShadow: '0 0 100px 60px rgba(174, 79, 242, 1)'
+          boxShadow: '0 0 100px 60px var(--step-color-300)'
         }}
       >
         <div className="absolute inset-0 z-[1] overflow-hidden w-full h-full rounded-20 flex items-center justify-center">

@@ -20,7 +20,7 @@ const menus = [
   [
     {
       label: 'Case Studies',
-      url: '#',
+      url: '/#case-studies',
       type: 'link'
     },
     {

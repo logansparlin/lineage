@@ -1,0 +1,12 @@
+.volume-controls-slider .range-slider__range {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.volume-controls-slider .range-slider__range[data-active] {
+  background: var(--color-step-200);
+}
+
+.volume-controls-slider .range-slider__thumb[data-lower], .volume-controls-slider .range-slider__thumb[data-upper] {
+  width: 10px;
+  height: 10px;
+} 

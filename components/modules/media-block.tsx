@@ -1,6 +1,7 @@
 import { type FC } from 'react'
 import { cva } from 'class-variance-authority'
 import { Image } from '@/components/global/image'
+import { Video } from '../global/video/video'
 
 const mediaBlockStyles = cva(['relative overflow-hidden'], {
   variants: {
@@ -13,7 +14,7 @@ const mediaBlockStyles = cva(['relative overflow-hidden'], {
   }
 })
 
-const mediaBlockContainerStyles = cva(['relative w-fit max-w-screen h-screen'], {
+const mediaBlockContainerStyles = cva(['relative w-fit h-screen'], {
   variants: {
     size: {
       full: '',
@@ -28,10 +29,9 @@ interface FullBleedMediaProps {
   mediaType: 'image' | 'video'
   image?: any
   video?: {
-    asset: {
-      _ref: string
-      url: string
-    }
+    playbackId: string
+    duration: number
+    aspectRatio: string
   }
   videoThumbnail?: any
   size: 'full' | 'large' | 'medium' | 'small'
@@ -61,18 +61,8 @@ export const MediaBlock: FC<FullBleedMediaProps> = ({
         ) : null}
 
         {mediaType === 'video' && video ? (
-          <div className="w-full h-full">
-            <video
-              src={video.asset.url}
-              poster={videoThumbnail ? videoThumbnail.asset.url : undefined}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover"
-            >
-              <source src={video.asset.url} type="video/mp4" />
-            </video>
+          <div className="relative w-full h-full">
+            <Video {...video} className="absolute inset-0 w-full h-full" />
           </div>
         ) : null}
       </div>

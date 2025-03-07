@@ -5,6 +5,8 @@ interface SiteStore {
   setMenuOpen: (open: boolean) => void;
   colorButtonVisible: boolean;
   setColorButtonVisible: (visible: boolean) => void;
+  cursorHidden: boolean;
+  setCursorHidden: (hidden: boolean) => void;
 }
 
 export const useSiteStore = create<SiteStore>((set) => ({
@@ -12,4 +14,6 @@ export const useSiteStore = create<SiteStore>((set) => ({
   setMenuOpen: (open: boolean) => set({ menuOpen: open }),
   colorButtonVisible: false,
   setColorButtonVisible: (visible: boolean) => set({ colorButtonVisible: visible }),
+  cursorHidden: false,
+  setCursorHidden: (hidden: boolean) => set({ cursorHidden: hidden }),
 }))

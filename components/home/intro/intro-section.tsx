@@ -11,10 +11,10 @@ interface IntroSectionProps {
 const introSectionStyles = cva('relative z-[2]', {
   variants: {
     variant: {
-      default: 'min-h-[200svh]',
-      first: 'min-h-[250svh] -mt-[100svh]',
-      second: 'min-h-[250svh]',
-      last: 'min-h-[250svh]',
+      default: 'min-h-screen-200',
+      first: 'min-h-screen-250 -mt-screen',
+      second: 'min-h-screen-250',
+      last: 'min-h-screen-250',
     }
   }
 })
@@ -25,7 +25,7 @@ export const IntroSection: FC<IntroSectionProps> = ({ text, variant }) => {
 
   return (
     <div ref={sectionRef} className={`${introSectionStyles({ variant })} ${sectionClass}`}>
-      <div className={`section-title relative flex items-center justify-center min-h-[100svh]`}>
+      <div className={`section-title relative flex items-center justify-center min-h-screen`}>
         <h2 className={'sr-only'}>{text}</h2>
       </div>
     </div>

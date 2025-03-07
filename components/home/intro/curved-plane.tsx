@@ -8,6 +8,7 @@ interface CurvedPlaneProps {
   width?: number;
   height?: number;
   curveIntensity?: number;
+  curveProgress?: number;
   outer?: string;
   inner?: string;
   innerNext?: string;
@@ -27,6 +28,7 @@ export const CurvedPlane: FC<CurvedPlaneProps> = ({
   width = 10,
   height = 10,
   curveIntensity = 3,
+  curveProgress = 0,
   outer = "#FE9807",
   inner = "#F44318",
   center = '#FFFFFF',
@@ -57,6 +59,7 @@ export const CurvedPlane: FC<CurvedPlaneProps> = ({
         aspect={aspectRatio}
         size={new Vector2(width, height)}
         curveIntensity={curveIntensity}
+        curveProgress={curveProgress}
       />
     </mesh>
   )

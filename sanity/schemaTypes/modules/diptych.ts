@@ -24,6 +24,8 @@ export default {
               { title: 'Image', value: 'image' },
               { title: 'Video', value: 'video' }
             ],
+            layout: 'radio',
+            direction: 'horizontal',
           },
           initialValue: 'image',
         },
@@ -39,10 +41,7 @@ export default {
         {
           name: 'video',
           title: 'Video',
-          type: 'file',
-          options: {
-            accept: 'video/*'
-          },
+          type: 'mux.video',
           hidden: ({ parent }) => parent?.mediaType !== 'video'
         },
         {
@@ -76,6 +75,8 @@ export default {
               { title: 'Image', value: 'image' },
               { title: 'Video', value: 'video' }
             ],
+            layout: 'radio',
+            direction: 'horizontal',
           },
           initialValue: 'image',
         },
@@ -91,10 +92,7 @@ export default {
         {
           name: 'video',
           title: 'Video',
-          type: 'file',
-          options: {
-            accept: 'video/*'
-          },
+          type: 'mux.video',
           hidden: ({ parent }) => parent?.mediaType !== 'video'
         },
         {

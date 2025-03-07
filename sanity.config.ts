@@ -4,6 +4,7 @@ import { visionTool } from '@sanity/vision'
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { presentationTool } from 'sanity/presentation'
+import { muxInput } from 'sanity-plugin-mux-input'
 
 import { apiVersion, dataset, projectId } from './sanity/env'
 import { allTypes } from './sanity/schemaTypes'
@@ -36,5 +37,9 @@ export default defineConfig({
         }
       }
     }),
+    muxInput({
+      disableUploadConfig: true,
+      disableTextTrackConfig: true,
+    })
   ],
 })

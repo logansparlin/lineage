@@ -1,9 +1,11 @@
+import { useMemo } from "react";
 import { Footer } from "../global/footer";
 import { CaseStudies } from "./case-studies/case-studies";
 import { HomeScrim } from "./home-scrim";
 import { HomeIntro } from "./intro/home-intro";
 import { HomeScrollScene } from "./intro/home-scroll-scene";
 import { StepsSection } from "./steps/steps-section";
+import { getGradient } from "@/lib/gradients";
 
 export interface HomePageProps {
   title: string
@@ -23,6 +25,7 @@ export interface HomePageProps {
     featuredImage: any
     shortDescription: string
     isMain?: boolean
+    step: string
   }[]
   steps: {
     intro: {
@@ -56,9 +59,11 @@ export interface HomePageProps {
 }
 
 export const HomePage = (props: HomePageProps) => {
-  if (!props) return null
-
   const { title, intro, caseStudies, steps } = props
+
+  const caseStudyGradient = useMemo(() => {
+    return getGradient(caseStudies?.[0]?.step)
+  }, [caseStudies])
 
   return (
     <div className="relative select-none">
@@ -68,11 +73,11 @@ export const HomePage = (props: HomePageProps) => {
 
       <StepsSection {...steps} />
 
-      <div className="h-[200svh] w-full bg-transparent" />
+      <div className="case-enter-section h-screen-150 w-full bg-transparent" />
 
       <CaseStudies items={caseStudies} />
       
-      <HomeScrollScene />
+      <HomeScrollScene caseStudyGradient={caseStudyGradient} />
 
       <Footer />
       

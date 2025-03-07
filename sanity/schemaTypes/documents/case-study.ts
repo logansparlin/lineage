@@ -77,6 +77,7 @@ export default defineType({
         { type: 'textBlock' },
         { type: 'diptych' },
         { type: 'offsetMedia' },
+        { type: 'mediaCarousel' },
       ]
     })
   ],

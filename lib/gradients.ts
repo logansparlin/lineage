@@ -24,6 +24,13 @@ const blue = {
   outer: '#087EEE'
 }
 
+const stepGradients = {
+  'one': orange,
+  'two': green,
+  'three': blue,
+  'four': pink
+}
+
 export const gradients = [orange, pink, green, blue];
 
 export const getRandomGradient = () => {
@@ -48,5 +55,5 @@ export const getRandomGradient = () => {
 }
 
 export const getGradient = (label: string) => {
-  return gradients.find((gradient) => gradient.label === label);
+  return stepGradients[label] ?? gradients.find((gradient) => gradient.label === label);
 }

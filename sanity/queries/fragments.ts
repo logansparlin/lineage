@@ -9,11 +9,29 @@ export const imageFields = groq`
   "lqip": asset -> metadata.lqip
 `
 
-export const videoFields = groq`
+export const muxVideoFields = groq`
   _key,
   _type,
-  "url": asset -> url,
-  aspectRatio
+  "playbackId": asset-> playbackId,
+  "duration": asset-> data.duration,
+  "aspectRatio": asset->data.aspect_ratio,
+`
+
+export const mediaFields = groq`
+  _key,
+  _type,
+  mediaType,
+  caption,
+  mediaType == 'image' => {
+    image {
+      ${imageFields}
+    }
+  },
+  mediaType == 'video' => {
+    video {
+      ${muxVideoFields}
+    }
+  }
 `
 
 export const linkFields = groq`
@@ -23,18 +41,6 @@ export const linkFields = groq`
   to -> {
     _type,
     "slug": slug.current
-  }
-`
-
-export const mediaFields = groq`
-  _key,
-  _type,
-  mediaType,
-  image {
-    ${imageFields}
-  },
-  video {
-    ${videoFields}
   }
 `
 
@@ -65,10 +71,7 @@ export const modulesFields = groq`
     caption,
     image,
     video {
-      asset-> {
-        _ref,
-        url
-      }
+      ${muxVideoFields}
     },
     videoThumbnail,
   },
@@ -88,10 +91,7 @@ export const modulesFields = groq`
       mediaType,
       image,
       video {
-        asset-> {
-          _ref,
-          url
-        }
+        ${muxVideoFields}
       },
       videoThumbnail,
       caption
@@ -100,10 +100,7 @@ export const modulesFields = groq`
       mediaType,
       image,
       video {
-        asset-> {
-          _ref,
-          url
-        }
+        ${muxVideoFields}
       },
       videoThumbnail,
       caption
@@ -116,10 +113,7 @@ export const modulesFields = groq`
       mediaType,
       image,
       video {
-        asset-> {
-          _ref,
-          url
-        }
+        ${muxVideoFields}
       },
       videoThumbnail,
       text
@@ -128,13 +122,17 @@ export const modulesFields = groq`
       mediaType,
       image,
       video {
-        asset-> {
-          _ref,
-          url
-        }
+        ${muxVideoFields}
       },
       videoThumbnail,
       text
+    }
+  },
+  _type == 'mediaCarousel' => {
+    _type,
+    _key,
+    items[] {
+      ${mediaFields}
     }
   }
 `

@@ -29,7 +29,7 @@ export const StepFour: FC<StepFourProps> = ({ title, description, className = ''
           </div>
         )}
       />
-      <div className="relative z-[2] w-full min-h-[200svh] flex items-start">
+      <div className="relative z-[2] w-full min-h-screen-200 flex items-start">
         <StepFourIllo />
       </div>
     </section>

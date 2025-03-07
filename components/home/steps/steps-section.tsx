@@ -42,10 +42,10 @@ export const StepsSection: FC<StepsSectionProps> = (props) => {
   if (!intro) return null;
 
   return (
-    <section className="w-full flex flex-col items-center relative z-[3] -mt-[130svh]" {...rest}>
+    <section className="w-full flex flex-col items-center relative z-[3]" {...rest}>
       {intro ? <StepsIntro {...intro} /> : null}
 
-      <div className="w-full relative flex flex-col items-center gap-y-250 pt-100 mb-[-100svh]">
+      <div className="w-full relative flex flex-col items-center gap-y-250 pt-100 -mb-screen">
         <StepOne
           className="relative w-full flex flex-col gap-y-180"
           {...one}
@@ -68,7 +68,7 @@ export const StepsSection: FC<StepsSectionProps> = (props) => {
       </div>
 
       {/* Step Navigation */}
-      <div className="w-full h-[100svh] sticky bottom-0 z-[12] flex items-center justify-start px-40">
+      <div className="w-full h-screen sticky bottom-0 z-[12] flex items-center justify-start px-40">
         <div className="w-fit flex flex-col justify-center gap-y-0 text-18 text-center py-18 bg-[rgba(255,255,255,0.1)] border-1 border-white/20 rounded-30 backdrop-blur-[20px]">
           <div className="px-14 py-12 opacity-30 active:opacity-100 hover:opacity-100 transition-opacity duration-300 ease">1</div>
           <div className="px-14 py-12 opacity-30 active:opacity-100 hover:opacity-100 transition-opacity duration-300 ease">2</div>
