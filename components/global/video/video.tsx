@@ -33,6 +33,7 @@ export const Video: FC<VideoProps> = (props) => {
     isMuted,
     volume,
     controlsVisible,
+    progress,
     setIsPlaying,
     setVolume,
     handlePlay,
@@ -94,6 +95,7 @@ export const Video: FC<VideoProps> = (props) => {
         handlePlay={handlePlay}
         handlePause={handlePause}
         handleFullscreen={handleFullscreen}
+        progress={progress}
       />
     </div>
   )

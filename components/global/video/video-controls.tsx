@@ -14,6 +14,7 @@ interface VideoControlsProps {
   isMuted: boolean
   duration: number
   volume: number
+  progress: number
   setVolume: (volume: number) => void
   toggleMute: () => void
   handlePlay: () => void
@@ -22,7 +23,7 @@ interface VideoControlsProps {
 }
 
 export const VideoControls: FC<VideoControlsProps> = (props) => {
-  const { isPlaying, isMuted, toggleMute, handlePlay, handlePause, handleFullscreen, volume, setVolume, hidden = true } = props;
+  const { isPlaying, isMuted, toggleMute, handlePlay, handlePause, handleFullscreen, volume, setVolume, hidden = true, progress } = props;
 
   return (
     <AnimatePresence>
@@ -39,7 +40,9 @@ export const VideoControls: FC<VideoControlsProps> = (props) => {
               <PlayButton onClick={handlePlay} isPlaying={isPlaying} />
               <PauseButton onClick={handlePause} isPlaying={isPlaying} />
             </div>
-            <div className="flex-1 bg-white/30 rounded-full h-4"></div>
+            <div className="flex-1 bg-white/30 rounded-full h-4 overflow-hidden">
+              <div className="h-full w-full origin-left bg-step-200" style={{ width: `${progress}%` }} />
+            </div>
             <div className="flex items-center gap-x-10">
               <VolumeControls onClick={toggleMute} isMuted={isMuted} volume={volume} setVolume={setVolume} />
               <FullscreenButton onClick={handleFullscreen} />

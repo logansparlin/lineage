@@ -35,7 +35,6 @@ export const MediaCarousel: FC<MediaCarouselProps> = ({
   useEffect(() => {
     if (!emblaApi) return
 
-    console.log('emblaApi', emblaApi)
     emblaApi.on('select', () => {
       const currentSlide = emblaApi.selectedScrollSnap()
       setCurrentSlide(currentSlide)

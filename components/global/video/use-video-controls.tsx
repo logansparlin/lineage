@@ -1,4 +1,4 @@
-import { type RefObject, useState, useEffect } from "react";
+import { type RefObject, useState, useEffect, useRef } from "react";
 
 interface UseVideoControlsProps {
   playerRef: RefObject<any>
@@ -7,10 +7,12 @@ interface UseVideoControlsProps {
 
 export const useVideoControls = (props: UseVideoControlsProps) => {
   const { playerRef, containerRef } = props;
+  const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
   const [controlsVisible, setControlsVisible] = useState(false)
   const [hasPlayed, setHasPlayed] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [progress, setProgress] = useState(0)
   const [isMuted, setIsMuted] = useState(false)
   const [volume, setVolume] = useState(1)
   const [timeout, setTimeoutRef] = useState<NodeJS.Timeout | null>(null)
@@ -115,6 +117,11 @@ export const useVideoControls = (props: UseVideoControlsProps) => {
     }
   }
 
+  const handleProgress = (currentTime: number) => {
+    const progressPercentage = (currentTime / playerRef.current?.duration) * 100
+    setProgress(progressPercentage)
+  }
+
   const handleFullscreen = () => {
     if (document.fullscreenElement === null) {
       containerRef.current?.requestFullscreen()
@@ -122,6 +129,20 @@ export const useVideoControls = (props: UseVideoControlsProps) => {
       document.exitFullscreen()
     }
   }
+
+  useEffect(() => {
+    if (!isPlaying) return;
+    
+    intervalRef.current = setInterval(() => {
+      if (!playerRef.current) return;
+      handleProgress(playerRef.current?.currentTime)
+      console.log(playerRef.current?.currentTime)
+    }, 10)
+
+    return () => {
+      clearInterval(intervalRef.current)
+    }
+  }, [isPlaying])
 
   const containerProps = {
     onMouseMove: handleMouseMove,
@@ -135,6 +156,7 @@ export const useVideoControls = (props: UseVideoControlsProps) => {
     isPlaying,
     isMuted,
     volume,
+    progress,
     controlsVisible,
     containerProps,
     setIsPlaying,
