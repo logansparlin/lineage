@@ -11,7 +11,6 @@ gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.defaults({
   immediateRender: false,
   scrub: true,
-  invalidateOnRefresh: true,
 })
 
 interface ScrollContainerProps extends ComponentProps<'div'> {}
@@ -38,7 +37,8 @@ export const ScrollContainer: FC<ScrollContainerProps> = memo(({ children, ...pr
     <ReactLenis
       root
       ref={lenisRef}
-      options={{ 
+      options={{
+        anchors: true,
         autoRaf: false,
         syncTouch: false,
         touchMultiplier: 2,

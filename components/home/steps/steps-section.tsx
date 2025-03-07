@@ -1,10 +1,12 @@
-import { SitePortableText } from '@/components/global/site-portable-text';
 import { type FC, type ComponentProps } from 'react';
+
 import { StepOne } from './step-one/step-one';
 import { StepTwo } from './step-two/step-two';
 import { StepThree } from './step-three/step-three';
 import { StepFour } from './step-four/step-four';
 import { StepsIntro } from './steps-intro';
+import { StepObserver } from './step-observer';
+import { StepsNavigation } from './steps-navigation';
 
 interface StepsSectionProps extends ComponentProps<'section'> {
   intro: {
@@ -46,36 +48,37 @@ export const StepsSection: FC<StepsSectionProps> = (props) => {
       {intro ? <StepsIntro {...intro} /> : null}
 
       <div className="w-full relative flex flex-col items-center gap-y-250 pt-100 -mb-screen">
-        <StepOne
-          className="relative w-full flex flex-col gap-y-180"
-          {...one}
-        />
+        <StepObserver step="one">
+          <StepOne
+            className="relative w-full flex flex-col gap-y-180"
+            {...one}
+          />
+        </StepObserver>
 
-        <StepTwo
-          className="relative w-full flex flex-col gap-y-180"
-          {...two}
-        />
+        <StepObserver step="two">
+          <StepTwo
+            className="relative w-full flex flex-col gap-y-180"
+            {...two}
+          />
+        </StepObserver>
 
-        <StepThree
-          className="relative w-full flex flex-col gap-y-180"
-          {...three}
-        />
+        <StepObserver step="three">
+          <StepThree
+            className="relative w-full flex flex-col gap-y-180"
+            {...three}
+          />
+        </StepObserver>
 
-        <StepFour
-          className="relative w-full flex flex-col gap-y-180"
-          {...four}
-        />
+        <StepObserver step="four">
+          <StepFour
+            className="relative w-full flex flex-col gap-y-180"
+            {...four}
+          />
+        </StepObserver>
       </div>
 
       {/* Step Navigation */}
-      <div className="w-full h-screen sticky bottom-0 z-[12] flex items-center justify-start px-40">
-        <div className="w-fit flex flex-col justify-center gap-y-0 text-18 text-center py-18 bg-[rgba(255,255,255,0.1)] border-1 border-white/20 rounded-30 backdrop-blur-[20px]">
-          <div className="px-14 py-12 opacity-30 active:opacity-100 hover:opacity-100 transition-opacity duration-300 ease">1</div>
-          <div className="px-14 py-12 opacity-30 active:opacity-100 hover:opacity-100 transition-opacity duration-300 ease">2</div>
-          <div className="px-14 py-12 opacity-30 active:opacity-100 hover:opacity-100 transition-opacity duration-300 ease">3</div>
-          <div className="px-14 py-12 opacity-30 active:opacity-100 hover:opacity-100 transition-opacity duration-300 ease">4</div>
-        </div>
-      </div>
+      <StepsNavigation />
     </section>
   )
 }

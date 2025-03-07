@@ -59,7 +59,7 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = ({ _id, title, sl
       <div
         className="relative w-[60%] aspect-video flex items-center justify-center rounded-20 transition-[box-shadow] duration-1000 ease"
         style={{
-          boxShadow: '0 0 100px 60px var(--step-color-300)'
+          boxShadow: isMain ? '0 0 80px 80px var(--step-color-300)' : 'none'
         }}
       >
         <div className="absolute inset-0 z-[1] overflow-hidden w-full h-full rounded-20 flex items-center justify-center">

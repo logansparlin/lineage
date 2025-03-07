@@ -6,6 +6,7 @@ import { useMeasure } from 'react-use';
 import { getStepColors } from '@/lib/get-step-colors';
 import { CaseStudiesContent } from './case-studies-content';
 import { clamp } from '../../../lib/clamp';
+import { BlurredBackground } from './blurred-background';
 
 interface CaseStudiesProps {
   items: {
@@ -47,19 +48,21 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
   return (
     <section
       id="case-studies"
-      ref={containerRef} className="relative z-[3] mb-[-100vh] transition-colors duration-1000 ease"
+      ref={containerRef} className="relative z-[3] mb-[-100vh]"
       style={{ 
         height: `${height}px`, 
-        backgroundColor: stepColors[400],
         '--step-color-100': stepColors[100],
         '--step-color-200': stepColors[200],
         '--step-color-300': stepColors[300],
         '--step-color-400': stepColors[400],
       } as React.CSSProperties}
     >
-      <div className="absolute inset-0 z-[4]" />
+      <div className="absolute inset-0 z-[4] transition-colors duration-1000 ease" />
       <div className="w-full h-screen overflow-hidden sticky z-[5] top-0 perspective-[3500px]">
-        <div className="w-full h-screen transform-3d">
+        <div className="absolute w-full h-screen inset-0 z-[1] transition-colors duration-1000 ease bg-step-400 translate-z-[200vh]">
+          <BlurredBackground className="text-step-300 w-full h-full transition-colors duration-1000 ease will-change-auto transform-gpu" />
+        </div>
+        <div className="w-full h-screen relative z-[2] transform-3d">
 
           {/* Top */}
           <div 
