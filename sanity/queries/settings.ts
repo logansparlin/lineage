@@ -43,7 +43,18 @@ export const settingsSeoQuery = defineQuery(
     title,
     description,
     favicon {
-      ${imageFields}
+      one {
+        ${imageFields}
+      },
+      two {
+        ${imageFields}
+      },
+      three {
+        ${imageFields}
+      },
+      four {
+        ${imageFields}
+      }
     },
     ogImage {
       ${imageFields}
@@ -53,6 +64,7 @@ export const settingsSeoQuery = defineQuery(
 
 export const settingsQuery = defineQuery(
   groq`{
+    "seo": ${settingsSeoQuery},
     "header": ${settingsHeaderQuery},
     "footer": ${settingsFooterQuery},
   }`

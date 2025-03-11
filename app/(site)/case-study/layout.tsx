@@ -6,10 +6,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ReactLenis root options={{ orientation: 'horizontal' }} className="overflow-x-auto overflow-y-hidden">
-      <div className="w-fit h-screen flex items-center">
-        {children}
-      </div>
+    <ReactLenis root options={{ orientation: 'horizontal', gestureOrientation: 'both', syncTouch: false }} className="md:overflow-x-auto md:overflow-y-hidden">
+      {children}
     </ReactLenis>
   );
 }

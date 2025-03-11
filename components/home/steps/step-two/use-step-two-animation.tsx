@@ -1,6 +1,8 @@
 import { type RefObject } from "react";
 import { gsap } from "gsap/gsap-core";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { getPositionBetween } from "@/lib/get-position-between";
 
 export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
   useGSAP(() => {
@@ -13,10 +15,16 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
 
     const pinRect = pin.getBoundingClientRect();
     const iconRect = icon.getBoundingClientRect();
-    
-    const iconPinTop = (pinRect.height / 2) - (iconRect.height / 2) + 40;
 
+    const pinDistance = getPositionBetween(pin, illo);
+    
     const iconScale = pinRect.width / iconRect.width;
+
+    console.log(iconScale)
+
+    const iconExtraHeight = (iconScale - 1) * iconRect.height
+    
+    const iconPinTop = pinDistance + (iconRect.height - (iconExtraHeight / 2));
 
     const groupOneHighlights = gsap.utils.toArray(illo.querySelectorAll('.group-one .highlight'));
     const groupTwoHighlights = gsap.utils.toArray(illo.querySelectorAll('.group-two .highlight'));
@@ -38,33 +46,33 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
 
     mainTl.to({}, {}, '+=1')
 
-    mainTl.to(icon, {
+    const iconPin = gsap.timeline({
       scrollTrigger: {
         trigger: icon,
-        start: () => `top ${iconPinTop}px`,
+        start: () => `top ${-1 * iconPinTop}px`,
         end: 'bottom bottom',
         endTrigger: stepTwoRef.current,
         scrub: true,
         pin: true,
         pinSpacing: false,
         pinReparent: true,
-        anticipatePin: 0.05
+        anticipatePin: 0.01
       }
-    }, 0)
+    })
 
-    mainTl.to(illo, {
+    const illoPin = gsap.timeline({
       scrollTrigger: {
         trigger: illo,
-        start: 'top 40px',
+        start: 'top top',
         end: 'bottom bottom',
         endTrigger: stepTwoRef.current,
         scrub: true,
         pin: true,
         pinSpacing: false,
         pinReparent: true,
-        anticipatePin: 0.05
+        anticipatePin: 0.01
       }
-    }, 0)
+    })
 
     groupOneHighlights.forEach((highlight: HTMLElement, index: number) => {
       mainTl.to(highlight, {
@@ -92,6 +100,10 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
 
     mainTl.to({}, {}, '+=0.5')
 
+    ScrollTrigger.refresh();
+
+  }, {
+    dependencies: [stepTwoRef]
   });
 };
 

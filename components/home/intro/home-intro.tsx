@@ -46,12 +46,12 @@ export const HomeIntro = ({ titles, description }) => {
   }, [titles]);
 
   return (
-    <section id="home-intro">
+    <section className="w-full" id="home-intro">
       <div className="relative">
         <div ref={introRef} className="home-intro-container relative w-full h-fit z-[1]">
           <ScrollIndicator />
           
-          <div className="home-intro-main w-full h-screen sticky top-0 grid-contain z-[5] text-white place-items-center">
+          <div className="home-intro-main px-20 w-full h-screen sticky top-0 grid-contain z-[5] text-white place-items-center">
             {titles?.map((title, index) => {
               const variant = getFormattedVariant(index);
 
@@ -66,7 +66,7 @@ export const HomeIntro = ({ titles, description }) => {
                     <Image
                       image={title.svg}
                       alt={title.text}
-                      className="w-auto h-45"
+                      className="w-auto h-28 md:h-45"
                       height={100}
                       style={{
                         aspectRatio: title.svg.aspectRatio
@@ -78,12 +78,12 @@ export const HomeIntro = ({ titles, description }) => {
 
                   {variant === 'last' && description ? (
                     <div
-                      className="home-intro-description max-w-800 text-18 lg:text-32 h-0 overflow-hidden"
+                      className="home-intro-description w-[80%] md:w-full max-w-800 text-18 lg:text-32 h-0 overflow-hidden"
                       style={{
                         maskImage: 'linear-gradient(to top, transparent, black 80px)'
                       }}
                     >
-                      <div className="flex flex-col gap-y-[1.1em] py-80">
+                      <div className="flex flex-col gap-y-[1.1em] py-30 md:py-80">
                         {description?.split('\n').map((line, index) => (
                           <p key={`description-line-${index}`}>{line}</p>
                         ))}

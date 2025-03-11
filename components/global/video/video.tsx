@@ -53,7 +53,7 @@ export const Video: FC<VideoProps> = (props) => {
   return (
     <div
       ref={containerRef}
-      className={`${className} cursor-default`}
+      className={`${className} cursor-default overflow-hidden`}
       {...containerProps}
     >
       <PlayButtonOverlay onClick={handlePlay} hidden={hasPlayed} />
@@ -63,7 +63,7 @@ export const Video: FC<VideoProps> = (props) => {
         onClick={togglePlay}
       >
         <MuxPlayer
-          preload="auto"
+          preload="metadata"
           ref={playerRef}
           className="will-change-auto transform-gpu"
           loading="viewport"

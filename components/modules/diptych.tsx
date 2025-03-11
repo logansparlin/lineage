@@ -21,16 +21,16 @@ interface DiptychProps {
   secondMedia: MediaItem
 }
 
-const containerOneStyles = cva('relative flex flex-col gap-y-28', {
+const containerOneStyles = cva('w-full h-auto relative flex flex-col gap-y-10 md:gap-y-28', {
   variants: {
     reversed: {
-      false: 'h-full w-auto',
-      true: 'h-[80%] w-auto',
+      false: 'md:h-full md:w-auto',
+      true: 'md:h-[80%] md:w-auto',
     }
   }
 })
 
-const mediaOneStyles = cva('overflow-hidden rounded-10 lg:rounded-30 border-1 border-white/30 h-full w-auto', {
+const mediaOneStyles = cva('overflow-hidden rounded-10 md:rounded-30 border-1 border-white/30 w-full h-auto md:h-full md:w-auto', {
   variants: {
     reversed: {
       false: 'aspect-portrait-video',
@@ -39,16 +39,16 @@ const mediaOneStyles = cva('overflow-hidden rounded-10 lg:rounded-30 border-1 bo
   }
 })
 
-const containerTwoStyles = cva('relative flex flex-col gap-y-28', {
+const containerTwoStyles = cva('w-full h-auto relative flex flex-col gap-y-10 md:gap-y-28', {
   variants: {
     reversed: {
-      false: 'h-[80%] w-auto',
-      true: 'h-full w-auto',
+      false: 'md:h-[80%] md:w-auto',
+      true: 'md:h-full md:w-auto',
     }
   }
 })
 
-const mediaTwoStyles = cva('overflow-hidden rounded-10 lg:rounded-30 border-1 border-white/30 h-full w-auto', {
+const mediaTwoStyles = cva('overflow-hidden rounded-10 md:rounded-30 border-1 border-white/30 w-full h-auto md:h-full md:w-auto', {
   variants: {
     reversed: {
       false: 'aspect-video',
@@ -75,19 +75,19 @@ export const Diptych: FC<DiptychProps> = ({
           ) : null}
 
           {media.mediaType === 'video' && media.video ? (
-            <Video className="w-full h-full" {...media.video} />
+            <Video {...media.video} />
           ) : null}
         </div>
         
         {media.caption ? (
-          <p className="col-span-full text-23 text-center">{media.caption}</p>
+          <p className="col-span-full text-18 md:text-23 text-center">{media.caption}</p>
         ) : null}
       </div>
     )
   }
 
   return (
-    <div className="w-fit h-screen py-100 flex items-center gap-x-column-1">
+    <div className="case-module w-full md:w-fit md:h-screen md:py-100 flex flex-col md:flex-row items-center gap-y-20 md:gap-y-0 gap-x-column-1">
       {renderMedia(firstMedia, containerOneStyles({ reversed }), mediaOneStyles({ reversed }))}
       {renderMedia(secondMedia, containerTwoStyles({ reversed }), mediaTwoStyles({ reversed }))}
     </div>

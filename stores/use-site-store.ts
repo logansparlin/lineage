@@ -7,6 +7,8 @@ interface SiteStore {
   setColorButtonVisible: (visible: boolean) => void;
   cursorHidden: boolean;
   setCursorHidden: (hidden: boolean) => void;
+  currentStep: string | null;
+  setCurrentStep: (step: string | null) => void;
 }
 
 export const useSiteStore = create<SiteStore>((set) => ({
@@ -16,4 +18,6 @@ export const useSiteStore = create<SiteStore>((set) => ({
   setColorButtonVisible: (visible: boolean) => set({ colorButtonVisible: visible }),
   cursorHidden: false,
   setCursorHidden: (hidden: boolean) => set({ cursorHidden: hidden }),
+  currentStep: null,
+  setCurrentStep: (step: string | null) => set({ currentStep: step }),
 }))

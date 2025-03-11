@@ -47,7 +47,7 @@ export const StepsSection: FC<StepsSectionProps> = (props) => {
     <section className="w-full flex flex-col items-center relative z-[3]" {...rest}>
       {intro ? <StepsIntro {...intro} /> : null}
 
-      <div className="w-full relative flex flex-col items-center gap-y-250 pt-100 -mb-screen">
+      <div className="w-full overflow-hidden relative flex flex-col items-center gap-y-250 pt-100 -mb-screen">
         <StepObserver step="one">
           <StepOne
             className="relative w-full flex flex-col gap-y-180"

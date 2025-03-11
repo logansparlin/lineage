@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { VisualEditing } from "next-sanity";
-import { settingsFooterQuery, settingsQuery, settingsSeoQuery } from "@/sanity/queries/settings";
+import { settingsQuery, settingsSeoQuery } from "@/sanity/queries/settings";
 import { useMetadata } from "@/hooks/use-metadata";
 import { draftMode } from "next/headers";
 import localFont from "next/font/local";
@@ -11,9 +11,8 @@ import { IBM_Plex_Mono } from "next/font/google";
 import { LayoutTransition } from "@/components/global/layout-transition";
 import { Header } from "@/components/global/header";
 import { SetVH } from "@/components/global/SetVH";
-
-import { Footer } from '@/components/global/footer';
 import { Cursor } from '@/components/global/cursor';
+import { Favicon } from '@/components/global/favicon';
 
 import "./globals.css";
 
@@ -72,10 +71,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [{ data: settings }, { data: footerSettings }] = await Promise.all([
-    sanityFetch({ query: settingsQuery }),
-    sanityFetch({ query: settingsFooterQuery })
-  ])
+  const { data: settings } = await sanityFetch({ query: settingsQuery })
 
   return (
     <html lang="en">
@@ -83,10 +79,11 @@ export default async function RootLayout({
         className={`${PPNeueMontreal.variable} ${IBMPlexMono.variable} antialiased font-sans font-normal bg-black text-off-white cursor-none`}
       >
         <Cursor />
+        <Favicon icons={settings?.seo?.favicon} />
         <Header {...settings?.header} />
         <SetVH />
         <SanityLive />
-        <LayoutTransition>
+        <LayoutTransition className="w-full">
             {children}
         </LayoutTransition>
         {(await draftMode()).isEnabled && <VisualEditing />}

@@ -7,35 +7,42 @@ import { Canvas, useThree, extend } from "@react-three/fiber"
 import { BoxGradient } from "@/shaders/box-gradient";
 import { CurvedPlane } from "@/components/home/intro/curved-plane";
 import { HomeIntroInteraction } from "./home-intro-interaction";
+import { HomeIntroColorSwitcher } from "./home-intro-color-switcher";
 import { Vector3 } from "three";
 
 extend({ BoxGradient });
 
 export const HomeScrollScene = memo(({ caseStudyGradient }: { caseStudyGradient: any }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   return (
     <div
-      className="fixed top-0 left-0 w-full h-screen"
+      id="home-scroll-scene"
+      className="fixed top-0 left-0 w-full h-screen overflow-hidden"
+      ref={containerRef}
     >
       <Canvas
-        gl={{
-          antialias: true,
+        gl={{ antialias: true, alpha: true }}
+        resize={{
+          scroll: false,
+          debounce: 0,
         }}
         camera={{ position: [0, 0, 10], fov: 75, near: 0.1, far: 10000 }} 
         dpr={[1, 3]}
         shadows={true}
-        className="w-full bg-black"
+        className="w-full bg-transparent"
       >
-        <Scene caseStudyGradient={caseStudyGradient} />
+        <Scene />
       </Canvas>
     </div>
   )
 })
 
-const Scene = ({ caseStudyGradient }: { caseStudyGradient: any }) => {
-  const { viewport, scene } = useThree();
+const Scene = () => {
+  const { viewport } = useThree();
   const meshRef = useRef<any>(null);
   
-  const gradient = getRandomGradient();
+  const gradient = useMemo(() => getRandomGradient(), []);
 
   const aspectRatio = useMemo(() => {
     const aspect = viewport.height / viewport.width;
@@ -46,14 +53,17 @@ const Scene = ({ caseStudyGradient }: { caseStudyGradient: any }) => {
     return Math.max(viewport.width, viewport.height);
   }, [viewport])
 
-  const introPlanesTop = Array.from({ length: 8 }, (_, i) => i + 1);
-  const introPlanesBottom = Array.from({ length: 5 }, (_, i) => i + 1);
+  const introPlanesTop = useMemo(() => Array.from({ length: 8 }, (_, i) => i + 1), []);
+  const introPlanesBottom = useMemo(() => Array.from({ length: 5 }, (_, i) => i + 1), []);
 
-  const exitPlanes = Array.from({ length: 5 }, (_, i) => i + 1);
+  const exitPlanes = useMemo(() => Array.from({ length: 5 }, (_, i) => i + 1), []);
+
+  console.log('re rendering scene')
 
   return (
     <>
-      <HomeIntroInteraction scene={scene} viewport={viewport} aspectRatio={aspectRatio} />
+      <HomeIntroInteraction />
+      <HomeIntroColorSwitcher />
       <mesh ref={meshRef} name="intro-mesh">
         {introPlanesTop.map((step, index) => {
           return (
@@ -68,12 +78,14 @@ const Scene = ({ caseStudyGradient }: { caseStudyGradient: any }) => {
               outer={gradient.outer}
               scale={new Vector3(0, 0, 0)}
               position={new Vector3(0, 0, index * 0.001)}
+              opacity={1}
             />
           )
         })}
 
         {introPlanesBottom.map((step, index) => {
-          const topFull = ((((normalizedSize * 1.5) - viewport.height) / 2) + viewport.height)
+          const yScale = 1.5;
+          const topFull = ((((normalizedSize * yScale) - viewport.height) / 2) + viewport.height)
           const yPosition = -1 * (topFull + (index * (normalizedSize * 0.125)))
 
           return (
@@ -87,19 +99,20 @@ const Scene = ({ caseStudyGradient }: { caseStudyGradient: any }) => {
               inner={gradient.outer}
               outer={gradient.inner}
               center={index === (introPlanesBottom.length - 1) ? "#000000" : "#FFFFFF"}
-              scale={new Vector3(2.5, 1.5, 1)}
+              scale={new Vector3(2.5, yScale, 1)}
               position={new Vector3(0, yPosition, ((introPlanesTop.length - 1) + index) * 0.001)}
               inset={0.925}
+              opacity={1}
             />
           )
         })}
 
         {exitPlanes.map((step, index) => {
-          const yScale = 1.25;
+          const yScale = 1.5;
           const topFull = ((((normalizedSize * yScale) - viewport.height) / 2) + viewport.height)
-          const yPosition = (topFull + (index * (normalizedSize * 0.125))) - (normalizedSize * 1.5)
+          const yPosition = (topFull + (index * (normalizedSize * 0.125))) - (normalizedSize * yScale)
           // const zPosition = ((introPlanesTop.length - 1) + (introPlanesBottom.length - 1) + index) * 0.001
-          const zPosition = -0.001 + (-1 * ((exitPlanes.length - index) * 0.001))
+          const zPosition = index * 0.001
 
           return (
             <CurvedPlane
@@ -110,11 +123,13 @@ const Scene = ({ caseStudyGradient }: { caseStudyGradient: any }) => {
               aspectRatio={aspectRatio}
               curveIntensity={3}
               curveProgress={-1 * (index * 1)}
-              inner={caseStudyGradient?.outer}
-              outer={caseStudyGradient?.inner}
+              inner={gradient?.outer}
+              outer={gradient?.inner}
               center={index === (exitPlanes.length - 1) ? "#000000" : "#FFFFFF"}
               scale={new Vector3(3, yScale, 1)}
               position={new Vector3(0, yPosition, zPosition)}
+              inset={0.985}
+              opacity={0}
             />
           )
         })}

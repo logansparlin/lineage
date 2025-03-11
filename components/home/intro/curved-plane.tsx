@@ -18,6 +18,7 @@ interface CurvedPlaneProps {
   scale?: Vector3;
   position?: Vector3;
   inset?: number;
+  opacity?: number;
 }
 
 export const CurvedPlane: FC<CurvedPlaneProps> = ({ 
@@ -36,11 +37,12 @@ export const CurvedPlane: FC<CurvedPlaneProps> = ({
   outerNext = "#000000",
   position = new Vector3(0, 0, 0),
   scale = new Vector3(1, 1, 1),
-  inset = 0.85
+  inset = 0.85,
+  opacity = 1.0,
 }) => {
   const innerColor = useMemo(() => new Color(outer).convertLinearToSRGB(), [outer])
   const outerColor = useMemo(() => new Color(inner).convertLinearToSRGB(), [inner])
-  const centerColor = useMemo(() => center ? new Color(center).convertLinearToSRGB() : null, [center])
+  const centerColor = useMemo(() => center ? new Color(center).convertLinearToSRGB() : new Color('#ffffff').convertLinearToSRGB(), [center])
 
   const innerColorNext = useMemo(() => new Color(innerNext).convertLinearToSRGB(), [innerNext])
   const outerColorNext = useMemo(() => new Color(outerNext).convertLinearToSRGB(), [outerNext])
@@ -60,6 +62,8 @@ export const CurvedPlane: FC<CurvedPlaneProps> = ({
         size={new Vector2(width, height)}
         curveIntensity={curveIntensity}
         curveProgress={curveProgress}
+        opacity={opacity}
+        transparent={true}
       />
     </mesh>
   )

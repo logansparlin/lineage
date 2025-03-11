@@ -10,7 +10,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 ScrollTrigger.defaults({
   immediateRender: false,
-  scrub: true,
+  scrub: 0.05,
+  invalidateOnRefresh: false,
 })
 
 interface ScrollContainerProps extends ComponentProps<'div'> {}
@@ -38,10 +39,11 @@ export const ScrollContainer: FC<ScrollContainerProps> = memo(({ children, ...pr
       root
       ref={lenisRef}
       options={{
+        infinite: true,
         anchors: true,
         autoRaf: false,
         syncTouch: false,
-        touchMultiplier: 2,
+        touchMultiplier: 1.5,
       }}
       className="overflow-auto"
     >

@@ -6,7 +6,12 @@ interface MetadataFromQuery {
   data: {
     title?: string
     description?: string
-    favicon?: Image
+    favicon?: {
+      one?: Image
+      two?: Image
+      three?: Image
+      four?: Image
+    }
     ogImage?: Image
   }
   useTitleTemplate?: boolean
@@ -22,7 +27,7 @@ export const useMetadata = ({
     title: defaultTitle,
   }
 
-  const favicon = data?.favicon ? urlFor(data?.favicon).url() : ''
+  const favicon = data?.favicon?.one ? urlFor(data?.favicon?.one).url() : ''
   const ogImage = data?.ogImage ? urlFor(data?.ogImage).url() : ''
 
   const parsedTitle = !data?.title ? defaultTitle : useTitleTemplate ? `${data?.title} | ${defaultTitle}` : data?.title

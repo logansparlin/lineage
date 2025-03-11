@@ -19,7 +19,33 @@ export default defineType({
     defineField({
       name: 'favicon',
       title: 'Favicon',
-      type: 'image'
+      type: 'object',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
+      fields: [
+        defineField({
+          name: 'one',
+          title: 'Step One',
+          type: 'image'
+        }),
+        defineField({
+          name: 'two',
+          title: 'Step Two',
+          type: 'image'
+        }),
+        defineField({
+          name: 'three',
+          title: 'Step Three',
+          type: 'image'
+        }),
+        defineField({
+          name: 'four',
+          title: 'Step Four',
+          type: 'image'
+        })
+      ]
     }),
     defineField({
       name: 'ogImage',

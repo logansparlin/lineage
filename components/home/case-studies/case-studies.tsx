@@ -32,6 +32,8 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
   useLenis(() => {
     if (typeof window === 'undefined' || !containerRef.current || !bottomRef.current || !topRef.current) return;
 
+    if (window.innerWidth < 768) return;
+
     containerRef.current.style.height = `${mainRef.current.scrollHeight}px`
     const containerRect = containerRef.current?.getBoundingClientRect();
     const offset = clamp((-1 * containerRect.top), 0, containerRef.current.scrollHeight);
@@ -48,7 +50,7 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
   return (
     <section
       id="case-studies"
-      ref={containerRef} className="relative z-[3] mb-[-100vh]"
+      ref={containerRef} className="relative w-full max-md:overflow-hidden z-[3] md:-mb-screen"
       style={{ 
         height: `${height}px`, 
         '--step-color-100': stepColors[100],
@@ -57,18 +59,17 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
         '--step-color-400': stepColors[400],
       } as React.CSSProperties}
     >
-      <div className="absolute inset-0 z-[4] transition-colors duration-1000 ease" />
-      <div className="w-full h-screen overflow-hidden sticky z-[5] top-0 perspective-[3500px]">
-        <div className="absolute w-full h-screen inset-0 z-[1] transition-colors duration-1000 ease bg-step-400 translate-z-[200vh]">
+      <div className="w-full overflow-hidden md:h-screen md:sticky z-[5] top-0 md:perspective-[3500px]">
+        <div className="pointer-events-none hidden md:block absolute w-full h-screen blur-[30px] inset-0 z-[1] transition-colors duration-1000 ease bg-step-400 translate-z-[200vh]">
           <BlurredBackground className="text-step-300 w-full h-full transition-colors duration-1000 ease will-change-auto transform-gpu" />
         </div>
-        <div className="w-full h-screen relative z-[2] transform-3d">
+        <div className="w-full md:h-screen relative z-[2] transform-3d">
 
           {/* Top */}
           <div 
             inert
             ref={topRef}
-            className="absolute will-change-auto w-full h-screen top-0 left-0 pointer-events-none translate-z-[-50vh] translate-y-[-50vh] rotate-x-[-90deg] overflow-hidden"
+            className="hidden md:block absolute will-change-auto w-full h-screen top-0 left-0 pointer-events-none translate-z-[-50vh] translate-y-[-50vh] rotate-x-[-90deg] overflow-hidden"
             style={{
               maskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 50%, black 100%)'
             }}
@@ -80,7 +81,7 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
           <div
             inert
             ref={bottomRef}
-            className="absolute will-change-auto w-full h-screen bottom-0 left-0 pointer-events-none translate-z-[-50vh] translate-y-[50vh] rotate-x-[90deg] overflow-hidden"
+            className="hidden md:block absolute will-change-auto w-full h-screen bottom-0 left-0 pointer-events-none translate-z-[-50vh] translate-y-[50vh] rotate-x-[90deg] overflow-hidden"
             style={{
               maskImage: 'linear-gradient(to top, rgba(0, 0, 0, 0.35) 50%, black 100%)'
             }}
@@ -91,7 +92,7 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
           {/* Primary */}
           <div
             ref={mainRef}
-            className="will-change-auto w-full h-screen translate-z-[-100vh] overflow-hidden pt-[100vh]"
+            className="will-change-auto w-full md:h-screen md:translate-z-[-100vh] overflow-hidden md:pt-[100vh]"
           >
             <CaseStudiesContent ref={contentRef} isMain items={items} setCurrentStep={setCurrentStep} />
           </div>

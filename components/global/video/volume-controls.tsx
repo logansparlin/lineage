@@ -14,7 +14,7 @@ interface VolumeControlsProps extends ComponentProps<'button'> {
   setVolume: (volume: number) => void
 }
 
-const volumeControlsStyles = cva('cursor-pointer w-24 h-24 flex-center transition-colors duration-400 ease', {
+const volumeControlsStyles = cva('cursor-pointer w-20 h-20 md:w-24 md:h-24 flex-center transition-colors duration-400 ease', {
   variants: {
     isMuted: {
       true: 'text-step-200',
@@ -44,6 +44,7 @@ export const VolumeControls: FC<VolumeControlsProps> = ({ isMuted, volume, setVo
       <button className={volumeControlsStyles({ isMuted })} {...rest}>
         <span className="sr-only">Volume</span>
         <VolumeIcon
+          className="w-16 md:w-18 h-auto"
           isMuted={isMuted}
           volume={volume}
         />

@@ -41,12 +41,12 @@ const menus = [
     },
     {
       label: 'Instagram',
-      url: 'https://instagram.com',
+      url: 'https://www.instagram.com/lineagedigital',
       type: 'link'
     },
     {
       label: 'LinkedIn',
-      url: 'https://linkedin.com',
+      url: 'https://www.linkedin.com/company/lineage-digital/',
       type: 'link'
     }
   ]
@@ -68,24 +68,33 @@ export const MainMenu: FC<MainMenuProps> = ({ className }) => {
     <AnimatePresence mode="wait">
       {menuOpen ? (
         <motion.div 
-          className={`${className} ${menuOpen ? 'grid' : 'hidden'} grid-cols-2 gap-x-72 pr-180 pt-8`}
+          className="
+            max-md:absolute max-md:w-full max-md:bg-black max-md:top-0 max-md:left-0 z-[1] md:pr-180 overflow-hidden
+            [--h-from:0px] md:[--h-from:100%]
+          "
+          initial={{ height: 'var(--h-from)' }}
+          animate={{ height: 'auto' }}
+          exit={{ height: 'var(--h-from)' }}
+          transition={{ duration: 0.75, ease: easings.outExpo }}
         >
-          {menus?.map((menu, index) => {
-            return (
-              <ul key={`menu-${index}`} className="flex flex-col">
-                {menu?.map((link, linkIndex) => (
-                  <MenuItem
-                    key={`menu-${index}-${linkIndex}`}
-                    onClick={onLinkClick}
-                    total={menu.length}
-                    index={linkIndex}
-                    offset={index}
-                    {...link}
-                  />
-                ))}
-              </ul>
-            )
-          })}
+          <div className="flex flex-col max-md:gap-y-32 pt-100 pb-32 px-20 md:grid md:grid-cols-2 md:gap-x-72">
+            {menus?.map((menu, index) => {
+              return (
+                <ul key={`menu-${index}`} className={`flex flex-col ${index === 0 ? 'max-md:text-36' : 'gap-y-6 text-20'}`}>
+                  {menu?.map((link, linkIndex) => (
+                    <MenuItem
+                      key={`menu-${index}-${linkIndex}`}
+                      onClick={onLinkClick}
+                      total={menu.length}
+                      index={linkIndex}
+                      offset={index}
+                      {...link}
+                    />
+                  ))}
+                </ul>
+              )
+            })}
+          </div>
         </motion.div>
       ) : null}
     </AnimatePresence>

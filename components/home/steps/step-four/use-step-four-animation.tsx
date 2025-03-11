@@ -1,7 +1,6 @@
 import { type RefObject } from "react";
 import { gsap } from "gsap/gsap-core";
 import { useGSAP } from "@gsap/react";
-import { getPositionBetween } from "@/lib/get-position-between";
 
 export const useStepFourAnimation = (stepFourRef: RefObject<HTMLDivElement>) => {
   useGSAP(() => {
@@ -12,66 +11,66 @@ export const useStepFourAnimation = (stepFourRef: RefObject<HTMLDivElement>) => 
 
     if (!details || !icon || !pin || !illo) return;
 
-    const illoSvg = illo.querySelector('.step-illo-svg');
-
-    const pinRect = pin.getBoundingClientRect();
     const iconRect = icon.getBoundingClientRect();
-    
-    const distance = getPositionBetween(icon, pin);
-    
-    const iconPinTop = distance - (pinRect.height / 2) - (iconRect.height / 2);
 
-
-    const mainTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: stepFourRef.current,
-        start: `top top`,
-        end: 'bottom top',
-        scrub: true,
-      }
-    })
-
-    mainTl.to(icon, {
-      zIndex: 5,
+    const iconPin = gsap.timeline({
       scrollTrigger: {
         trigger: icon,
-        start: () => `top ${iconPinTop}px`,
+        start: () => `top ${window.innerHeight / 2 - (iconRect.height / 2)}px`,
         end: 'bottom bottom',
         endTrigger: stepFourRef.current,
         scrub: true,
         pin: true,
         pinSpacing: false,
         pinReparent: true,
-        anticipatePin: 0.05
+        anticipatePin: 0.01
       }
+    })
+
+    const illoPin = gsap.timeline({
+      scrollTrigger: {
+        trigger: illo,
+        start: 'top top',
+        end: 'bottom bottom',
+        endTrigger: stepFourRef.current,
+        scrub: true,
+        pin: true,
+        pinSpacing: false,
+        pinReparent: true,
+        anticipatePin: 0.01,
+      }
+    })
+
+    const illoTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: illo,
+        start: 'top top',
+        end: 'bottom bottom',
+        endTrigger: stepFourRef.current,
+        scrub: true,
+      }
+    })
+
+    illoTl.to('.rect-one', {
+      transform: 'scale(1.35)',
+      ease: 'none',
+      duration: 0.7
+    }, 0.3)
+
+    illoTl.to('.rect-two', {
+      transform: 'scale(1.35)',
+      ease: 'none',
+      duration: 0.85
+    }, 0.15)
+
+    illoTl.to('.rect-three', {
+      transform: 'scale(1.45)',
+      ease: 'none',
+      duration: 1
     }, 0)
-
-    mainTl.to(illo, {
-      zIndex: 1,
-      scrollTrigger: {
-        trigger: illo,
-        start: 'top 40px',
-        end: 'bottom bottom',
-        endTrigger: stepFourRef.current,
-        scrub: true,
-        pin: true,
-        pinSpacing: false,
-        pinReparent: true,
-        anticipatePin: 0.05,
-      }
-    })
-
-    mainTl.to(illoSvg, {
-      scale: 1.25,
-      scrollTrigger: {
-        trigger: illo,
-        start: 'top 40px',
-        end: 'bottom bottom',
-        endTrigger: stepFourRef.current,
-        scrub: true,
-      }
-    })
-
+    
+  }, {
+    scope: stepFourRef.current
   });
 };
 

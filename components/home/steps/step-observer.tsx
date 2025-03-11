@@ -38,7 +38,7 @@ export const StepObserver: FC<StepObserverProps> = ({ step, children }) => {
   }, [])
 
   return (
-    <div id={`step-${step}`} ref={containerRef}>
+    <div className="w-full" id={`step-${step}`} ref={containerRef}>
       {children}
     </div>
   )

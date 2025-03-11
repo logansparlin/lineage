@@ -47,7 +47,7 @@ export const Header: FC<HeaderProps> = (props) => {
 
   return (
     <header className="w-full px-20 py-20 md:px-40 md:py-24 fixed top-0 left-0 z-[500] flex items-start justify-between">
-      <Link href="/">
+      <Link href="/" className="relative z-[2]">
         <span className="sr-only">Lineage</span>
         <Logo className="h-22 w-auto" />
       </Link>
@@ -73,6 +73,7 @@ export const Header: FC<HeaderProps> = (props) => {
           ) : null}
         </AnimatePresence>
         <Button
+          className="relative z-[2]"
           onClick={toggleMenu}
         >
           Menu

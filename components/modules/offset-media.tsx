@@ -22,7 +22,7 @@ interface OffsetMediaProps {
   secondMedia: MediaItem
 }
 
-const mediaStyles = cva('relative h-full w-full flex items-center gap-x-120', {
+const mediaStyles = cva('relative h-full w-full flex items-center gap-x-120 flex flex-col gap-y-20', {
   variants: {
     position: {
       first: 'justify-start',
@@ -38,7 +38,7 @@ export const OffsetMedia: FC<OffsetMediaProps> = ({
   const renderMedia = (media: MediaItem, className: string) => {
     return (
       <div className={className}>
-        <div className={`aspect-video relative h-full rounded-10 lg:rounded-30 overflow-hidden border-1 border-white/30`}>
+        <div className={`aspect-video relative w-full md:w-auto md:h-full rounded-10 lg:rounded-30 overflow-hidden border-1 border-white/30`}>
           {media.mediaType === 'image' && media.image ? (
             <Image
               image={media.image}
@@ -48,12 +48,12 @@ export const OffsetMedia: FC<OffsetMediaProps> = ({
           ) : null}
 
           {media.mediaType === 'video' && media.video ? (
-            <Video className="w-full h-full" playbackId={media.video.playbackId} />
+            <Video playbackId={media.video.playbackId} />
           ) : null}
         </div>
         
         {media.text ? (
-          <div className="mt-28 text-18 md:text-23 max-w-820">
+          <div className="text-18 md:text-23 pb-40 md:pb-0 max-w-820">
             <SitePortableText value={media.text} />
           </div>
         ) : null}
@@ -62,7 +62,7 @@ export const OffsetMedia: FC<OffsetMediaProps> = ({
   }
 
   return (
-    <div className="min-w-1200 w-auto h-screen grid grid-cols-1 grid-rows-2 gap-y-24 lg:py-100">
+    <div className="flex flex-col gap-y-20 w-full md:min-w-screen md:w-auto md:h-screen md:grid md:grid-cols-1 md:grid-rows-2 md:gap-y-24 lg:py-100">
       {renderMedia(firstMedia, mediaStyles({ position: 'first' }))}
       {renderMedia(secondMedia, mediaStyles({ position: 'last' }))}
     </div>

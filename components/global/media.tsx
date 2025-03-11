@@ -30,12 +30,12 @@ export const Media: FC<MediaProps> = (props) => {
 
         {mediaType === 'video' && video ? (
           <div className="absolute inset-0 w-full h-full">
-            <Video {...video} className="w-full h-full" />
+            <Video {...video} />
           </div>
         ) : null}
       </div>
       {caption ? (
-        <p className="col-span-full text-23 text-center">{caption}</p>
+        <p className="col-span-full text-18 md:text-23 text-center">{caption}</p>
       ) : null}
     </div>
   )

@@ -1,7 +1,4 @@
-
-
 import { ComponentProps, type FC } from 'react';
-import Link from 'next/link';
 import { CaseStudiesSection } from './case-studies-section';
 
 interface CaseStudiesContentProps extends ComponentProps<'div'> {
@@ -24,7 +21,7 @@ export const CaseStudiesContent: FC<CaseStudiesContentProps> = ({ items, ref = (
   return (
     <div 
       ref={ref}
-      className={`${className} home-case-study w-full pb-[200vh]`} 
+      className={`${className} home-case-study w-full md:pb-[200vh]`} 
       {...rest}
     >
       {items?.map(caseStudy => {

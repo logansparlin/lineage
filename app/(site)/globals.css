@@ -123,7 +123,6 @@
   --column-width: calc(calc(100vw - var(--margin)) / var(--grid-columns));
 }
 
-
 @media (max-width: 1024px) {
   :root {
     --margin: 20px;
@@ -140,15 +139,6 @@
   --color-step-200: var(--step-color-200);
   --color-step-300: var(--step-color-300);
   --color-step-400: var(--step-color-400);
-}
-
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-i, em {
-  font-style: normal;
 }
 
 @layer base {
@@ -203,6 +193,10 @@ i, em {
 
   .flex-center {
     @apply flex items-center justify-center;
+  }
+
+  .case-module {
+    @apply px-20 md:px-0;
   }
 }
 
@@ -347,10 +341,8 @@ i, em {
     }
   }
 
-  @media (hover:none) {
-    &:active {
-      @slot;
-    }
+  &:active {
+    @slot;
   }
 }
 
@@ -360,11 +352,29 @@ i, em {
       @slot;
     }
   }
+
+  &:active {
+    @slot;
+  }
+
+  &:focus-visible {
+    @slot;
+  }
 }
 
 * {
   text-decoration-thickness: 0.05em;
   text-underline-offset: 3px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  width: 100%;
+}
+
+i, em {
+  font-style: normal;
 }
 
 body:not(.fullscreen) *:not(input, textarea, .disable-cursor) {

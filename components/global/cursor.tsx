@@ -11,8 +11,6 @@ interface CursorProps {
   hidden?: boolean;
 }
 
-const DAMPING = 0.15
-
 export const Cursor: FC<CursorProps> = () => {
   const [currentStep, setCurrentStep] = useState(1)
 
@@ -63,10 +61,14 @@ export const Cursor: FC<CursorProps> = () => {
   }, [])
 
   useEffect(() => {
+    if (typeof window === 'undefined') return
+    
     window.addEventListener('mousemove', handleMouseMove)
     document.addEventListener('click', handleClick)
 
     return () => {
+      if (typeof window === 'undefined') return
+      
       window.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('click', handleClick)
     }

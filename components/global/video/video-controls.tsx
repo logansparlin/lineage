@@ -29,13 +29,13 @@ export const VideoControls: FC<VideoControlsProps> = (props) => {
     <AnimatePresence>
       {!hidden ? (
         <motion.div
-          className="absolute bottom-0 left-0 w-full z-[2] text-white p-30 h-130 flex items-end justify-center bg-linear-to-t from-black/100 to-black/0"
+          className="absolute bottom-0 left-0 w-full z-[2] text-white p-12 md:p-30 h-80 md:h-130 flex items-end justify-center bg-linear-to-t from-black/100 to-black/0"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.35 }}
         >
-          <div className="w-full max-w-[calc(100vw-60px)] flex items-center gap-20">
+          <div className="w-full md:max-w-[calc(100vw-60px)] flex items-center gap-12 md:gap-20">
             <div className="flex items-center">
               <PlayButton onClick={handlePlay} isPlaying={isPlaying} />
               <PauseButton onClick={handlePause} isPlaying={isPlaying} />
@@ -43,7 +43,7 @@ export const VideoControls: FC<VideoControlsProps> = (props) => {
             <div className="flex-1 bg-white/30 rounded-full h-4 overflow-hidden">
               <div className="h-full w-full origin-left bg-step-200" style={{ width: `${progress}%` }} />
             </div>
-            <div className="flex items-center gap-x-10">
+            <div className="flex items-center pl-2 gap-x-4 md:gap-x-10">
               <VolumeControls onClick={toggleMute} isMuted={isMuted} volume={volume} setVolume={setVolume} />
               <FullscreenButton onClick={handleFullscreen} />
             </div>

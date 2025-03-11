@@ -17,6 +17,7 @@ export const BoxGradient = shaderMaterial(
     curveIntensity: 4.0,
     inset: 0.85,
     colorProgress: 0.0,
+    opacity: 1.0,
   },
   // Vertex Shader
   `
@@ -36,7 +37,11 @@ export const BoxGradient = shaderMaterial(
       
       // Apply curve to position
       vec3 adjusted = position;
-      adjusted.y *= aspect;
+      if (aspect > 1.0) {
+        adjusted.y *= aspect;
+      } else {
+        adjusted.x /= aspect;
+      }
       adjusted.y -= curve * curveProgress;
       
       vec4 pos = projectionMatrix * modelViewMatrix * vec4(adjusted, 1.0);
@@ -60,6 +65,7 @@ export const BoxGradient = shaderMaterial(
   uniform vec3 innerColorNext;
   uniform vec3 outerColorNext;
   uniform float colorProgress;
+  uniform float opacity;
 
   float smoothBox(vec2 p, vec2 b, float r) {
     vec2 d = abs(p) - b + r;
@@ -113,7 +119,7 @@ export const BoxGradient = shaderMaterial(
       }
     }
 
-    gl_FragColor = vec4(finalColor, 1.0);
+    gl_FragColor = vec4(finalColor, opacity);
   }
   `
 )

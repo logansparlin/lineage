@@ -3,8 +3,8 @@ import { SitePortableText } from "../global/site-portable-text"
 
 const shadows = {
   0: 'shadow-orange lg:hover:shadow-orange-hover',
-  1: 'shadow-green lg:hover:shadow-green-hover',
-  2: 'shadow-blue lg:hover:shadow-blue-hover',
+  1: 'shadow-blue lg:hover:shadow-blue-hover',
+  2: 'shadow-green lg:hover:shadow-green-hover',
   3: 'shadow-pink lg:hover:shadow-pink-hover',
 }
 

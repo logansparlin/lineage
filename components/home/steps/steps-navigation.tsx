@@ -28,8 +28,8 @@ export const StepsNavigation: FC<StepsNavigationProps> = ({ className, ...props 
   const currentStep = useHomeSteps((state) => state.currentStep)
 
   return (
-    <div className="w-full h-screen sticky bottom-0 z-[12] flex items-center justify-start px-40">
-      <div className="w-fit flex flex-col justify-center gap-y-0 text-18 text-center py-18 bg-[rgba(255,255,255,0.1)] border-1 border-white/20 rounded-30 backdrop-blur-[20px]">
+    <div className="w-full h-screen sticky bottom-0 z-[12] hidden md:flex items-center justify-start px-40 pointer-events-none">
+      <div className="w-fit flex flex-col justify-center gap-y-0 text-18 text-center py-18 bg-[rgba(255,255,255,0.1)] border-1 border-white/20 rounded-30 pointer-events-auto">
         {allSteps?.map((step, index) => {
           return (
             <a href={`#step-${step}`} key={step} className={stepsNavigationStyles({ active: currentStep === step })}>

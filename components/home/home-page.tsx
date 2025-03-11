@@ -66,14 +66,14 @@ export const HomePage = (props: HomePageProps) => {
   }, [caseStudies])
 
   return (
-    <div className="relative select-none">
+    <div className="relative w-full select-none">
       <h1 className="sr-only">{title}</h1>
 
       <HomeIntro titles={intro.titles} description={intro.description} />
 
       <StepsSection {...steps} />
 
-      <div className="case-enter-section h-screen-150 w-full bg-transparent" />
+      <div className="case-enter-section h-screen-200 w-full bg-transparent" />
 
       <CaseStudies items={caseStudies} />
       
@@ -81,7 +81,7 @@ export const HomePage = (props: HomePageProps) => {
 
       <Footer />
       
-      <HomeScrim />
+      {/* <HomeScrim /> */}
     </div>
   );
 };

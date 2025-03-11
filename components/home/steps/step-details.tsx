@@ -12,13 +12,13 @@ export const StepDetails: FC<StepDetailsProps> = (props) => {
   const { step, title, description, icon, className, ...rest } = props
 
   return (
-    <div className="step-details relative z-[3] w-full grid grid-cols-2 gap-0">
-      <div className="relative col-start-2 row-start-1 self-start flex items-center gap-x-24">
-        <span className="block -translate-x-1/2 -translate-y-[calc(50%-16px)]">{icon}</span>
+    <div className="step-details px-20 md:px-0 relative z-[3] w-full flex flex-col items-center justify-center gap-60 md:grid md:grid-cols-2 md:gap-0">
+      <div className="relative md:col-start-2 md:row-start-1 md:self-start flex items-center gap-x-24">
+        <span className="block md:-translate-x-1/2 md:-translate-y-[calc(50%-16px)]">{icon}</span>
       </div>
-      <div className="col-start-2 row-start-1 flex items-start gap-x-24 pl-[4vw]">
-        <div className="w-180 h-1 mt-15 bg-white" />
-        <div className="flex flex-col items-start gap-y-20 max-w-330">
+      <div className="text-center md:text-left md:col-start-2 md:row-start-1 flex items-center md:items-start gap-x-24 md:pl-[4vw]">
+        <div className="hidden md:block w-180 h-1 mt-15 bg-white" />
+        <div className="flex flex-col items-center md:items-start gap-y-15 md:gap-y-20 max-w-330">
           <StepBadge step={step} />
           <div className="flex flex-col gap-y-10">
             <h2 className="text-29">{title}</h2>
