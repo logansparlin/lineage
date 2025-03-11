@@ -311,27 +311,27 @@
 }
 
 @utility h-screen-* {
-  height: calc(100svh * --value(integer));
+  height: calc(1svh * --value(integer));
 }
 
 @utility min-h-screen-* {
-  min-height: calc(100svh * --value(integer));
+  min-height: calc(1svh * --value(integer));
 }
 
 @utility mb-screen-* {
-  margin-bottom: calc(100svh * --value(integer));
+  margin-bottom: calc(1svh * --value(integer));
 }
 
 @utility -mb-screen-* {
-  margin-bottom: calc(-1 * (100svh * --value(integer)));
+  margin-bottom: calc(-1 * (1svh * --value(integer)));
 }
 
 @utility mt-screen-* {
-  margin-top: calc(100svh * --value(integer));
+  margin-top: calc(1svh * --value(integer));
 }
 
 @utility -mt-screen-* {
-  margin-top: calc(-1 * (100svh * --value(integer)));
+  margin-top: calc(-1 * (1svh * --value(integer)));
 }
 
 @custom-variant hover-active {
