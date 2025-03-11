@@ -164,27 +164,27 @@
   }
   
   .mb-screen {
-    margin-bottom: calc(var(--vh, 1vh) * 100);
+    margin-bottom: 100svh;
   }
 
   .-mb-screen {
-    margin-bottom: calc(-1 * (var(--vh, 1vh) * 100));
+    margin-bottom: calc(-1 * (100svh));
   }
 
   .mt-screen {
-    margin-top: calc(var(--vh, 1vh) * 100);
+    margin-top: 100svh;
   }
 
   .-mt-screen {
-    margin-top: calc(-1 * (var(--vh, 1vh) * 100));
+    margin-top: calc(-1 * (100svh));
   }
 
   .h-screen {
-    height: calc(var(--vh, 1vh) * 100);
+    height: 100svh;
   }
 
   .min-h-screen {
-    min-height: calc(var(--vh, 1vh) * 100);
+    min-height: 100svh;
   }
 
   .absolute-center {
@@ -311,27 +311,27 @@
 }
 
 @utility h-screen-* {
-  height: calc(var(--vh, 1vh) * --value(integer));
+  height: calc(100svh * --value(integer));
 }
 
 @utility min-h-screen-* {
-  min-height: calc(var(--vh, 1vh) * --value(integer));
+  min-height: calc(100svh * --value(integer));
 }
 
 @utility mb-screen-* {
-  margin-bottom: calc(var(--vh, 1vh) * --value(integer));
+  margin-bottom: calc(100svh * --value(integer));
 }
 
 @utility -mb-screen-* {
-  margin-bottom: calc(-1 * (var(--vh, 1vh) * --value(integer)));
+  margin-bottom: calc(-1 * (100svh * --value(integer)));
 }
 
 @utility mt-screen-* {
-  margin-top: calc(var(--vh, 1vh) * --value(integer));
+  margin-top: calc(100svh * --value(integer));
 }
 
 @utility -mt-screen-* {
-  margin-top: calc(-1 * (var(--vh, 1vh) * --value(integer)));
+  margin-top: calc(-1 * (100svh * --value(integer)));
 }
 
 @custom-variant hover-active {
