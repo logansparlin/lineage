@@ -34,11 +34,17 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
 
     if (window.innerWidth < 768) return;
 
+    const mainContent: HTMLElement = mainRef.current?.querySelector('.home-case-study');
+    const topContent: HTMLElement = topRef.current?.querySelector('.home-case-study');
+    const bottomContent: HTMLElement = bottomRef.current?.querySelector('.home-case-study');
+
     containerRef.current.style.height = `${mainRef.current.scrollHeight}px`
     const containerRect = containerRef.current?.getBoundingClientRect();
     const offset = clamp((-1 * containerRect.top), 0, containerRef.current.scrollHeight);
 
-    topRef.current.scrollTop = bottomRef.current.scrollTop = mainRef.current.scrollTop = offset;
+    mainContent.style.transform = `translateY(${-1 *offset}px)`;
+    topContent.style.transform = `translateY(${-1 *offset}px)`;
+    bottomContent.style.transform = `translateY(${-1 * offset}px)`;
   })
 
   const stepColors = useMemo(() => {

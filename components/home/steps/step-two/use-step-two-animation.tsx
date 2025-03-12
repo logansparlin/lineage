@@ -12,17 +12,22 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
     const illo: HTMLElement = stepTwoRef.current?.querySelector('.step-illo');
 
     if (!details || !icon || !pin || !illo) return;
-
-    const pinRect = pin.getBoundingClientRect();
-    const iconRect = icon.getBoundingClientRect();
-
-    const pinDistance = getPositionBetween(pin, illo);
     
-    const iconScale = pinRect.width / iconRect.width;
+    const getIconScale = () => {
+      const pinRect = pin.getBoundingClientRect();
+      const iconRect = icon.getBoundingClientRect();
 
-    const iconExtraHeight = (iconScale - 1) * iconRect.height
+      return pinRect.width / iconRect.width;
+    }
     
-    const iconPinTop = pinDistance + (iconRect.height - (iconExtraHeight / 2));
+    const getIconPinStart = () => {
+      const iconRect = icon.getBoundingClientRect();
+      const iconScale = getIconScale();
+      const pinDistance = getPositionBetween(pin, illo);
+      const iconExtraHeight = (iconScale - 1) * iconRect.height
+      const iconPinTop = pinDistance + (iconRect.height - (iconExtraHeight / 2));
+      return `top ${-1 * iconPinTop}px`
+    }
 
     const groupOneHighlights = gsap.utils.toArray(illo.querySelectorAll('.group-one .highlight'));
     const groupTwoHighlights = gsap.utils.toArray(illo.querySelectorAll('.group-two .highlight'));
@@ -38,7 +43,7 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
     })
 
     mainTl.to(icon, {
-      scale: iconScale,
+      scale: () => getIconScale(),
       duration: 0.5,
     }, 0)
 
@@ -47,7 +52,7 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
     const iconPin = gsap.timeline({
       scrollTrigger: {
         trigger: icon,
-        start: () => `top ${-1 * iconPinTop}px`,
+        start: () =>getIconPinStart(),
         end: 'bottom bottom',
         endTrigger: stepTwoRef.current,
         scrub: true,

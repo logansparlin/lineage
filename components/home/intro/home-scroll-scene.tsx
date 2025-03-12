@@ -58,7 +58,9 @@ const Scene = ({ caseStudyGradient }: { caseStudyGradient: any }) => {
 
   const exitPlanes = useMemo(() => Array.from({ length: 5 }, (_, i) => i + 1), []);
 
-  console.log('re rendering scene')
+  const curveIntensity = useMemo(() => {
+    return aspectRatio > 1 ? 3 : 1.5;
+  }, [aspectRatio])
 
   return (
     <>
@@ -73,7 +75,7 @@ const Scene = ({ caseStudyGradient }: { caseStudyGradient: any }) => {
               width={viewport.width}
               height={viewport.height}
               aspectRatio={aspectRatio}
-              curveIntensity={3}
+              curveIntensity={curveIntensity}
               inner={gradient.inner}
               outer={gradient.outer}
               scale={new Vector3(0, 0, 0)}
@@ -95,7 +97,7 @@ const Scene = ({ caseStudyGradient }: { caseStudyGradient: any }) => {
               width={viewport.width}
               height={viewport.height}
               aspectRatio={aspectRatio}
-              curveIntensity={3}
+              curveIntensity={curveIntensity}
               inner={gradient.outer}
               outer={gradient.inner}
               center={index === (introPlanesBottom.length - 1) ? "#000000" : "#FFFFFF"}
@@ -121,7 +123,7 @@ const Scene = ({ caseStudyGradient }: { caseStudyGradient: any }) => {
               width={viewport.width}
               height={viewport.height}
               aspectRatio={aspectRatio}
-              curveIntensity={3}
+              curveIntensity={curveIntensity}
               curveProgress={-1 * (index * 1)}
               inner={caseStudyGradient?.outer}
               outer={caseStudyGradient?.inner}

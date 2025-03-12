@@ -24,7 +24,7 @@ export const StepOne: FC<StepOneProps> = ({ title, description, className = '', 
         title={title}
         description={description}
         icon={(
-          <div className="step-icon relative z-[10] h-[clamp(40px,6vw,120px)] w-[clamp(40px,6vw,120px)]">
+          <div className="step-icon relative z-[10] h-[clamp(40px,6vw,120px)] w-[clamp(40px,6vw,120px)] will-change-transform">
             <IconStepOne
               highlight
               className="w-full h-auto"

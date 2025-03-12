@@ -11,7 +11,7 @@ export const InternalLink: FC<InternalLinkProps> = ({ _key, _type, label, to, ..
   const href = getRelativePath({ slug: to.slug, type: to._type })
 
   return (
-    <Link scroll={false} href={href} {...rest}>
+    <Link href={href} scroll={false} {...rest}>
       {label}
     </Link>
   )

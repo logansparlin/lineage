@@ -1,6 +1,6 @@
 export const StepThreeIllo = () => {
   return (
-    <div className="step-illo col-span-full w-full px-60 relative flex justify-center z-[1]">
+    <div className="step-illo will-change-transform col-span-full w-full px-60 relative flex justify-center z-[1]">
       <svg className="max-w-full relative z-[1]" width="1207" height="1060" viewBox="0 0 1207 1060" fill="none" xmlns="http://www.w3.org/2000/svg">
         {/* Left Box */}
         <path className="box-left" d="M0.725694 818.601H275.038V1058.81H0.725694V818.601ZM276.49 1058.14V818.292L497.101 689.963V903.855L276.49 1058.14ZM2.75933 817.149L228.785 689.427H495.136L275.568 817.149H2.75933Z" fill="black" stroke="#505050" strokeWidth="1.45139"/>
