@@ -133,6 +133,12 @@ export const useVideoControls = (props: UseVideoControlsProps) => {
     }
   }, [containerRef]);
 
+  const updateProgress = useCallback((progress: number) => {
+    if (!playerRef.current) return;
+    playerRef.current.currentTime = (playerRef.current?.duration * progress) / 100;
+    setProgress(progress)
+  }, [playerRef])
+
   useEffect(() => {
     if (!isPlaying) return;
 
@@ -168,10 +174,11 @@ export const useVideoControls = (props: UseVideoControlsProps) => {
     togglePlay,
     toggleMute,
     handleFullscreen,
+    setProgress: updateProgress,
   }), [
     hasPlayed, isPlaying, isMuted, volume, progress, 
     controlsVisible, containerProps, handlePlay, handlePause, 
-    togglePlay, toggleMute, handleFullscreen
+    togglePlay, toggleMute, handleFullscreen, updateProgress
   ]);
 
   return memoizedReturnValue;

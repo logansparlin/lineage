@@ -78,7 +78,7 @@ export const HomeIntro = ({ titles, description }) => {
 
                   {variant === 'last' && description ? (
                     <div
-                      className="home-intro-description w-[80%] md:w-full max-w-800 text-18 lg:text-32 h-0 overflow-hidden"
+                      className="home-intro-description w-[80%] md:w-full max-w-800 text-18 lg:text-32 h-0 overflow-hidden will-change-auto"
                       style={{
                         maskImage: 'linear-gradient(to top, transparent, black 80px)'
                       }}
@@ -107,7 +107,7 @@ export const HomeIntro = ({ titles, description }) => {
           })}
         </div>
         
-        <div className="intro-section-exit h-screen-200"></div>
+        <div className="intro-section-exit h-screen md:h-screen-200"></div>
       </div>
     </section>
   )

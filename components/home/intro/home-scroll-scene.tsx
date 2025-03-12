@@ -32,13 +32,13 @@ export const HomeScrollScene = memo(({ caseStudyGradient }: { caseStudyGradient:
         shadows={true}
         className="w-full bg-transparent"
       >
-        <Scene />
+        <Scene caseStudyGradient={caseStudyGradient} />
       </Canvas>
     </div>
   )
 })
 
-const Scene = () => {
+const Scene = ({ caseStudyGradient }: { caseStudyGradient: any }) => {
   const { viewport } = useThree();
   const meshRef = useRef<any>(null);
   
@@ -84,7 +84,7 @@ const Scene = () => {
         })}
 
         {introPlanesBottom.map((step, index) => {
-          const yScale = 1.5;
+          const yScale = aspectRatio > 1 ? 1.5 : 2.5;
           const topFull = ((((normalizedSize * yScale) - viewport.height) / 2) + viewport.height)
           const yPosition = -1 * (topFull + (index * (normalizedSize * 0.125)))
 
@@ -123,8 +123,8 @@ const Scene = () => {
               aspectRatio={aspectRatio}
               curveIntensity={3}
               curveProgress={-1 * (index * 1)}
-              inner={gradient?.outer}
-              outer={gradient?.inner}
+              inner={caseStudyGradient?.outer}
+              outer={caseStudyGradient?.inner}
               center={index === (exitPlanes.length - 1) ? "#000000" : "#FFFFFF"}
               scale={new Vector3(3, yScale, 1)}
               position={new Vector3(0, yPosition, zPosition)}

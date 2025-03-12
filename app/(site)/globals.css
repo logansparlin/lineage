@@ -381,6 +381,10 @@ body:not(.fullscreen) *:not(input, textarea, .disable-cursor) {
   cursor: none;
 }
 
+.disable-cursor, .disable-cursor * {
+  cursor: pointer !important;
+}
+
 body.fullscreen .site-cursor {
   display: none;
 }

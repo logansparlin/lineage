@@ -33,6 +33,7 @@ export const Video: FC<VideoProps> = (props) => {
     isMuted,
     volume,
     controlsVisible,
+    containerProps,
     progress,
     setIsPlaying,
     setVolume,
@@ -41,7 +42,7 @@ export const Video: FC<VideoProps> = (props) => {
     togglePlay,
     toggleMute,
     handleFullscreen,
-    containerProps,
+    setProgress,
   } = useVideoControls({ playerRef, containerRef })
 
   useEffect(() => {
@@ -84,14 +85,15 @@ export const Video: FC<VideoProps> = (props) => {
         hidden={!controlsVisible || !hasPlayed}
         volume={isMuted ? 0 : volume}
         isMuted={isMuted}
+        progress={progress}
         duration={duration}
         isPlaying={isPlaying}
         setVolume={setVolume}
         toggleMute={toggleMute}
         handlePlay={handlePlay}
+        setProgress={setProgress}
         handlePause={handlePause}
         handleFullscreen={handleFullscreen}
-        progress={progress}
       />
     </div>
   )

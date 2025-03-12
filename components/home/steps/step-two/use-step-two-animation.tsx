@@ -20,8 +20,6 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
     
     const iconScale = pinRect.width / iconRect.width;
 
-    console.log(iconScale)
-
     const iconExtraHeight = (iconScale - 1) * iconRect.height
     
     const iconPinTop = pinDistance + (iconRect.height - (iconExtraHeight / 2));
@@ -54,6 +52,7 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
         endTrigger: stepTwoRef.current,
         scrub: true,
         pin: true,
+        pinType: 'transform',
         pinSpacing: false,
         pinReparent: true,
         anticipatePin: 0.01
@@ -68,6 +67,7 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
         endTrigger: stepTwoRef.current,
         scrub: true,
         pin: true,
+        pinType: 'transform',
         pinSpacing: false,
         pinReparent: true,
         anticipatePin: 0.01

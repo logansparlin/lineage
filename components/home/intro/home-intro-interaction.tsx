@@ -15,6 +15,7 @@ export const HomeIntroInteraction = () => {
     const TITLE_EASE = 'power2.inOut';
     const TITLE_END_TIME = `>-=${TITLE_DURATION}`;
     const normalizedSize = Math.max(viewport.width, viewport.height);
+    const aspectRatio = viewport.width / viewport.height;
 
     await new Promise((resolve) => setTimeout(resolve, 5));
     
@@ -138,14 +139,18 @@ export const HomeIntroInteraction = () => {
     }, 0)
 
     topPlanes?.forEach((plane, index) => {
-      let scale = 0.3 + (index * (0.7 / (topPlanes.length - 1)));
+      const aspectOffset = aspectRatio > 1 ? 1 : aspectRatio;
 
-      secondSectionTl.set(plane.scale, { x: scale, y: scale, z: scale }, 0)
+      let startScale = 0.3 + (index * (0.7 / (topPlanes.length - 1)));
+
+      secondSectionTl.set(plane.scale, { x: startScale, y: startScale, z: startScale }, 0)
+
+      let endScale = (startScale + 0.7);
   
       secondSectionTl.to(plane.scale, {
-        x: () => scale + 0.7,
-        y: () => scale + 0.7,
-        z: () => scale + 0.7,
+        x: () => endScale * aspectOffset,
+        y: () => endScale,
+        z: () => endScale,
         duration: 2,
         ease: 'none'
       }, 0)
@@ -186,10 +191,11 @@ export const HomeIntroInteraction = () => {
     }
 
     topPlanes?.forEach((plane, index) => {
+      const aspectOffset = aspectRatio > 1 ? 1 : aspectRatio;
+
       let scale = (0.3 + (index * (0.7 / (topPlanes.length - 1))) + 0.7);
 
-      lastSectionTl.set(plane.scale, { x: scale, y: scale, z: scale }, 0)
-
+      lastSectionTl.to(plane.scale, { x: scale * aspectOffset, y: scale, z: scale, duration: 0 }, 0)
     })
     
     // lastSectionTl.to(topPlanes[0]?.position, {
@@ -209,10 +215,12 @@ export const HomeIntroInteraction = () => {
 
     bottomPlanes?.forEach((plane: any, index) => {
       if (!plane.material?.uniforms?.curveProgress) return;
+
+      const yScale = aspectRatio > 1 ? 1.5 : 2.5;
       
       exitTl.add(
         exitTl.to(plane.position, {
-          y: () => plane.position.y + (normalizedSize * 1.5),
+          y: () => plane.position.y + (normalizedSize * yScale),
           duration: 1,
           ease: 'none'
         }, 0)

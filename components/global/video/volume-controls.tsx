@@ -1,7 +1,6 @@
 'use client';
 
 import { type FC, type ComponentProps, useState } from 'react';
-import { useSiteStore } from '@/stores/use-site-store';
 import { cva } from 'class-variance-authority';
 
 import { AnimatePresence, motion } from 'framer-motion';
@@ -60,27 +59,15 @@ interface VolumeSliderProps {
 }
 
 const VolumeSlider: FC<VolumeSliderProps> = ({ volume, visible = false, setVolume }) => {
-  const setCursorHidden = useSiteStore(state => state.setCursorHidden)
-
   const handleVolumeChange = (value: number[]) => {
     setVolume(value[0])
-  }
-
-  const handleMouseEnter = () => {
-    setCursorHidden(true)
-  }
-
-  const handleMouseLeave = () => {
-    setCursorHidden(false)
   }
 
   return (
     <AnimatePresence>
       {visible ? (
         <motion.div
-          className="absolute z-[2] bottom-[calc(100%+12px)] left-0 w-full disable-cursor cursor-pointer flex justify-center"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          className="absolute z-[2] bottom-[calc(100%+12px)] left-0 w-full flex justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -96,11 +83,11 @@ const VolumeSlider: FC<VolumeSliderProps> = ({ volume, visible = false, setVolum
             step={0.01}
             onValueChange={handleVolumeChange}
           >
-            <Track className="relative h-full w-full bg-white/30 rounded-full overflow-hidden disable-cursor cursor-pointer">
-              <Range className="absolute h-full w-full rounded-full bg-step-200 disable-cursor cursor-pointer" />
+            <Track className="relative h-full w-full bg-white/30 rounded-full overflow-hidden">
+              <Range className="absolute h-full w-full rounded-full bg-step-200" />
             </Track>
             <Thumb
-              className="block w-8 h-8 bg-transparent disable-cursor cursor-pointer outline-none border-none focus:outline-none"
+              className="block w-8 h-8 bg-transparent outline-none border-none focus:outline-none"
               aria-label="Volume"
             />
           </SliderRoot>
