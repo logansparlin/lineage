@@ -13,18 +13,18 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
 
     if (!details || !icon || !pin || !illo) return;
     
-    const getIconScale = () => {
+    const getIconScale = () => () => {
       const pinRect = pin.getBoundingClientRect();
       const iconRect = icon.getBoundingClientRect();
 
       return pinRect.width / iconRect.width;
     }
     
-    const getIconPinStart = () => {
+    const getIconPinStart = () => () => {
       const iconRect = icon.getBoundingClientRect();
       const iconScale = getIconScale();
       const pinDistance = getPositionBetween(pin, illo);
-      const iconExtraHeight = (iconScale - 1) * iconRect.height
+      const iconExtraHeight = (iconScale() - 1) * iconRect.height
       const iconPinTop = pinDistance + (iconRect.height - (iconExtraHeight / 2));
       return `top ${-1 * iconPinTop}px`
     }
@@ -43,7 +43,7 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
     })
 
     mainTl.to(icon, {
-      scale: () => getIconScale(),
+      scale: getIconScale(),
       duration: 0.5,
     }, 0)
 
@@ -52,7 +52,7 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
     const iconPin = gsap.timeline({
       scrollTrigger: {
         trigger: icon,
-        start: () =>getIconPinStart(),
+        start: getIconPinStart(),
         end: 'bottom bottom',
         endTrigger: stepTwoRef.current,
         scrub: true,
