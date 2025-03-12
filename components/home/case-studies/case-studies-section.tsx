@@ -53,7 +53,7 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = ({ _id, title, sl
   return (
     <div
       ref={containerRef}
-      className={`${className} will-change-auto card overflow-hidden px-20 md:px-0 bg-[var(--local-color-400)] md:bg-transparent text-center md:text-left md:min-h-screen relative flex flex-col items-center justify-center gap-10 md:gap-15 py-100 md:py-[20vh]`}
+      className={`${className} group will-change-auto card overflow-hidden px-20 md:px-0 bg-[var(--local-color-400)] md:bg-transparent text-center md:text-left md:min-h-screen relative flex flex-col items-center justify-center gap-10 md:gap-15 py-100 md:py-[20vh]`}
       style={{
         '--local-color-100': stepColors[100],
         '--local-color-200': stepColors[200],
@@ -94,7 +94,7 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = ({ _id, title, sl
       <Link
         href={`/case-study/${slug}`}
         scroll={false}
-        className={`z-[2] text-20 font-medium py-2 px-12 rounded-full border-1 transition-colors duration-300 ease border-white all-interactions:bg-white all-interactions:text-black ${isMain ? 'opacity-100' : 'opacity-0'}`}
+        className={`card-link z-[2] text-20 font-medium py-2 px-12 rounded-full border-1 transition-colors duration-300 ease border-white group-hover:bg-white group-hover:text-black ${isMain ? 'opacity-100' : 'opacity-0'}`}
       >
         Read More
       </Link>
