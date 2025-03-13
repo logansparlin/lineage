@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 @theme {
+  --breakpoint-md: 800px;
+
   --color-black: rgb(0, 0, 0);
   --color-white: rgb(255, 255, 255);
   --color-off-white: rgb(242, 242, 242);
@@ -36,6 +38,9 @@
 
   --shadow-pink: 0 0px 200px 0px rgba(89, 0, 255, 0);
   --shadow-pink-hover: 0 0px 200px 0px rgba(89, 0, 255, 1);
+
+  --shadow-current: 0 0px 40px 40px currentColor;
+  --shadow-current-lg: 0 0px 100px 180px currentColor;
 
   --text-case-title: 93px;
   --text-case-title--line-height: 90%;
@@ -139,8 +144,6 @@
   --color-step-200: var(--step-color-200);
   --color-step-300: var(--step-color-300);
   --color-step-400: var(--step-color-400);
-
-  --shadow-current: 0 0px 800px 200px currentColor;
 }
 
 @layer base {

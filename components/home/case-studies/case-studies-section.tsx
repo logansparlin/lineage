@@ -61,9 +61,7 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = ({ _id, title, sl
         '--local-color-400': stepColors[400],
       } as React.CSSProperties}
     >
-      <div className="md:hidden absolute w-full h-full blur-[50px] inset-0 z-[1] translate-z-[200vh] pointer-events-none">
-        <BlurredBackground className="text-[var(--local-color-300)] w-full h-full will-change-auto transform-gpu" />
-      </div>
+      <BlurredBackground className="md:hidden absolute w-full h-full inset-0 z-[1] pointer-events-none text-[var(--local-color-300)]" />
       
       <h3
         className={`z-[2] pb-10 md:pb-5 text-32 md:text-58 ${isMain ? 'opacity-100' : 'opacity-0'}`}
@@ -73,7 +71,7 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = ({ _id, title, sl
       
       <div
         className={`
-          relative w-full md:w-[60%] aspect-video flex items-center justify-center rounded-10 md:rounded-20 will-change-auto
+          relative w-full md:w-[60%] aspect-video flex items-center justify-center rounded-10 md:rounded-20
           ${isMain ? 'transition-[box-shadow] duration-1000 ease md:shadow-[0_0_80px_80px_var(--step-color-300)]' : ''}
         `}
       >
@@ -82,7 +80,7 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = ({ _id, title, sl
             image={featuredImage}
             alt={title}
             sizes="50vw"
-            className="w-full h-full object-cover transform-gpu"
+            className="w-full h-full object-cover"
           />
         </div>
       </div>

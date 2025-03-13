@@ -1,12 +1,17 @@
 'use client';
 
 import { type FC, useMemo, useRef, useState } from 'react';
-import { useLenis } from 'lenis/react';
-import { useMeasure } from 'react-use';
 import { getStepColors } from '@/lib/get-step-colors';
-import { CaseStudiesContent } from './case-studies-content';
+import { useWindowSize } from 'react-use';
+import { useMeasure } from 'react-use';
+import { useLenis } from 'lenis/react';
 import { clamp } from '../../../lib/clamp';
+import dynamic from 'next/dynamic';
+
+import { CaseStudiesContent } from './case-studies-content';
 import { BlurredBackground } from './blurred-background';
+
+const CaseStudiesClone = dynamic(() => import('./case-studies-clone').then((mod) => mod.CaseStudiesClone), { ssr: false });
 
 interface CaseStudiesProps {
   items: {
@@ -26,13 +31,15 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const [currentStep, setCurrentStep] = useState<string>(items?.[0]?.step ?? 'one')
+  
+  const { width } = useWindowSize();
 
   const [contentRef, { height }] = useMeasure();
 
   useLenis(() => {
     if (typeof window === 'undefined' || !containerRef.current || !bottomRef.current || !topRef.current) return;
 
-    if (window.innerWidth < 768) return;
+    if (window.innerWidth < 800) return;
 
     const mainContent: HTMLElement = mainRef.current?.querySelector('.home-case-study');
     const topContent: HTMLElement = topRef.current?.querySelector('.home-case-study');
@@ -42,14 +49,18 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
     const containerRect = containerRef.current?.getBoundingClientRect();
     const offset = clamp((-1 * containerRect.top), 0, containerRef.current.scrollHeight);
 
-    mainContent.style.transform = `translateY(${-1 *offset}px)`;
-    topContent.style.transform = `translateY(${-1 *offset}px)`;
-    bottomContent.style.transform = `translateY(${-1 * offset}px)`;
+    mainContent.style.transform = `translate3d(0, ${-1 *offset}px, 0)`;
+    topContent.style.transform = `translate3d(0, ${-1 *offset}px, 0)`;
+    bottomContent.style.transform = `translate3d(0, ${-1 * offset}px, 0)`;
   })
 
   const stepColors = useMemo(() => {
     return getStepColors(currentStep)
   }, [currentStep])
+
+  const isMobile = useMemo(() => {
+    return width < 800;
+  }, [width])
 
   if (!items) return null
 
@@ -66,39 +77,38 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
       } as React.CSSProperties}
     >
       <div className="w-full overflow-hidden md:h-screen md:sticky z-[5] top-0">
-        <div className="pointer-events-none hidden md:block absolute w-full h-screen inset-0 z-[1] transition-colors duration-1000 ease bg-step-400">
-          <BlurredBackground className="text-step-300 w-full h-full transition-colors duration-1000 ease will-change-auto transform-gpu" />
-        </div>
-        <div className="w-full md:h-screen relative z-[2] transform-3d md:perspective-[3500px]">
+        <BlurredBackground className="pointer-events-none z-[1] hidden md:block text-step-300 bg-step-400 absolute inset-0 w-full h-screen transition-colors duration-1000 ease" />
+        <div className="w-full md:h-screen relative z-[2] transform-3d md:perspective-[3500px] will-change-contents">
 
           {/* Top */}
-          <div 
-            inert
-            ref={topRef}
-            className="hidden md:block absolute will-change-auto w-full h-screen top-0 left-0 pointer-events-none backface-hidden translate-z-[-50vh] translate-y-[-50vh] rotate-x-[-90deg] overflow-hidden"
-            style={{
-              maskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 50%, black 100%)'
-            }}
-          >
-            <CaseStudiesContent items={items} className="w-full pt-[200vh]" />
-          </div>
+          {!isMobile ? (
+            <CaseStudiesClone
+              items={items}
+              ref={topRef}
+              className="translate-z-[-50vh] translate-y-[-50vh] rotate-x-[-90deg] overflow-hidden"
+              contentClassName="w-full pt-[200vh]"
+              style={{
+                maskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 50%, black 100%)'
+              }}
+            />
+          ) : null}
 
           {/* Bottom */}
-          <div
-            inert
-            ref={bottomRef}
-            className="hidden md:block absolute will-change-auto w-full h-screen bottom-0 left-0 pointer-events-none backface-hidden translate-z-[-50vh] translate-y-[50vh] rotate-x-[90deg] overflow-hidden"
-            style={{
-              maskImage: 'linear-gradient(to top, rgba(0, 0, 0, 0.35) 50%, black 100%)'
-            }}
-          >
-            <CaseStudiesContent items={items} />
-          </div>
+          {!isMobile ? (
+            <CaseStudiesClone
+              items={items}
+              ref={bottomRef}
+              className="translate-z-[-50vh] translate-y-[50vh] rotate-x-[90deg] overflow-hidden"
+              style={{
+                maskImage: 'linear-gradient(to top, rgba(0, 0, 0, 0.35) 50%, black 100%)'
+              }}
+            />
+          ) : null}
 
           {/* Primary */}
           <div
             ref={mainRef}
-            className="will-change-auto w-full md:h-screen backface-hidden md:translate-z-[-100vh] overflow-hidden md:pt-[100vh]"
+            className="w-full md:h-screen backface-hidden md:translate-z-[-100vh] overflow-hidden md:pt-[100vh]"
           >
             <CaseStudiesContent ref={contentRef} isMain items={items} setCurrentStep={setCurrentStep} />
           </div>

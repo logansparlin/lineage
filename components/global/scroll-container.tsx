@@ -18,6 +18,8 @@ ScrollTrigger.defaults({
   invalidateOnRefresh: false,
 })
 
+ScrollTrigger.normalizeScroll(true);
+
 interface ScrollContainerProps extends ComponentProps<'div'> {}
 
 export const ScrollContainer: FC<ScrollContainerProps> = memo(({ children, ...props }) => {
@@ -37,6 +39,8 @@ export const ScrollContainer: FC<ScrollContainerProps> = memo(({ children, ...pr
       gsap.ticker.remove(update);
     }
   }, [])
+
+  // return (<div>{children}</div>)
 
   return (
     <ReactLenis

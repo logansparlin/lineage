@@ -35,7 +35,7 @@ export const useStepThreeAnimation = (stepThreeRef: RefObject<HTMLDivElement>) =
         pin: true,
         pinSpacing: false,
         pinReparent: true,
-        pinType: 'transform',
+        pinType: 'fixed',
         anticipatePin: 0.05
       }
     })
@@ -51,7 +51,7 @@ export const useStepThreeAnimation = (stepThreeRef: RefObject<HTMLDivElement>) =
         pinSpacing: false,
         pinReparent: true,
         pinType: 'transform',
-        anticipatePin: 0.05
+        anticipatePin: 0.05,
       }
     })
 

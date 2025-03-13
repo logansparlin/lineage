@@ -1,6 +1,6 @@
 export const StepOneIllo = () => {
   return (
-    <div className="step-illo self-start will-change-transform h-screen px-60 flex items-center justify-center sticky top-0">
+    <div className="step-illo self-start h-screen px-60 flex items-center justify-center sticky top-0">
       <svg className="h-[90%] w-auto" width="1015" height="1016" viewBox="0 0 1015 1016" fill="none" xmlns="http://www.w3.org/2000/svg">
         {/* Circle 1 */}
         <circle cx="507.406" cy="507.91" r="506.825" stroke="#505050" strokeWidth="1.16111"/>

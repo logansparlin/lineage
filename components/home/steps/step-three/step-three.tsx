@@ -24,7 +24,7 @@ export const StepThree: FC<StepThreeProps> = ({ title, description, className = 
         title={title}
         description={description}
         icon={(
-          <div className="step-icon will-change-transform relative z-[4] h-[clamp(40px,6vw,120px)] w-[clamp(40px,6vw,120px)]">
+          <div className="step-icon relative z-[4] h-[clamp(40px,6vw,120px)] w-[clamp(40px,6vw,120px)]">
             <IconStepThree highlight className="w-full h-auto" />
           </div>
         )}
