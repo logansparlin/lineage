@@ -3,6 +3,7 @@
 import { type FC, type ComponentProps, useEffect, useRef, memo } from "react";
 import { scrollConfig } from "@/lib/scroll-config";
 import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
 
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ReactLenis } from "lenis/react";
@@ -10,20 +11,23 @@ import { ReactLenis } from "lenis/react";
 import 'lenis/dist/lenis.css'
 
 gsap.registerPlugin(ScrollTrigger);
-gsap.config({ force3D: true });
-
-ScrollTrigger.defaults({
-  immediateRender: false,
-  scrub: true,
-  invalidateOnRefresh: false,
-})
-
-ScrollTrigger.normalizeScroll(true);
 
 interface ScrollContainerProps extends ComponentProps<'div'> {}
 
 export const ScrollContainer: FC<ScrollContainerProps> = memo(({ children, ...props }) => {
   const lenisRef = useRef<any>(null);
+
+  useGSAP(() => {
+    gsap.config({ force3D: true });
+
+    ScrollTrigger.defaults({
+      immediateRender: false,
+      scrub: true,
+      invalidateOnRefresh: false,
+    })
+
+    ScrollTrigger.normalizeScroll(true);
+  })
 
   useEffect(() => {
     const update = (time) => {
