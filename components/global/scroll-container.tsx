@@ -11,6 +11,10 @@ import 'lenis/dist/lenis.css'
 
 gsap.registerPlugin(ScrollTrigger);
 
+ScrollTrigger.normalizeScroll(true)
+gsap.config({ force3D: true })
+ScrollTrigger.config({ ignoreMobileResize: true })
+
 ScrollTrigger.defaults({
   immediateRender: false,
   scrub: true,
