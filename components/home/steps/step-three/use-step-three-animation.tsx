@@ -25,16 +25,7 @@ export const useStepThreeAnimation = (stepThreeRef: RefObject<HTMLDivElement>) =
 
     const trackingCircleItems = gsap.utils.toArray('.tracking-circle');
 
-    const mainTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: stepThreeRef.current,
-        start: `top top`,
-        end: 'bottom top',
-        scrub: true,
-      }
-    })
-
-    mainTl.to(icon, {
+    const iconPin = gsap.timeline({
       scrollTrigger: {
         trigger: icon,
         start: () => `top ${iconPinTop}px`,
@@ -47,9 +38,9 @@ export const useStepThreeAnimation = (stepThreeRef: RefObject<HTMLDivElement>) =
         pinType: 'transform',
         anticipatePin: 0.05
       }
-    }, 0)
+    })
 
-    mainTl.to(trackingCirclesContainer, {
+    const trackingCirclesPin = gsap.timeline({
       scrollTrigger: {
         trigger: trackingCirclesContainer,
         endTrigger: stepThreeRef.current,
@@ -62,11 +53,11 @@ export const useStepThreeAnimation = (stepThreeRef: RefObject<HTMLDivElement>) =
         pinType: 'transform',
         anticipatePin: 0.05
       }
-    }, 0)
+    })
 
     trackingCircleItems?.forEach((item: any) => {
       const r = item.getAttribute('data-r');
-      mainTl.to(item, {
+      trackingCirclesPin.to(item, {
         r,
         duration: 0.2,
         scrollTrigger: {
@@ -77,40 +68,40 @@ export const useStepThreeAnimation = (stepThreeRef: RefObject<HTMLDivElement>) =
       }, 0)
     })
 
-    mainTl.to(boxCenterHighlight, {
-      opacity: 1,
-      duration: 0.75,
+    const boxCenterHighlightTl = gsap.timeline({
       scrollTrigger: {
         trigger: boxCenterHighlight,
         endTrigger: stepThreeRef.current,
         start: 'top top+=50%',
         end: 'bottom top+=50%'
       }
+    })
+
+    boxCenterHighlightTl.to(boxCenterHighlight, {
+      opacity: 1,
+      duration: 0.75,
     }, 0)
 
-    mainTl.to(boxLeftHighlight, {
-      opacity: 1,
-      duration: 0.5,
+    const smallBoxHighlightTl = gsap.timeline({
       scrollTrigger: {
         trigger: boxRightHighlight,
         endTrigger: stepThreeRef.current,
         start: 'top top+=30%',
         end: 'bottom top+=50%'
       }
-    }, 0)
+    })
 
-    mainTl.to(boxRightHighlight, {
+    smallBoxHighlightTl.to(boxLeftHighlight, {
       opacity: 1,
       duration: 0.5,
-      scrollTrigger: {
-        trigger: boxRightHighlight,
-        endTrigger: stepThreeRef.current,
-        start: 'top top+=30%',
-        end: 'bottom top+=50%'
-      }
     }, 0)
 
-    mainTl.to({}, {}, '+=0.85')
+    smallBoxHighlightTl.to(boxRightHighlight, {
+      opacity: 1,
+      duration: 0.5,
+    }, 0)
+  }, {
+    dependencies: [stepThreeRef]
   });
 };
 
