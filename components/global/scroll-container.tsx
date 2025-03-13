@@ -12,7 +12,6 @@ import 'lenis/dist/lenis.css'
 gsap.registerPlugin(ScrollTrigger);
 
 ScrollTrigger.normalizeScroll(true)
-gsap.config({ force3D: true })
 
 ScrollTrigger.defaults({
   immediateRender: false,
