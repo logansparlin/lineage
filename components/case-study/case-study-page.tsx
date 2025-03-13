@@ -41,7 +41,7 @@ export const CaseStudyPage = (props) => {
 
         <Modules modules={content} />
       </div>
-      {/* <BackgroundTrail colors={[stepColorsRGB[400], stepColorsRGB[300], stepColorsRGB[200], stepColorsRGB[100]]} /> */}
+      <BackgroundTrail colors={[stepColorsRGB[400], stepColorsRGB[300], stepColorsRGB[200], stepColorsRGB[100]]} />
     </div>
   )
 }

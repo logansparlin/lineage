@@ -32,7 +32,7 @@ export const StepOne: FC<StepOneProps> = ({ title, description, className = '', 
           </div>
         )}
       />
-      <div className="relative w-full min-h-screen-200">
+      <div className="relative self-start w-full min-h-screen-200">
         <StepOneIllo />
       </div>
     </section>

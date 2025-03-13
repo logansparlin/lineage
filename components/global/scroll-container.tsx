@@ -1,10 +1,13 @@
 'use client';
 
 import { type FC, type ComponentProps, useEffect, useRef, memo } from "react";
+import { scrollConfig } from "@/lib/scroll-config";
 import { gsap } from "gsap";
 
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ReactLenis } from "lenis/react";
+
+import 'lenis/dist/lenis.css'
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -39,13 +42,12 @@ export const ScrollContainer: FC<ScrollContainerProps> = memo(({ children, ...pr
       root
       ref={lenisRef}
       options={{
+        ...scrollConfig,
         infinite: true,
-        anchors: true,
         autoRaf: false,
-        syncTouch: false,
-        touchMultiplier: 1.5,
+        touchMultiplier: 1.15,
+        touchInertiaMultiplier: 20
       }}
-      className="overflow-auto"
     >
       {children}
     </ReactLenis>

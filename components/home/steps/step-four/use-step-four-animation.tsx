@@ -27,20 +27,6 @@ export const useStepFourAnimation = (stepFourRef: RefObject<HTMLDivElement>) => 
       }
     })
 
-    const illoPin = gsap.timeline({
-      scrollTrigger: {
-        trigger: illo,
-        start: 'top top',
-        end: 'bottom bottom',
-        endTrigger: stepFourRef.current,
-        scrub: true,
-        pin: true,
-        pinType: 'transform',
-        pinSpacing: false,
-        anticipatePin: 0.01,
-      }
-    })
-
     const illoTl = gsap.timeline({
       scrollTrigger: {
         trigger: illo,

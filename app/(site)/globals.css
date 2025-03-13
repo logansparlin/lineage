@@ -25,17 +25,17 @@
   --color-pink-300: rgba(174, 79, 242, 1);
   --color-pink-400: rgba(89, 0, 255, 1);
 
-  --shadow-orange: 0 0px 250px 10px rgba(244, 67, 24, 0);
-  --shadow-orange-hover: 0 0px 250px 10px rgba(244, 67, 24, 1);
+  --shadow-orange: 0 0px 200px 0px rgba(244, 67, 24, 0);
+  --shadow-orange-hover: 0 0px 200px 0px rgba(244, 67, 24, 1);
 
-  --shadow-green: 0 0px 250px 10px rgba(0, 89, 33, 0);
-  --shadow-green-hover: 0 0px 250px 10px rgb(0, 140, 95);
+  --shadow-green: 0 0px 200px 0px rgba(0, 89, 33, 0);
+  --shadow-green-hover: 0 0px 200px 0px rgb(0, 140, 95);
 
-  --shadow-blue: 0 0px 250px 10px rgba(14, 59, 221, 0);
-  --shadow-blue-hover: 0 0px 250px 10px rgba(14, 59, 221, 1);
+  --shadow-blue: 0 0px 200px 0px rgba(14, 59, 221, 0);
+  --shadow-blue-hover: 0 0px 200px 0px rgba(14, 59, 221, 1);
 
-  --shadow-pink: 0 0px 250px 10px rgba(89, 0, 255, 0);
-  --shadow-pink-hover: 0 0px 250px 10px rgba(89, 0, 255, 1);
+  --shadow-pink: 0 0px 200px 0px rgba(89, 0, 255, 0);
+  --shadow-pink-hover: 0 0px 200px 0px rgba(89, 0, 255, 1);
 
   --text-case-title: 93px;
   --text-case-title--line-height: 90%;
@@ -139,6 +139,8 @@
   --color-step-200: var(--step-color-200);
   --color-step-300: var(--step-color-300);
   --color-step-400: var(--step-color-400);
+
+  --shadow-current: 0 0px 800px 200px currentColor;
 }
 
 @layer base {
@@ -375,6 +377,7 @@
 
 html, body {
   width: 100%;
+  scroll-behavior: auto;
 }
 
 i, em {

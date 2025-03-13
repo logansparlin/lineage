@@ -64,21 +64,6 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
       }
     })
 
-    const illoPin = gsap.timeline({
-      scrollTrigger: {
-        trigger: illo,
-        start: 'top top',
-        end: 'bottom bottom',
-        endTrigger: stepTwoRef.current,
-        scrub: true,
-        pin: true,
-        pinType: 'transform',
-        pinSpacing: false,
-        pinReparent: true,
-        anticipatePin: 0.01
-      }
-    })
-
     groupOneHighlights.forEach((highlight: HTMLElement, index: number) => {
       mainTl.to(highlight, {
         opacity: 1,
@@ -104,9 +89,6 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
     })
 
     mainTl.to({}, {}, '+=0.5')
-
-    ScrollTrigger.refresh();
-
   }, {
     dependencies: [stepTwoRef]
   });

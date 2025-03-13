@@ -19,7 +19,7 @@ export const TeamPage = ({
   members,
 }) => {
   return (
-    <div className="flex flex-col gap-y-100">
+    <div className="flex flex-col gap-y-60 md:gap-y-100">
       <h1 className="text-46 md:text-83">{title}</h1>
 
       <div className="grid md:grid-cols-2 md:gap-x-150 gap-y-60 md:gap-y-120">

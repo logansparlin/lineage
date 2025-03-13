@@ -37,8 +37,8 @@ export const MemberBio = ({ slug, bio }) => {
             />
             <motion.div
               className="w-8 h-1 bg-current will-change-transform"
-              initial={{ rotate: -90 }}
-              animate={{ rotate: isExpanded ? 0 : -90 }}
+              initial={{ rotate: 90 }}
+              animate={{ rotate: isExpanded ? 0 : 90 }}
               transition={{ duration: 0.55, ease: easings.outExpo }}
             />
           </div>

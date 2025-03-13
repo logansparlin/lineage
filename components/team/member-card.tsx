@@ -8,9 +8,9 @@ export const MemberCard = (props) => {
     <div className="flex flex-col gap-y-20" style={style}>
       <div className="relative z-[1] w-full group">
         <div className="relative z-[2] w-full h-full aspect-square overflow-hidden rounded-20">
-          <Image image={image} sizes="(max-width: 768px) 90vw, 40vw" className="relative z-[2]" />
+          <Image image={image} sizes="(max-width: 768px) 80vw, 40vw" className="relative w-full h-full object-cover z-[2]" />
         </div>
-        <div className={`${shadowClass} absolute origin-center opacity-80 inset-0 w-full h-full z-[1] rounded-[25%] transition-shadow duration-500 ease`} />
+        <div className={`${shadowClass} absolute origin-center will-change-auto opacity-80 inset-0 w-full h-full z-[1] rounded-[40%] transition-shadow duration-500 ease`} />
       </div>
       <div className="relative z-[2] flex flex-col gap-y-30">
         <div className="flex flex-col items-start">

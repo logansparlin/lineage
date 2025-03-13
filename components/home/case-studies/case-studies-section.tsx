@@ -72,17 +72,17 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = ({ _id, title, sl
       </h3>
       
       <div
-        className="
-          relative w-full md:w-[60%] aspect-video flex items-center justify-center rounded-10 md:rounded-20 transition-[box-shadow] duration-1000 ease will-change-auto
-          md:shadow-[0_0_80px_80px_var(--step-color-300)]
-        "
+        className={`
+          relative w-full md:w-[60%] aspect-video flex items-center justify-center rounded-10 md:rounded-20 will-change-auto
+          ${isMain ? 'transition-[box-shadow] duration-1000 ease md:shadow-[0_0_80px_80px_var(--step-color-300)]' : ''}
+        `}
       >
         <div className="absolute inset-0 z-[1] overflow-hidden w-full h-full rounded-20 flex items-center justify-center">
           <Image
             image={featuredImage}
             alt={title}
             sizes="50vw"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transform-gpu"
           />
         </div>
       </div>

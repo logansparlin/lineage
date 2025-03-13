@@ -180,6 +180,8 @@ export const HomeIntroInteraction = () => {
     }, 0)
 
     lastSectionTl.to(description, {
+      z: 0,
+      skewX: 0,
       height: 'auto',
       duration: 2,
       ease: 'none'

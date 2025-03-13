@@ -16,17 +16,7 @@ export const useStepOneAnimation = (stepOneRef: RefObject<HTMLDivElement>) => {
 
     const iconPinTop = (pinRect.height / 2) - (iconRect.height / 2) + 40;
 
-    const mainTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: stepOneRef.current,
-        start: `top top`,
-        end: 'bottom top',
-        scrub: true,
-      }
-    })
-
-    mainTl.to(icon, {
-      zIndex: 5,
+    const iconPin = gsap.timeline({
       scrollTrigger: {
         trigger: icon,
         start: () => `top ${iconPinTop}px`,
@@ -34,22 +24,7 @@ export const useStepOneAnimation = (stepOneRef: RefObject<HTMLDivElement>) => {
         endTrigger: stepOneRef.current,
         scrub: true,
         pin: true,
-        pinType: 'transform',
-        pinSpacing: false,
-        pinReparent: true,
-        anticipatePin: 0.05,
-      }
-    })
-
-    mainTl.to(illo, {
-      scrollTrigger: {
-        trigger: illo,
-        start: 'top 40px',
-        end: 'bottom bottom',
-        endTrigger: stepOneRef.current,
-        scrub: true,
-        pin: true,
-        pinType: 'transform',
+        pinType: 'fixed',
         pinSpacing: false,
         pinReparent: true,
         anticipatePin: 0.05,
@@ -83,9 +58,6 @@ export const useStepOneAnimation = (stepOneRef: RefObject<HTMLDivElement>) => {
         ease: 'power3.inOut',
       }, '>')
     })
-
-
-    mainTl.add(illoTl);
   }, {
     scope: stepOneRef,
   });
