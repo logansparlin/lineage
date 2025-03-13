@@ -18,8 +18,7 @@ export const HomeIntroInteraction = () => {
     const aspectRatio = viewport.width / viewport.height;
 
     await new Promise((resolve) => setTimeout(resolve, 5));
-    
-    // ScrollTrigger.normalizeScroll(true)
+
 
     const introMesh = scene?.children?.find((child) => child.name === "intro-mesh");
 

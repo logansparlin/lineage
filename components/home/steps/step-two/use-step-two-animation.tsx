@@ -1,6 +1,5 @@
 import { type RefObject } from "react";
 import { gsap } from "gsap/gsap-core";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { getPositionBetween } from "@/lib/get-position-between";
 
