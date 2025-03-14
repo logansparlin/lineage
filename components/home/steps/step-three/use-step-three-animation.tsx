@@ -14,8 +14,8 @@ export const useStepThreeAnimation = (stepThreeRef: RefObject<HTMLDivElement>) =
     const iconRect = icon.getBoundingClientRect();
     const pinR = parseFloat(pin.getAttribute('data-r') || '0');
     
-    const iconPinTop = (pinR) - (iconRect.height / 2) + 100;
-    const trackingPinTop = -1 * pinR - (iconRect.height / 2) + 8
+    const iconPinTop = (pinR) - (iconRect.height / 2) + (400);
+    const trackingPinTop = -1 * pinR - (iconRect.height * 4)
 
     const boxLeftHighlight = illo.querySelector('.box-left-highlight');
     const boxCenterHighlight = illo.querySelector('.box-center-highlight');
@@ -29,14 +29,14 @@ export const useStepThreeAnimation = (stepThreeRef: RefObject<HTMLDivElement>) =
       scrollTrigger: {
         trigger: icon,
         start: () => `top ${iconPinTop}px`,
-        end: () => `bottom top+=${pinR * 4}px`,
+        end: () => `bottom top+=${pinR * 5}px`,
         endTrigger: stepThreeRef.current,
         scrub: true,
-        // pin: true,
-        // pinSpacing: false,
-        // pinReparent: true,
-        // pinType: 'fixed',
-        // anticipatePin: 0.05
+        pin: true,
+        pinSpacing: false,
+        pinReparent: true,
+        pinType: 'fixed',
+        anticipatePin: 1
       }
     })
 
@@ -45,28 +45,31 @@ export const useStepThreeAnimation = (stepThreeRef: RefObject<HTMLDivElement>) =
         trigger: trackingCirclesContainer,
         endTrigger: stepThreeRef.current,
         start: () => `top ${trackingPinTop}px`,
-        end: () => `bottom top+=${pinR * 4}px`,
+        end: () => `bottom top+=${pinR * 5}px`,
         scrub: true,
-        // pin: true,
-        // pinSpacing: false,
-        // pinReparent: true,
-        // pinType: 'transform',
-        // anticipatePin: 0.05,
+        pin: true,
+        pinSpacing: false,
+        pinReparent: true,
+        pinType: 'fixed',
+        anticipatePin: 1,
       }
     })
 
-    trackingCircleItems?.forEach((item: any) => {
-      const r = item.getAttribute('data-r');
-      trackingCirclesPin.to(item, {
-        r,
-        duration: 0.2,
-        scrollTrigger: {
-          trigger: illo,
-          start: () => `top top+=${trackingPinTop + (pinR / 2)}px`,
-          end: () => `top top-=${pinR * 2}px`
-        }
+    trackingCircleItems?.forEach((item: any, index: number) => {
+      trackingCirclesPin.fromTo(item, {
+        scale: 0,
+        opacity: 0,
+        transformOrigin: 'center',
+        duration: 1,
+      }, {
+        scale: 1,
+        opacity: 0.2 + (index * 0.1),
+        transformOrigin: 'center',
+        duration: 1,
       }, 0)
     })
+
+    trackingCirclesPin.to({}, {}, '+=1')
 
     const boxCenterHighlightTl = gsap.timeline({
       scrollTrigger: {

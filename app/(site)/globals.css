@@ -207,6 +207,11 @@
   .bg-current {
     background-color: currentColor;
   }
+
+  .linear-gradient-blue {
+    stroke: linear-gradient(to bottom, #01C2FF, #087EEE);
+    fill: linear-gradient(to bottom, #01C2FF, #087EEE);
+  }
 }
 
 @utility w-column-* {

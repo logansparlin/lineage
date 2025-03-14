@@ -20,6 +20,8 @@ export const ScrollContainer: FC<ScrollContainerProps> = memo(({ children, ...pr
   useGSAP(() => {
     gsap.config({ force3D: true });
 
+    ScrollTrigger.refresh();
+
     ScrollTrigger.defaults({
       immediateRender: false,
       scrub: true,
@@ -31,7 +33,6 @@ export const ScrollContainer: FC<ScrollContainerProps> = memo(({ children, ...pr
     const update = (time) => {
       // time * 1000 converts to milliseconds
       lenisRef.current?.lenis?.raf(time * 1000);
-      ScrollTrigger.update();
     }
 
     gsap.ticker.add(update);
