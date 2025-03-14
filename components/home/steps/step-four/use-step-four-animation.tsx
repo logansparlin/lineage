@@ -20,7 +20,7 @@ export const useStepFourAnimation = (stepFourRef: RefObject<HTMLDivElement>) => 
         end: 'bottom bottom',
         endTrigger: stepFourRef.current,
         scrub: true,
-        pin: true,
+        // pin: true,
         pinType: 'transform',
         pinSpacing: false,
         anticipatePin: 0.01

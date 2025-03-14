@@ -1,7 +1,7 @@
 export const scrollConfig = {
   anchors: true,
   syncTouch: true,
-  touchMultiplier: 1.1,
-  syncTouchLerp: 0.12,
-  touchInertiaMultiplier: 25
+  touchMultiplier: 0.9,
+  syncTouchLerp: 0.1,
+  touchInertiaMultiplier: 30
 }
