@@ -21,9 +21,9 @@ export const useStepFourAnimation = (stepFourRef: RefObject<HTMLDivElement>) => 
         endTrigger: stepFourRef.current,
         scrub: true,
         // pin: true,
-        pinType: 'transform',
-        pinSpacing: false,
-        anticipatePin: 0.01
+        // pinType: 'transform',
+        // pinSpacing: false,
+        // anticipatePin: 0.01
       }
     })
 

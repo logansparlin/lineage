@@ -33,10 +33,10 @@ export const useStepThreeAnimation = (stepThreeRef: RefObject<HTMLDivElement>) =
         endTrigger: stepThreeRef.current,
         scrub: true,
         // pin: true,
-        pinSpacing: false,
-        pinReparent: true,
-        pinType: 'fixed',
-        anticipatePin: 0.05
+        // pinSpacing: false,
+        // pinReparent: true,
+        // pinType: 'fixed',
+        // anticipatePin: 0.05
       }
     })
 
@@ -48,10 +48,10 @@ export const useStepThreeAnimation = (stepThreeRef: RefObject<HTMLDivElement>) =
         end: () => `bottom top+=${pinR * 4}px`,
         scrub: true,
         // pin: true,
-        pinSpacing: false,
-        pinReparent: true,
-        pinType: 'transform',
-        anticipatePin: 0.05,
+        // pinSpacing: false,
+        // pinReparent: true,
+        // pinType: 'transform',
+        // anticipatePin: 0.05,
       }
     })
 

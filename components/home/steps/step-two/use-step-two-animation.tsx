@@ -56,10 +56,10 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
         endTrigger: stepTwoRef.current,
         scrub: true,
         // pin: true,
-        pinType: 'fixed',
-        pinSpacing: false,
-        pinReparent: true,
-        anticipatePin: 0.01
+        // pinType: 'fixed',
+        // pinSpacing: false,
+        // pinReparent: true,
+        // anticipatePin: 0.01
       }
     })
 

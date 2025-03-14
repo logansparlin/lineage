@@ -24,10 +24,10 @@ export const useStepOneAnimation = (stepOneRef: RefObject<HTMLDivElement>) => {
         endTrigger: stepOneRef.current,
         scrub: true,
         // pin: true,
-        pinType: 'fixed',
-        pinSpacing: false,
-        pinReparent: true,
-        anticipatePin: 0.05,
+        // pinType: 'fixed',
+        // pinSpacing: false,
+        // pinReparent: true,
+        // anticipatePin: 0.05,
       }
     })
 
