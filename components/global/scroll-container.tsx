@@ -25,8 +25,6 @@ export const ScrollContainer: FC<ScrollContainerProps> = memo(({ children, ...pr
       scrub: true,
       invalidateOnRefresh: false,
     })
-
-    ScrollTrigger.normalizeScroll(true);
   })
 
   useEffect(() => {
