@@ -71,7 +71,7 @@ export const HomePage = (props: HomePageProps) => {
 
       <HomeIntro titles={intro.titles} description={intro.description} />
 
-      <StepsSection {...steps} />
+      {/* <StepsSection {...steps} /> */}
 
       <div className="case-enter-section h-screen-200 w-full bg-transparent" />
 
