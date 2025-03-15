@@ -27,7 +27,7 @@ export const useStepOneAnimation = (stepOneRef: RefObject<HTMLDivElement>) => {
         pinType: 'fixed',
         pinSpacing: false,
         pinReparent: true,
-        anticipatePin: 0.05,
+        anticipatePin: 0.25,
       }
     })
 

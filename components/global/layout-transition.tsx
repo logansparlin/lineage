@@ -5,7 +5,7 @@ import { usePathname, useSelectedLayoutSegment } from "next/navigation";
 import { useLenis } from "lenis/react";
 
 import { LayoutRouterContext } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { easeInOutQuart } from "@/lib/animation";
  
 function usePreviousValue<T>(value: T): T | undefined {

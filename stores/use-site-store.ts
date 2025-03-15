@@ -9,6 +9,8 @@ interface SiteStore {
   setCursorHidden: (hidden: boolean) => void;
   currentStep: string | null;
   setCurrentStep: (step: string | null) => void;
+  isAnimatingGradient: boolean;
+  setIsAnimatingGradient: (animating: boolean) => void;
 }
 
 export const useSiteStore = create<SiteStore>((set) => ({
@@ -20,4 +22,6 @@ export const useSiteStore = create<SiteStore>((set) => ({
   setCursorHidden: (hidden: boolean) => set({ cursorHidden: hidden }),
   currentStep: null,
   setCurrentStep: (step: string | null) => set({ currentStep: step }),
+  isAnimatingGradient: false,
+  setIsAnimatingGradient: (animating: boolean) => set({ isAnimatingGradient: animating }),
 }))

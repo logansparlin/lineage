@@ -73,8 +73,6 @@ export const HomePage = (props: HomePageProps) => {
 
       <StepsSection {...steps} />
 
-      <div className="case-enter-section h-screen-200 w-full bg-transparent" />
-
       <CaseStudies items={caseStudies} />
       
       <HomeScrollScene caseStudyGradient={caseStudyGradient} />

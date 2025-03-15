@@ -21,7 +21,7 @@ export const CaseStudiesContent: FC<CaseStudiesContentProps> = ({ items, ref = (
   return (
     <div 
       ref={ref}
-      className={`${className} home-case-study w-full md:pb-[200vh]`} 
+      className={`${className} home-case-study w-full md:pb-[200vh] will-change-transform`} 
       {...rest}
     >
       {items?.map(caseStudy => {

@@ -1,12 +1,16 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useInView } from "motion/react";
+import { useTitlesAnimation } from "./use-titles-animation";
 import { useSiteStore } from "@/stores/use-site-store";
+import { useInView } from "motion/react";
 
-import { IntroSection } from "./intro-section";
 import { ScrollIndicator } from "./scroll-indicator";
+import { IntroSection } from "./intro-section";
+import { IntroScene } from "../scenes/intro";
+import { TransitionScene } from "../scenes/transition";
 import { Image } from "@/components/global/image";
+import { View } from "@react-three/drei";
 
 export const HomeIntro = ({ titles, description }) => {
   const setColorButtonVisible = useSiteStore((state) => state.setColorButtonVisible);
@@ -15,6 +19,19 @@ export const HomeIntro = ({ titles, description }) => {
   const introRef = useRef<HTMLDivElement>(null);
   const inView = useInView(introRef, { once: false });
   const [hasScrolled, setHasScrolled] = useState(false);
+
+  const getFormattedVariant = useCallback((index: number) => {
+    if (index === 0) return 'first';
+    if (index === 1) return 'second';
+    if (index === titles.length - 1) return 'last';
+    return 'default';
+  }, []);
+
+  const sectionClasses = useMemo(() => {
+    return titles?.map((_, index) => `.intro-section-${getFormattedVariant(index)}`) ?? []
+  }, [titles])
+
+  useTitlesAnimation({ container: introRef, sections: sectionClasses })
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,13 +54,6 @@ export const HomeIntro = ({ titles, description }) => {
       setColorButtonVisible(false);
     }
   }, [inView, hasScrolled, colorButtonVisible, setColorButtonVisible])
-  
-  const getFormattedVariant = useCallback((index: number) => {
-    if (index === 0) return 'first';
-    if (index === 1) return 'second';
-    if (index === titles.length - 1) return 'last';
-    return 'default';
-  }, [titles]);
 
   return (
     <section className="w-full" id="home-intro">
@@ -51,7 +61,13 @@ export const HomeIntro = ({ titles, description }) => {
         <div ref={introRef} className="home-intro-container relative w-full h-fit z-[1]">
           <ScrollIndicator />
           
-          <div className="home-intro-main px-20 w-full h-screen sticky top-0 grid-contain z-[5] text-white place-items-center">
+          <div className="home-intro-main w-full h-screen sticky top-0 grid-contain z-[5] text-white place-items-center">
+            <View className="absolute inset-0 w-full h-screen">
+              <IntroScene
+                container={introRef}
+                sections={sectionClasses}
+              />
+            </View>
             {titles?.map((title, index) => {
               const variant = getFormattedVariant(index);
 
@@ -60,7 +76,7 @@ export const HomeIntro = ({ titles, description }) => {
                   key={title._key} 
                   inert
                   aria-hidden
-                  className={`flex flex-col items-center justify-center will-change-auto intro-title-${variant} ${variant !== 'first' ? 'opacity-0' : ''}`}
+                  className={`px-20 flex flex-col items-center justify-center intro-title-${variant} ${variant !== 'first' ? 'invisible' : ''}`}
                 >
                   {title?.svg ? (
                     <Image
@@ -69,16 +85,20 @@ export const HomeIntro = ({ titles, description }) => {
                       className="w-auto h-28 md:h-45"
                       height={100}
                       style={{
-                        aspectRatio: title.svg.aspectRatio
+                        aspectRatio: title.svg.aspectRatio,
                       }}
                     />
                   ) : (
-                    <span className="text-32 lg:text-58 font-medium">{title.text}</span>
+                    <span
+                      className="text-32 lg:text-58 font-medium"
+                    >
+                      {title.text}
+                    </span>
                   )}
 
                   {variant === 'last' && description ? (
                     <div
-                      className="home-intro-description w-[80%] md:w-full max-w-800 text-18 lg:text-32 h-0 overflow-hidden will-change-auto"
+                      className="home-intro-description w-[80%] md:w-full max-w-800 text-18 lg:text-32 h-0 overflow-hidden will-change-transform"
                       style={{
                         maskImage: 'linear-gradient(to top, transparent, black 80px)'
                       }}
@@ -107,7 +127,7 @@ export const HomeIntro = ({ titles, description }) => {
           })}
         </div>
         
-        <div className="intro-section-exit h-screen md:h-screen-200"></div>
+        <TransitionScene mode="exit" />
       </div>
     </section>
   )

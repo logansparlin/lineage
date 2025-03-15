@@ -3,7 +3,7 @@
 import { type FC } from "react";
 import { useSiteStore } from "@/stores/use-site-store";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { PlayButton } from "./play-button";
 import { PauseButton } from "./pause-button";
 import { FullscreenButton } from "./fullscreen-button";

@@ -5,7 +5,7 @@ import { useSiteStore } from "@/stores/use-site-store";
 import { useKeyPress } from "@/hooks/use-key-press";
 import { easings } from "@/lib/easings";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 
 interface MainMenuProps extends ComponentProps<'div'> {}

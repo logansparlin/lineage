@@ -11,8 +11,6 @@ interface CurvedPlaneProps {
   curveProgress?: number;
   outer?: string;
   inner?: string;
-  innerNext?: string;
-  outerNext?: string;
   center?: string;
   ref?: RefCallback<Object3D>;
   scale?: Vector3;
@@ -33,8 +31,6 @@ export const CurvedPlane: FC<CurvedPlaneProps> = ({
   outer = "#FE9807",
   inner = "#F44318",
   center = '#FFFFFF',
-  innerNext = "#000000",
-  outerNext = "#000000",
   position = new Vector3(0, 0, 0),
   scale = new Vector3(1, 1, 1),
   inset = 0.85,
@@ -43,9 +39,6 @@ export const CurvedPlane: FC<CurvedPlaneProps> = ({
   const innerColor = useMemo(() => new Color(outer).convertLinearToSRGB(), [outer])
   const outerColor = useMemo(() => new Color(inner).convertLinearToSRGB(), [inner])
   const centerColor = useMemo(() => center ? new Color(center).convertLinearToSRGB() : new Color('#ffffff').convertLinearToSRGB(), [center])
-
-  const innerColorNext = useMemo(() => new Color(innerNext).convertLinearToSRGB(), [innerNext])
-  const outerColorNext = useMemo(() => new Color(outerNext).convertLinearToSRGB(), [outerNext])
 
   return (
     <mesh key="plane" ref={ref} scale={scale} position={position} name={name}>
@@ -56,8 +49,6 @@ export const CurvedPlane: FC<CurvedPlaneProps> = ({
         innerColor={innerColor}
         outerColor={outerColor}
         centerColor={centerColor}
-        innerColorNext={innerColorNext}
-        outerColorNext={outerColorNext}
         aspect={aspectRatio}
         size={new Vector2(width, height)}
         curveIntensity={curveIntensity}

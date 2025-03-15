@@ -6,9 +6,7 @@ import { useSiteStore } from "@/stores/use-site-store";
 import { useClickAway } from "react-use";
 import { getRandomGradient } from "@/lib/gradients";
 
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { Logo } from "./logo";
 import { IconDice } from "../icons/icon-dice";
 import { Button } from "./button";
@@ -18,12 +16,11 @@ import Link from "next/link";
 export interface HeaderProps {}
 
 export const Header: FC<HeaderProps> = (props) => {
-  const setNextGradient = useHomeStore((state) => state.setNextGradient);
-  const isColorChanging = useHomeStore((state) => state.isColorChanging);
   const menuOpen = useSiteStore((state) => state.menuOpen);
-  const setMenuOpen = useSiteStore((state) => state.setMenuOpen);
   const colorButtonVisible = useSiteStore((state) => state.colorButtonVisible);
-  const setColorButtonVisible = useSiteStore((state) => state.setColorButtonVisible);
+  const isAnimatingGradient = useSiteStore((state) => state.isAnimatingGradient);
+  const setMenuOpen = useSiteStore((state) => state.setMenuOpen);
+  const setGradient = useHomeStore((state) => state.setGradient);
 
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +31,7 @@ export const Header: FC<HeaderProps> = (props) => {
   const shuffleGradient = useCallback(() => {
     const nextGradient = getRandomGradient();
 
-    setNextGradient(nextGradient.label);
+    setGradient(nextGradient.label);
 
     if (menuOpen) {
       setMenuOpen(false);
@@ -65,7 +62,7 @@ export const Header: FC<HeaderProps> = (props) => {
               <Button
                 className="px-18"
                 onClick={shuffleGradient}
-                disabled={isColorChanging}
+                disabled={isAnimatingGradient}
               >
                 <IconDice className="h-18 w-auto" />
               </Button>

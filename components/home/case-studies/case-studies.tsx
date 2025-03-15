@@ -8,6 +8,7 @@ import { useLenis } from 'lenis/react';
 import { clamp } from '../../../lib/clamp';
 import dynamic from 'next/dynamic';
 
+import { TransitionScene } from '../scenes/transition';
 import { CaseStudiesContent } from './case-studies-content';
 import { BlurredBackground } from './blurred-background';
 
@@ -62,58 +63,65 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
     return width < 800;
   }, [width])
 
+  const firstItemGradient = useMemo(() => {
+    return items?.[0]?.step ?? 'one';
+  }, [items])
+
   if (!items) return null
 
   return (
-    <section
-      id="case-studies"
-      ref={containerRef} className="relative w-full max-md:overflow-hidden z-[3] md:-mb-screen"
-      style={{ 
-        height: `${height}px`, 
-        '--step-color-100': stepColors[100],
-        '--step-color-200': stepColors[200],
-        '--step-color-300': stepColors[300],
-        '--step-color-400': stepColors[400],
-      } as React.CSSProperties}
-    >
-      <div className="w-full overflow-hidden md:h-screen md:sticky z-[5] top-0">
-        <BlurredBackground className="pointer-events-none z-[1] hidden md:block text-step-300 bg-step-400 absolute inset-0 w-full h-screen transition-colors duration-1000 ease" />
-        <div className="w-full md:h-screen relative z-[2] transform-3d md:perspective-[3500px] will-change-contents">
+    <>
+      <TransitionScene mode="enter" gradientOverride={firstItemGradient} />
+      <section
+        id="case-studies"
+        ref={containerRef} className="relative w-full max-md:overflow-hidden z-[3] md:-mb-screen"
+        style={{ 
+          height: `${height}px`, 
+          '--step-color-100': stepColors[100],
+          '--step-color-200': stepColors[200],
+          '--step-color-300': stepColors[300],
+          '--step-color-400': stepColors[400],
+        } as React.CSSProperties}
+      >
+        <div className="w-full overflow-hidden md:h-screen md:sticky z-[5] top-0">
+          <BlurredBackground className="pointer-events-none z-[1] hidden md:block text-step-300 bg-step-400 absolute inset-0 w-full h-screen transition-colors duration-1000 ease" />
+          <div className="w-full md:h-screen relative z-[2] transform-3d md:perspective-[3500px]">
 
-          {/* Top */}
-          {!isMobile ? (
-            <CaseStudiesClone
-              items={items}
-              ref={topRef}
-              className="translate-z-[-50vh] translate-y-[-50vh] rotate-x-[-90deg] overflow-hidden"
-              contentClassName="w-full pt-[200vh]"
-              style={{
-                maskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 50%, black 100%)'
-              }}
-            />
-          ) : null}
+            {/* Top */}
+            {!isMobile ? (
+              <CaseStudiesClone
+                items={items}
+                ref={topRef}
+                className="translate-z-[-50vh] translate-y-[-50vh] rotate-x-[-90deg] overflow-hidden"
+                contentClassName="w-full pt-[200vh]"
+                style={{
+                  maskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 50%, black 100%)'
+                }}
+              />
+            ) : null}
 
-          {/* Bottom */}
-          {!isMobile ? (
-            <CaseStudiesClone
-              items={items}
-              ref={bottomRef}
-              className="translate-z-[-50vh] translate-y-[50vh] rotate-x-[90deg] overflow-hidden"
-              style={{
-                maskImage: 'linear-gradient(to top, rgba(0, 0, 0, 0.35) 50%, black 100%)'
-              }}
-            />
-          ) : null}
+            {/* Bottom */}
+            {!isMobile ? (
+              <CaseStudiesClone
+                items={items}
+                ref={bottomRef}
+                className="translate-z-[-50vh] translate-y-[50vh] rotate-x-[90deg] overflow-hidden"
+                style={{
+                  maskImage: 'linear-gradient(to top, rgba(0, 0, 0, 0.35) 50%, black 100%)'
+                }}
+              />
+            ) : null}
 
-          {/* Primary */}
-          <div
-            ref={mainRef}
-            className="w-full md:h-screen backface-hidden md:translate-z-[-100vh] overflow-hidden md:pt-[100vh]"
-          >
-            <CaseStudiesContent ref={contentRef} isMain items={items} setCurrentStep={setCurrentStep} />
+            {/* Primary */}
+            <div
+              ref={mainRef}
+              className="w-full md:h-screen backface-hidden md:translate-z-[-100vh] overflow-hidden md:pt-[100vh]"
+            >
+              <CaseStudiesContent ref={contentRef} isMain items={items} setCurrentStep={setCurrentStep} />
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }

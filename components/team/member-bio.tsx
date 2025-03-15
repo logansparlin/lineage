@@ -2,7 +2,7 @@
 
 import { useMemo, useCallback } from "react"
 import { useTeamPageStore } from "./use-team-page"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import { SitePortableText } from "../global/site-portable-text"
 import { easings } from "@/lib/easings"
 

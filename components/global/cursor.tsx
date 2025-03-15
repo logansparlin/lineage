@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState, type FC } from "react";
 import { useSiteStore } from "@/stores/use-site-store";
 import { useRafLoop } from 'react-use'
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { IconCursorMorph } from "../icons/icon-cursor-morph";
 
 interface CursorProps {

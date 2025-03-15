@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
-    "@mux/blurhash": "^0.1.2",
     "@mux/mux-player-react": "^3.3.0",
     "@radix-ui/react-slider": "^1.2.3",
     "@react-three/drei": "^10.0.0-rc.0",
@@ -22,10 +21,9 @@
     "@types/three": "^0.173.0",
     "class-variance-authority": "^0.7.1",
     "embla-carousel-react": "^8.5.2",
-    "framer-motion": "^12.4.10",
     "gsap": "npm:@gsap/shockingly@^3.12.7",
     "lenis": "^1.1.19",
-    "motion": "^11.17.0",
+    "motion": "^11.18.2",
     "next": "^15.1.5",
     "next-sanity": "^9.8.58",
     "react": "^19.0.0",
@@ -36,6 +34,7 @@
     "sanity-plugin-mux-input": "^2.6.0",
     "styled-components": "^6.1.14",
     "three": "^0.173.0",
+    "three-stdlib": "^2.35.14",
     "zustand": "^5.0.3"
   },
   "devDependencies": {
@@ -48,11 +47,7 @@
     "typescript": "^5.7.3"
   },
   "overrides": {
-    "react": "$react",
-    "react-dom": "$react-dom",
-    "@sanity/orderable-document-list": {
-      "react": "^19.0.0",
-      "react-dom": "^19.0.0"
-    }
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }

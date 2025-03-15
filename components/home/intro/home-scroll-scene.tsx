@@ -3,6 +3,7 @@
 import { memo, useMemo, useRef } from "react";
 import { getRandomGradient } from "@/lib/gradients";
 
+import { View } from "@react-three/drei";
 import { Canvas, useThree, extend } from "@react-three/fiber"
 import { BoxGradient } from "@/shaders/box-gradient";
 import { CurvedPlane } from "@/components/home/intro/curved-plane";
@@ -32,6 +33,7 @@ export const HomeScrollScene = memo(({ caseStudyGradient }: { caseStudyGradient:
         shadows={true}
         className="w-full bg-transparent"
       >
+        <View.Port />
         <Scene caseStudyGradient={caseStudyGradient} />
       </Canvas>
     </div>
@@ -61,6 +63,8 @@ const Scene = ({ caseStudyGradient }: { caseStudyGradient: any }) => {
   const curveIntensity = useMemo(() => {
     return aspectRatio > 1 ? 3 : 1.5;
   }, [aspectRatio])
+
+  return null;
 
   return (
     <>

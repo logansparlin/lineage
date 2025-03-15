@@ -1,24 +1,28 @@
-import { shuffleArray } from "./shuffle-array";
+export interface Gradient {
+  label: string;
+  inner: string;
+  outer: string;
+}
 
-const orange = {
+const orange: Gradient = {
   label: 'orange',
   inner: '#F44318',
   outer: '#FE9807'
 }
 
-const pink = {
+const pink: Gradient = {
   label: 'pink',
   inner: '#5900FF',
   outer: '#AE4FF2'
 }
 
-const green = {
+const green: Gradient = {
   label: 'green',
   inner: '#005921',
   outer: '#008C5F'
 }
 
-const blue = {
+const blue: Gradient = {
   label: 'blue',
   inner: '#0E3BDD',
   outer: '#087EEE'
@@ -31,7 +35,7 @@ const stepGradients = {
   'four': pink
 }
 
-export const gradients = [orange, pink, green, blue];
+export const gradients: Gradient[] = [orange, pink, green, blue];
 
 export const getRandomGradient = () => {
   const isWindow = typeof window !== 'undefined';

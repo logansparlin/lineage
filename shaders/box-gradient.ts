@@ -8,15 +8,12 @@ export const BoxGradient = shaderMaterial(
     innerColor: new Color("#000000"),
     outerColor: new Color("#ffffff"),
     centerColor: new Color('#ffffff'),
-    innerColorNext: new Color("#000000"),
-    outerColorNext: new Color("#000000"),
     size: new Vector2(1, 1),
     scale: 1.0,
     aspect: 1.0,
     curveProgress: 0.0,
     curveIntensity: 4.0,
     inset: 0.85,
-    colorProgress: 0.0,
     opacity: 1.0,
   },
   // Vertex Shader
@@ -62,9 +59,6 @@ export const BoxGradient = shaderMaterial(
   uniform vec3 innerColor;
   uniform vec3 outerColor;
   uniform vec3 centerColor;
-  uniform vec3 innerColorNext;
-  uniform vec3 outerColorNext;
-  uniform float colorProgress;
   uniform float opacity;
 
   float smoothBox(vec2 p, vec2 b, float r) {
@@ -105,18 +99,13 @@ export const BoxGradient = shaderMaterial(
     innerAlpha = smoothstep(0.0, 1.0, innerAlpha);
 
     vec3 finalColor = mix(outerColor, innerColor, alpha);
-    vec3 finalColorNext = mix(outerColorNext, innerColorNext, alpha);
 
     if (centerColor.r < 0.99) {
       finalColor = mix(centerColor, finalColor, innerAlpha);
     }
 
-    if (colorProgress > 0.0) {
-      if (centerColor.r < 0.99) {
-        finalColor = mix(centerColor, mix(finalColor, finalColorNext, colorProgress), innerAlpha);
-      } else {
-       finalColor = mix(finalColor, finalColorNext, colorProgress);
-      }
+    if (centerColor.r < 0.99) {
+      finalColor = mix(centerColor, finalColor, innerAlpha);
     }
 
     gl_FragColor = vec4(finalColor, opacity);

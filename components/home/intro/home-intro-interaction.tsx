@@ -19,7 +19,6 @@ export const HomeIntroInteraction = () => {
 
     await new Promise((resolve) => setTimeout(resolve, 5));
 
-
     const introMesh = scene?.children?.find((child) => child.name === "intro-mesh");
 
     if (!introMesh) return;

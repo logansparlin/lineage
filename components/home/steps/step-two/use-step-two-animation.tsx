@@ -37,7 +37,7 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
         trigger: stepTwoRef.current,
         start: `top top`,
         end: 'bottom top',
-        scrub: true,
+        scrub: 1,
       }
     })
 
@@ -54,7 +54,7 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
         start: getIconPinStart(),
         end: 'bottom bottom',
         endTrigger: stepTwoRef.current,
-        scrub: true,
+        scrub: 1,
         pin: true,
         pinType: 'fixed',
         pinSpacing: false,
