@@ -14,15 +14,15 @@ export const LegalRichText: FC<LegalRichTextProps> = ({ content }) => {
         components={{
           block: {
             normal: ({ children }) => (
-              <p className="text-23 pb-30">{children}</p>
+              <p className="text-18 md:text-23 pb-20 md:pb-30">{children}</p>
             ),
             h2: ({ children }) => (
-              <h2 className="text-41 pt-30 pb-20">{children}</h2>
+              <h2 className="text-32 md:text-41 pt-30 pb-10 md:pb-20">{children}</h2>
             ),
           },
           list: {
             bullet: ({ children }) => (
-              <ul className="list-[square] pl-32 pb-30 text-23 flex flex-col gap-y-5">
+              <ul className="list-[square] pl-32 pb-20 md:pb-30 text-18 md:text-23 flex flex-col gap-y-5">
                 {children}
               </ul>
             ),

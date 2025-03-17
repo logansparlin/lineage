@@ -71,14 +71,14 @@ export const Header: FC<HeaderProps> = (props) => {
           ) : null}
         </AnimatePresence>
         <Button
-          className="relative z-[2] grid-contain"
+          className="relative z-[2]"
           onClick={toggleMenu}
         >
           <AnimatePresence mode="popLayout">
             {!menuOpen ? (
               <motion.div
                 key="menu"
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{
@@ -94,7 +94,7 @@ export const Header: FC<HeaderProps> = (props) => {
                 key="close"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
+                exit={{ opacity: 0, y: 10 }}
                 transition={{
                   duration: 0.35,
                   ease: easings.inOutExpo

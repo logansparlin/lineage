@@ -1,6 +1,7 @@
 'use client'
 
-import { type FC, useEffect, useRef } from 'react'
+import { type FC, Suspense, useMemo, useEffect, useRef } from 'react'
+import { useWindowSize } from 'react-use'
 import * as THREE from 'three'
 
 interface BackgroundTrailProps {
@@ -8,6 +9,24 @@ interface BackgroundTrailProps {
 }
 
 export const BackgroundTrail: FC<BackgroundTrailProps> = ({
+  colors = ['rgba(251, 197, 4, 1)', 'rgba(0, 191, 87, 1)', 'rgba(255, 126, 197, 1)']
+}) => {
+  const { width } = useWindowSize()
+
+  const isMobile = useMemo(() => {
+    return width < 800
+  }, [width])
+
+  return (
+    <Suspense fallback={null}>
+      {!isMobile ? (
+        <BackgroundTrailCanvas colors={colors} />
+      ) : null}
+    </Suspense>
+  )
+}
+
+const BackgroundTrailCanvas: FC<BackgroundTrailProps> = ({
   colors = ['rgba(251, 197, 4, 1)', 'rgba(0, 191, 87, 1)', 'rgba(255, 126, 197, 1)']
 }) => {
   const trailContainerRef = useRef<HTMLDivElement>(null)

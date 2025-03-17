@@ -13,10 +13,10 @@ interface LegalPageProps {
 export const LegalPage: FC<LegalPageProps> = ({ title, lastUpdated, content }) => {
   return (
     <div>
-      <div className="flex flex-col gap-y-100 relative z-[2]">
+      <div className="flex flex-col gap-y-30 md:gap-y-100 relative z-[2]">
         <div className="flex flex-col gap-y-4">
-          <h1 className="text-83">{title}</h1>
-          {lastUpdated ? <p className="text-14">Last updated <FormattedDate date={lastUpdated} /></p> : null}
+          <h1 className="text-46 md:text-83">{title}</h1>
+          {lastUpdated ? <p className="text-14 font-mono">Last updated <FormattedDate date={lastUpdated} /></p> : null}
         </div>
         <LegalRichText content={content} />
       </div>
