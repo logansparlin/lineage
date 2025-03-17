@@ -1,12 +1,13 @@
 'use client'
 
-import { type FC, type ComponentProps, useMemo } from "react";
+import { type FC, type ComponentProps, useMemo, useCallback } from "react";
 import { useSiteStore } from "@/stores/use-site-store";
 import { useKeyPress } from "@/hooks/use-key-press";
 import { easings } from "@/lib/easings";
 
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
+import { useLenis } from "lenis/react";
 
 interface MainMenuProps extends ComponentProps<'div'> {}
 
@@ -103,9 +104,25 @@ export const MainMenu: FC<MainMenuProps> = ({ className }) => {
 
 const MenuItem = ({ label, url = undefined, type, index, onClick, total, offset }) => {
   const baseTransition = { duration: 0.75, ease: easings.outExpo }
+  const lenis = useLenis();
+  
   const isExternal = useMemo(() => {
     return url?.includes('http')
   }, [url])
+
+  const isCaseStudiesLink = useMemo(() => {
+    return url?.includes('#case-studies')
+  }, [url])
+
+  const handleLinkClick = useCallback(() => {
+    if (isCaseStudiesLink) {
+      lenis?.scrollTo('#case-studies', {
+        offset: 0
+      })
+    }
+
+    onClick?.()
+  }, [onClick, isCaseStudiesLink, lenis])
 
   return (
     <motion.li
@@ -128,7 +145,17 @@ const MenuItem = ({ label, url = undefined, type, index, onClick, total, offset 
         }
       }}
     >
-      {type === 'text' ? label : <Link href={url} target={isExternal ? '_blank' : undefined} onClick={onClick} scroll={false} className="transform-gpu">{label}</Link>}
+      {type === 'text' ? label : ( 
+        <Link
+          href={url}
+          target={isExternal ? '_blank' : undefined}
+          onClick={handleLinkClick}
+          scroll={false}
+          className="transform-gpu"
+        >
+          {label}
+        </Link>
+      )}
     </motion.li>
   )
 }

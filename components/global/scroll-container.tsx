@@ -26,7 +26,7 @@ export const ScrollContainer: FC<ScrollContainerProps> = memo(({ children, ...pr
     ScrollTrigger.defaults({
       immediateRender: false,
       scrub: true,
-      invalidateOnRefresh: false,
+      invalidateOnRefresh: true,
     })
   })
 

@@ -41,6 +41,8 @@ export const CaseStudiesBackground = ({ gradientOverride }: { gradientOverride?:
     uniforms.fgColor.value.lerp(colors.foreground, 0.025)
   })
 
+  if (!viewport.width || !viewport.height) return null;
+
   return (
     <group>
       

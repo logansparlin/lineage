@@ -2,6 +2,7 @@
 
 @theme {
   --breakpoint-md: 800px;
+  --breakpoint-lg: 1440px;
 
   --color-black: rgb(0, 0, 0);
   --color-white: rgb(255, 255, 255);

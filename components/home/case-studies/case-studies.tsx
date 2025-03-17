@@ -60,11 +60,13 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
 
     if (window.innerWidth < 800) return;
 
-    // const firstSectionHeight = (caseStudiesRef.current.querySelector('.case-studies-section')?.clientHeight ?? 0) / 2;
-    caseStudiesRef.current.style.height = `${mainRef.current.scrollHeight}px`
+    const firstSectionHeight = (caseStudiesRef.current.querySelector('.case-studies-section')?.clientHeight ?? 0);
+    const startOffset = window.innerHeight - Math.min(0, (window.innerHeight - firstSectionHeight) / 2);
+    
+    caseStudiesRef.current.style.height = `${mainRef.current.scrollHeight - startOffset}px`
     
     const containerRect = caseStudiesRef.current?.getBoundingClientRect();
-    const offset = clamp((-1 * (containerRect.top - window.innerHeight)), window.innerHeight, (caseStudiesRef.current.scrollHeight));
+    const offset = clamp((-1 * (containerRect.top - startOffset)), startOffset, (caseStudiesRef.current.scrollHeight));
 
     mainRef.current.scrollTop = offset;
     topRef.current.scrollTop = offset;
@@ -101,31 +103,27 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
               <CaseStudiesBackground />
             </View>
           ) : null}
-          <div className="w-full md:h-screen relative z-[2] transform-3d md:perspective-[4000px]">
+          <div className="w-full md:h-screen relative z-[2] transform-3d md:perspective-[4000px] lg:perspective-[6500px]">
               {/* Top */}
-              <Suspense fallback={null}>
-                  <CaseStudiesClone
-                    items={items}
-                    ref={topRef}
-                    className="max-md:hidden translate-z-[-50vh] translate-y-[-50vh] rotate-x-[-90deg] overflow-hidden pointer-events-none"
-                    contentClassName="w-full pt-[200vh]"
-                    style={{
-                      maskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 20%, black 98%)'
-                    }}
-                  />
-              </Suspense>
+              <CaseStudiesClone
+                items={items}
+                ref={topRef}
+                className="max-md:hidden translate-z-[-50vh] translate-y-[-50vh] rotate-x-[-90deg] overflow-hidden pointer-events-none"
+                contentClassName="w-full pt-[200vh]"
+                style={{
+                  maskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.8) 100%)'
+                }}
+              />
 
               {/* Bottom */}
-              <Suspense fallback={null}>
-                  <CaseStudiesClone
-                    items={items}
-                    ref={bottomRef}
-                    className="max-md:hidden translate-z-[-50vh] translate-y-[50vh] rotate-x-[90deg] overflow-hidden pointer-events-none"
-                    style={{
-                      maskImage: 'linear-gradient(to top, rgba(0, 0, 0, 0.1) 20%, black 98%)'
-                    }}
-                  />
-              </Suspense>
+              <CaseStudiesClone
+                items={items}
+                ref={bottomRef}
+                className="max-md:hidden translate-z-[-50vh] translate-y-[50vh] rotate-x-[90deg] overflow-hidden pointer-events-none"
+                style={{
+                  maskImage: 'linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.8) 100%)'
+                }}
+              />
 
               {/* Primary */}
               <div

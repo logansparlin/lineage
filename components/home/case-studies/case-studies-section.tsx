@@ -66,7 +66,7 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ _id, inde
       </View>
       <div className="w-full relative flex flex-col items-center justify-center gap-10 md:gap-20">
         <h3
-          className={`z-[2] pb-10 md:pb-5 text-32 md:text-52 ${isMain ? 'visible' : 'invisible'}`}
+          className={`z-[2] pb-10 md:pb-5 text-32 md:text-52 lg:text-58 ${isMain ? 'visible' : 'invisible'}`}
         >
           {title}
         </h3>
@@ -77,7 +77,7 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ _id, inde
           ref={imageRef}
           id={`case-image-${slug}`}
           className={`
-            pointer-events-auto relative z-[1] w-full md:w-[61%] aspect-video flex items-center justify-center rounded-10 md:rounded-20
+            pointer-events-auto relative z-[1] w-full md:w-[61%] lg:w-[55%] aspect-video flex items-center justify-center rounded-10 md:rounded-20
           `}
         >
           {isMain ? (
@@ -104,7 +104,7 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ _id, inde
           </div>
         </Link>
 
-        <p className={`relative z-[3] text-18 md:text-20 !leading-[140%] font-medium text-center max-w-750 pt-14 ${isMain ? 'visible' : 'invisible'}`}>
+        <p className={`relative z-[3] text-18 md:text-20 lg:text-23 !leading-[140%] font-medium text-center max-w-750 lg:max-w-900 pt-14 ${isMain ? 'visible' : 'invisible'}`}>
           {shortDescription}
         </p>
 
