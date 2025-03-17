@@ -23,7 +23,7 @@ export const useStepOneAnimation = (stepOneRef: RefObject<HTMLDivElement>) => {
       scrollTrigger: {
         trigger: container,
         start: 'top top',
-        end: 'bottom top-=200%',
+        end: 'bottom top-=150%',
         scrub: true,
       }
     })
@@ -44,7 +44,7 @@ export const useStepOneAnimation = (stepOneRef: RefObject<HTMLDivElement>) => {
 
     mainTl.to(icon, {
       y: () => -1 * getPositionBetween(pin, icon) - pinRect.height / 2 - iconRect.height / 2,
-      duration: mainTl.duration(),
+      duration: mainTl.duration() * 0.75,
       ease: 'power3.inOut',
     }, 0)
   }, {

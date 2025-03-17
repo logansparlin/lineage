@@ -40,7 +40,7 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
       scrollTrigger: {
         trigger: stepTwoRef.current,
         start: `top top`,
-        end: 'bottom top-=200%',
+        end: 'bottom top-=150%',
         scrub: 1,
       }
     })

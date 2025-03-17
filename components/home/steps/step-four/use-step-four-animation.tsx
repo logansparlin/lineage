@@ -75,7 +75,7 @@ export const useStepFourAnimation = (stepFourRef: RefObject<HTMLDivElement>) => 
     }, 0)
 
     illoTl.to(icon, {
-      y: () => -1 * getPositionBetween(pin, icon) - pinRect.height / 2 - iconRect.height / 2,
+      y: () => -1 * getPositionBetween(pin, icon) - pinRect.height / 2 - iconRect.height / 2 - 2,
       duration: () => illoTl.duration() * 0.75,
       ease: 'none',
     }, 0)
