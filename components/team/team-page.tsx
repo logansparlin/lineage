@@ -1,10 +1,10 @@
 import { MemberCard } from "./member-card"
 
 const shadows = {
-  0: 'md:shadow-orange md:group-hover:shadow-orange-hover',
-  1: 'md:shadow-blue md:group-hover:shadow-blue-hover',
-  2: 'md:shadow-green md:group-hover:shadow-green-hover',
-  3: 'md:shadow-pink md:group-hover:shadow-pink-hover',
+  0: 'md:shadow-orange-hover',
+  1: 'md:shadow-blue-hover',
+  2: 'md:shadow-green-hover',
+  3: 'md:shadow-pink-hover',
 }
 
 const colors = {

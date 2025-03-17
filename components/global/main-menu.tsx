@@ -1,6 +1,6 @@
 'use client'
 
-import { type FC, type ComponentProps } from "react";
+import { type FC, type ComponentProps, useMemo } from "react";
 import { useSiteStore } from "@/stores/use-site-store";
 import { useKeyPress } from "@/hooks/use-key-press";
 import { easings } from "@/lib/easings";
@@ -80,7 +80,7 @@ export const MainMenu: FC<MainMenuProps> = ({ className }) => {
           <div className="flex flex-col max-md:gap-y-32 pt-100 pb-32 px-20 md:pt-0 md:pb-0 md:px-0 md:grid md:grid-cols-2 md:gap-x-72">
             {menus?.map((menu, index) => {
               return (
-                <ul key={`menu-${index}`} className={`flex flex-col ${index === 0 ? 'max-md:text-36 md:text-20' : 'gap-y-6 md:gap-y-0 text-20'}`}>
+                <ul key={`menu-${index}`} className={`flex flex-col group ${index === 0 ? 'max-md:text-36 md:text-20' : 'gap-y-6 md:gap-y-0 text-20'}`}>
                   {menu?.map((link, linkIndex) => (
                     <MenuItem
                       key={`menu-${index}-${linkIndex}`}
@@ -103,9 +103,13 @@ export const MainMenu: FC<MainMenuProps> = ({ className }) => {
 
 const MenuItem = ({ label, url = undefined, type, index, onClick, total, offset }) => {
   const baseTransition = { duration: 0.75, ease: easings.outExpo }
+  const isExternal = useMemo(() => {
+    return url?.includes('http')
+  }, [url])
+
   return (
     <motion.li
-      className="will-change-auto transform-gpu"
+      className="will-change-transform transform-gpu group-hover:text-white/30 group-hover:hover:text-white transition-colors duration-300 ease"
       initial={{ opacity: 0, y: 8 }}
       animate={{ 
         opacity: 1,
@@ -124,7 +128,7 @@ const MenuItem = ({ label, url = undefined, type, index, onClick, total, offset 
         }
       }}
     >
-      {type === 'text' ? label : <Link href={url} onClick={onClick} scroll={false} className="transform-gpu">{label}</Link>}
+      {type === 'text' ? label : <Link href={url} target={isExternal ? '_blank' : undefined} onClick={onClick} scroll={false} className="transform-gpu">{label}</Link>}
     </motion.li>
   )
 }

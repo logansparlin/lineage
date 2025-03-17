@@ -42,24 +42,29 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
 
   useEffect(() => {
     if (!isInView) {
+      stopLoop()
       setCurrentStep(items?.[0]?.step ?? 'one')
+    } else {
+      startLoop()
+    }
+
+    return () => {
+      stopLoop()
     }
   }, [isInView, items])
 
   const { width } = useWindowSize();
 
-  useRafLoop(() => {
+  const [stopLoop, startLoop] = useRafLoop(() => {
     if (typeof window === 'undefined' || !caseStudiesRef.current || !bottomRef.current || !topRef.current) return;
 
     if (window.innerWidth < 800) return;
 
-    const firstSectionHeight = (caseStudiesRef.current.querySelector('.case-studies-section')?.clientHeight ?? 0) / 2;
+    // const firstSectionHeight = (caseStudiesRef.current.querySelector('.case-studies-section')?.clientHeight ?? 0) / 2;
     caseStudiesRef.current.style.height = `${mainRef.current.scrollHeight}px`
     
     const containerRect = caseStudiesRef.current?.getBoundingClientRect();
     const offset = clamp((-1 * (containerRect.top - window.innerHeight)), window.innerHeight, (caseStudiesRef.current.scrollHeight));
-
-    console.log(offset)
 
     mainRef.current.scrollTop = offset;
     topRef.current.scrollTop = offset;
@@ -96,7 +101,7 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
               <CaseStudiesBackground />
             </View>
           ) : null}
-          <div className="w-full md:h-screen relative z-[2] transform-3d md:perspective-[3500px]">
+          <div className="w-full md:h-screen relative z-[2] transform-3d md:perspective-[4000px]">
               {/* Top */}
               <Suspense fallback={null}>
                   <CaseStudiesClone

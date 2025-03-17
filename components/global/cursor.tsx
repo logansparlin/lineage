@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState, type FC } from "react";
 import { useSiteStore } from "@/stores/use-site-store";
 import { useRafLoop } from 'react-use'
 
-import { AnimatePresence, motion } from "motion/react";
 import { IconCursorMorph } from "../icons/icon-cursor-morph";
 
 interface CursorProps {
@@ -23,35 +22,18 @@ export const Cursor: FC<CursorProps> = () => {
     target: { x: 0, y: 0 }
   })
 
-  const [stopLoop, startLoop] = useRafLoop(() => {
+  useRafLoop(() => {
     if (!cursorRef.current) return
 
     const elW = cursorRef.current?.offsetWidth
     const elH = cursorRef.current?.offsetHeight
 
-    cursorPos.current.current.x = cursorPos.current.target.x
-    cursorPos.current.current.y = cursorPos.current.target.y
-
-    cursorRef.current.style.transform = `translate3d(${cursorPos.current.current.x - (elW / 2)}px, ${cursorPos.current.current.y - (elH / 2)}px, 0)`
+    cursorRef.current.style.transform = `translate(${cursorPos.current.target.x - (elW / 2)}px, ${cursorPos.current.target.y - (elH / 2)}px)`
   })
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
     cursorPos.current.target.x = e.clientX
     cursorPos.current.target.y = e.clientY
-  }, [])
-
-  useEffect(() => {
-    if (cursorHidden) {
-      stopLoop()
-    } else {
-      startLoop()
-    }
-  }, [cursorHidden])
-
-  useEffect(() => {
-    return () => {
-      stopLoop()
-    }
   }, [])
 
   const handleClick = useCallback((e) => {
@@ -73,24 +55,13 @@ export const Cursor: FC<CursorProps> = () => {
   }, [])
 
   return (
-    <motion.div
+    <div
       ref={cursorRef}
-      className="site-cursor origin-center fixed top-0 w-40 left-0 z-[50] pointer-events-none cursor-none text-nav hidden md:block text-center text-white will-change-auto"
+      className="will-change-transform site-cursor origin-center fixed top-0 w-40 left-0 z-[9999] pointer-events-none cursor-none text-nav hidden md:block text-center text-white"
     >
-      <AnimatePresence>
-        {!cursorHidden ? (
-          <motion.div
-            key="cursor"
-            className="relative will-change-transform origin-center h-20 w-auto text-off-white"
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            <IconCursorMorph step={currentStep} className="h-full w-auto" />
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
-    </motion.div>
+      <div className={`relative h-20 w-auto text-off-white transition-opacity duration-300 ease ${cursorHidden ? 'opacity-0' : 'opacity-100'}`}>
+        <IconCursorMorph step={currentStep} className="h-full w-auto" />
+      </div>
+    </div>
   );
 };
