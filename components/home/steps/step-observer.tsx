@@ -9,7 +9,6 @@ interface StepObserverProps extends ComponentProps<'div'> {
 }
 
 export const StepObserver: FC<StepObserverProps> = ({ step, children }) => {
-  const currentStep = useHomeSteps((state) => state.currentStep)
   const setCurrentStep = useHomeSteps((state) => state.setCurrentStep)
   const stepObserverRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(stepObserverRef, { once: true })
@@ -40,8 +39,10 @@ export const StepObserver: FC<StepObserverProps> = ({ step, children }) => {
   }, [])
 
   return (
-    <div className={`w-full ${isInView ? 'visible': 'invisible'}`} id={`step-${step}`} ref={stepObserverRef}>
-      {children}
+    <div className={`w-full h-screen-300 relative ${isInView ? 'visible': 'invisible'}`} id={`step-${step}`} ref={stepObserverRef}>
+      <div className="w-full flex flex-col gap-y-40 sticky top-60 min-h-[calc(100vh-60px)] pb-60 self-start">
+        {children}
+      </div>
     </div>
   )
 }

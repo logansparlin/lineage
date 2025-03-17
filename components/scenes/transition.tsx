@@ -13,13 +13,14 @@ import { CurvedPlane } from "@/components/home/intro/curved-plane";
 interface TransitionSceneProps {
   mode: 'enter' | 'exit';
   gradientOverride?: string;
+  className?: string;
 }
 
-export const TransitionScene: FC<TransitionSceneProps> = ({ mode = 'enter', gradientOverride }) => {
+export const TransitionScene: FC<TransitionSceneProps> = ({ mode = 'enter', gradientOverride, className = '' }) => {
   const transitionRef = useRef<any>(null);
 
   return (
-    <div className="w-full h-screen-200" ref={transitionRef}>
+    <div className={`${className} w-full h-screen-200`} ref={transitionRef}>
       <View className="w-full h-full">
         <Planes container={transitionRef} mode={mode} gradientOverride={gradientOverride} />
       </View>
@@ -80,7 +81,7 @@ const Planes = ({ container, mode, gradientOverride }: PlanesProps) => {
   }, [normalizedSize, yScale, viewport])
 
   const calculatePosition = useCallback((index: number) => {
-    const yOffset = (index * (normalizedSize * 0.075))
+    const yOffset = (index * (normalizedSize * 0.06))
     const yPosition = (yStart + yOffset) * (mode === 'enter' ? 1 : -1)
     const zPosition = ((planes.length - 1) + index) * 0.001
 
@@ -88,7 +89,7 @@ const Planes = ({ container, mode, gradientOverride }: PlanesProps) => {
   }, [mode, yStart])
 
   const scale = useMemo(() => {
-    return new Vector3(1.5, yScale, 1)
+    return new Vector3(1.25, yScale, 1)
   }, [yScale])
 
   return (

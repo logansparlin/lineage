@@ -29,8 +29,6 @@ export const Cursor: FC<CursorProps> = () => {
     const elW = cursorRef.current?.offsetWidth
     const elH = cursorRef.current?.offsetHeight
 
-    // cursorPos.current.current.x = lerp({ start: cursorPos.current.current.x, end: cursorPos.current.target.x, time: DAMPING })
-    // cursorPos.current.current.y = lerp({ start: cursorPos.current.current.y, end: cursorPos.current.target.y, time: DAMPING })
     cursorPos.current.current.x = cursorPos.current.target.x
     cursorPos.current.current.y = cursorPos.current.target.y
 
@@ -77,7 +75,7 @@ export const Cursor: FC<CursorProps> = () => {
   return (
     <motion.div
       ref={cursorRef}
-      className="site-cursor origin-center fixed top-0 w-40 left-0 z-[50] pointer-events-none cursor-none text-nav hidden md:grid grid-contain text-center place-items-center text-white will-change-transform"
+      className="site-cursor origin-center fixed top-0 w-40 left-0 z-[50] pointer-events-none cursor-none text-nav hidden md:block text-center text-white will-change-auto"
     >
       <AnimatePresence>
         {!cursorHidden ? (

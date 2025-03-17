@@ -44,36 +44,24 @@ export const StepsSection: FC<StepsSectionProps> = (props) => {
   if (!intro) return null;
 
   return (
-    <section className="w-full flex flex-col items-center relative z-[3] -mt-screen-50" {...rest}>
+    <section className="w-full flex flex-col items-center relative z-[3] -mt-screen-35" {...rest}>
       {intro ? <StepsIntro {...intro} /> : null}
 
-      <div className="w-full relative flex flex-col items-center gap-y-250 pt-100 -mb-screen">
+      <div className="w-full relative flex flex-col items-center gap-y-180 pt-100 -mb-screen">
         <StepObserver step="one">
-          <StepOne
-            className="relative w-full flex flex-col gap-y-180"
-            {...one}
-          />
+          <StepOne {...one} />
         </StepObserver>
 
         <StepObserver step="two">
-          <StepTwo
-            className="relative w-full flex flex-col gap-y-180"
-            {...two}
-          />
+          <StepTwo {...two} />
         </StepObserver>
 
         <StepObserver step="three">
-          <StepThree
-            className="relative w-full flex flex-col gap-y-180"
-            {...three}
-          />
+          <StepThree {...three} />
         </StepObserver>
 
         <StepObserver step="four">
-          <StepFour
-            className="relative w-full flex flex-col gap-y-180"
-            {...four}
-          />
+          <StepFour {...four} />
         </StepObserver>
       </div>
 

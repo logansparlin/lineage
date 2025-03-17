@@ -1,7 +1,7 @@
 export const StepOneIllo = () => {
   return (
-    <div className="step-illo self-start h-screen px-60 flex items-center justify-center sticky top-0">
-      <svg className="h-[90%] w-auto" width="1015" height="1016" viewBox="0 0 1015 1016" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div className="step-illo self-start h-full w-auto px-60 flex items-center justify-center">
+      <svg className="absolute h-full w-full inset-0" width="1015" height="1016" viewBox="0 0 1015 1016" fill="none" xmlns="http://www.w3.org/2000/svg">
         {/* Circle 1 */}
         <circle cx="507.406" cy="507.91" r="506.825" stroke="#505050" strokeWidth="1.16111"/>
         <circle style={{ opacity: 0 }} className="circle-path circle-1" cx="507.406" cy="507.91" r="506.825" stroke="url(#paint1_linear_21_303)" strokeWidth="1.16111"/>

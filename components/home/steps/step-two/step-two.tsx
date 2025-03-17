@@ -18,18 +18,18 @@ export const StepTwo: FC<StepTwoProps> = ({ title, description, className = '', 
   useStepTwoAnimation(stepTwoRef);
 
   return (
-    <section className={className} ref={stepTwoRef}>
+    <section className="md:flex-1 md:flex md:flex-col md:items-center gap-y-50" ref={stepTwoRef}>
       <StepDetails
         step={2}
         title={title}
         description={description}
         icon={(
-          <div className="step-icon relative z-[10] h-[clamp(40px,6vw,120px)] w-[clamp(40px,6vw,120px)] flex items-center justify-center">
-            <IconStepTwo highlight className="absolute w-[clamp(40px,6vw,120px)] h-auto" />
+          <div className="step-icon relative z-[10] h-[clamp(40px,5vw,100px)] w-[clamp(40px,5vw,100px)] flex items-center justify-center">
+            <IconStepTwo highlight className="absolute w-[clamp(40px,5vw,100px)] h-auto" />
           </div>
         )}
       />
-      <div className="relative w-full min-h-screen-175">
+      <div className="relative w-full flex-1 flex">
         <StepTwoIllo />
       </div>
     </section>

@@ -1,6 +1,6 @@
 export const StepFourIllo = () => {
   return (
-    <div className="step-illo z-[1] col-span-full w-full h-screen flex justify-center overflow-hidden sticky top-0">
+    <div className="step-illo z-[1] absolute w-full h-full inset-0 flex justify-center overflow-hidden">
       <svg className="step-illo-svg absolute top-0 left-1/2 -translate-x-1/2 h-full w-auto" width="1672" height="876" viewBox="0 0 1672 876" fill="none" xmlns="http://www.w3.org/2000/svg">
         
         <path d="M836.158 1022.85V-147.067" stroke="url(#paint0_linear_22_401)" strokeWidth="1.16111"/>

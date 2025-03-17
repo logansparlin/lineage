@@ -9,10 +9,9 @@ import dynamic from 'next/dynamic';
 
 import Link from 'next/link';
 import { Image } from '@/components/global/image';
-import { View, Image as ImageTexture } from '@react-three/drei';
+import { View } from '@react-three/drei';
 import { useHomeStore } from '../hooks/use-home-store';
-
-const PerspectiveImage = dynamic(() => import('./perspective-image').then(mod => mod.PerspectiveImage), { ssr: false });
+import { CaseStudiesBackground } from '@/components/scenes/case-studies-background';
 
 interface CaseStudiesSectionProps extends ComponentProps<'div'> {
   _id: string
@@ -22,21 +21,24 @@ interface CaseStudiesSectionProps extends ComponentProps<'div'> {
   featuredImage: any
   shortDescription: string
   isMain?: boolean
+  index: number
 }
 
-export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ _id, title, slug, step, featuredImage, shortDescription, isMain = true, className = '', ...rest }) => {
+export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ _id, index, title, slug, step, featuredImage, shortDescription, isMain = true, className = '', ...rest }) => {
   const setCurrentStep = useHomeStore(state => state.setCurrentStep)
-  
+  const setCurrentCaseStudy = useHomeStore(state => state.setCurrentCaseStudy)
+
   const imageRef = useRef<any>(null);
   const caseSectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(caseSectionRef, {
-    margin: '0px 0px -30% 0px'
+    margin: '0px 0px -40% 0px'
   })
 
   useEffect(() => {
     if (!isInView || !isMain) return;
 
     setCurrentStep(step)
+    setCurrentCaseStudy(index)
   }, [isInView])
 
   const imageUrl = useMemo(() => {
@@ -49,6 +51,7 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ _id, titl
 
   return (
     <div
+      id={isMain ? `case-study-${index}` : undefined}
       ref={caseSectionRef}
       className={`${className} group card overflow-hidden px-20 md:px-0 text-center md:text-left md:min-h-screen relative py-100 md:py-[20vh]`}
       style={{
@@ -58,6 +61,9 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ _id, titl
         '--local-color-400': stepColors[400],
       } as React.CSSProperties}
     >
+      <View className="md:hidden absolute inset-0 w-screen h-full pointer-events-none">
+        <CaseStudiesBackground gradientOverride={step} />
+      </View>
       <div className="w-full relative flex flex-col items-center justify-center gap-10 md:gap-20">
         <h3
           className={`z-[2] pb-10 md:pb-5 text-32 md:text-52 ${isMain ? 'visible' : 'invisible'}`}
@@ -71,7 +77,7 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ _id, titl
           ref={imageRef}
           id={`case-image-${slug}`}
           className={`
-            block pointer-events-auto relative z-[1] w-full md:w-[60%] aspect-video flex items-center justify-center rounded-10 md:rounded-20
+            pointer-events-auto relative z-[1] w-full md:w-[60%] aspect-video flex items-center justify-center rounded-10 md:rounded-20
           `}
         >
           {isMain ? (

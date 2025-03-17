@@ -1,6 +1,10 @@
-import { type FC, type ComponentProps } from "react";
+'use client'
+
+import { type FC, type ComponentProps, useRef } from "react";
 import { SitePortableText } from "@/components/global/site-portable-text";
 import { SplitDescriptionContainer } from "./split-description-container";
+import { motion, useInView } from "motion/react";
+import { easings } from "@/lib/easings";
 
 interface StepsIntroProps extends ComponentProps<'section'> {
   heading: string;
@@ -16,6 +20,12 @@ interface StepsIntroProps extends ComponentProps<'section'> {
 
 export const StepsIntro: FC<StepsIntroProps> = (props) => {
   const { heading, subheading, splitDescription, description, ...rest } = props;
+  const splitDescriptionRef = useRef<HTMLDivElement>(null);
+
+  const isInView = useInView(splitDescriptionRef, {
+    amount: 0.01,
+    margin: '0px 0px -50% 0px'
+  })
 
   return (
     <section className="px-20 flex flex-col items-center text-center gap-y-72 pb-60 md:pb-100" {...rest}>
@@ -25,18 +35,38 @@ export const StepsIntro: FC<StepsIntroProps> = (props) => {
       </div>
 
       {splitDescription ? (
-        <div className="max-md:w-full flex flex-col md:flex-row items-center justify-center md:gap-x-50">
-          <SplitDescriptionContainer
-            side="left"
-            heading={splitDescription.headingOne}
-            description={splitDescription.descriptionOne}
-          />
+        <div ref={splitDescriptionRef} className="max-md:w-full flex flex-col md:flex-row items-center justify-center">
+          <motion.div
+            className="w-full flex items-center justify-center [--y-start:-15px] md:[--y-start:0px] [--x-start:0px] md:[--x-start:-25px]"
+            initial={{ y: 'var(--y-start)', x: 'var(--x-start)' }}
+            animate={{ y: isInView ? 0 : 'var(--y-start)', x: isInView ? 0 : 'var(--x-start)' }}
+            transition={{
+              duration: 0.85,
+              ease: easings.outExpo
+            }}
+          >
+            <SplitDescriptionContainer
+              side="left"
+              heading={splitDescription.headingOne}
+              description={splitDescription.descriptionOne}
+            />
+          </motion.div>
 
-          <SplitDescriptionContainer
-            side="right"
-            heading={splitDescription.headingTwo}
-            description={splitDescription.descriptionTwo}
-          />
+          <motion.div
+            className="w-full flex items-center justify-center [--y-start:15px] md:[--y-start:0px] [--x-start:0px] md:[--x-start:25px]"
+            initial={{ y: 'var(--y-start)', x: 'var(--x-start)' }}
+            animate={{ y: isInView ? 0 : 'var(--y-start)', x: isInView ? 0 : 'var(--x-start)' }}
+            transition={{
+              duration: 0.85,
+              ease: easings.outExpo
+            }}
+          >
+            <SplitDescriptionContainer
+              side="right"
+              heading={splitDescription.headingTwo}
+              description={splitDescription.descriptionTwo}
+            />
+          </motion.div>
         </div>
       ) : null}
 

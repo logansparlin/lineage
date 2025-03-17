@@ -10,6 +10,8 @@ interface HomeStore {
   setIsColorChanging: (isColorChanging: boolean) => void;
   currentStep: string;
   setCurrentStep: (currentStep: string) => void;
+  currentCaseStudy: number;
+  setCurrentCaseStudy: (currentCaseStudy: number) => void;
 }
 
 export const useHomeStore = create<HomeStore>((set) => ({
@@ -20,5 +22,7 @@ export const useHomeStore = create<HomeStore>((set) => ({
   isColorChanging: false,
   setIsColorChanging: (isColorChanging: boolean) => set({ isColorChanging }),
   currentStep: 'one',
-  setCurrentStep: (currentStep: string) => set({ currentStep })
+  setCurrentStep: (currentStep: string) => set({ currentStep }),
+  currentCaseStudy: 0,
+  setCurrentCaseStudy: (currentCaseStudy: number) => set({ currentCaseStudy })
 }));

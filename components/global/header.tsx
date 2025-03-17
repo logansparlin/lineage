@@ -12,6 +12,7 @@ import { IconDice } from "../icons/icon-dice";
 import { Button } from "./button";
 import { MainMenu } from "./main-menu";
 import Link from "next/link";
+import { easings } from "@/lib/easings";
 
 export interface HeaderProps {}
 
@@ -70,10 +71,39 @@ export const Header: FC<HeaderProps> = (props) => {
           ) : null}
         </AnimatePresence>
         <Button
-          className="relative z-[2]"
+          className="relative z-[2] grid-contain"
           onClick={toggleMenu}
         >
-          Menu
+          <AnimatePresence mode="popLayout">
+            {!menuOpen ? (
+              <motion.div
+                key="menu"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{
+                  duration: 0.35,
+                  ease: easings.inOutExpo
+                }}
+              >
+                <span>Menu</span>
+              </motion.div>
+            ) : null}
+            {menuOpen ? (
+              <motion.div
+                key="close"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{
+                  duration: 0.35,
+                  ease: easings.inOutExpo
+                }}
+              >
+                <span>Close</span>
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
         </Button>
       </div>
     </header>

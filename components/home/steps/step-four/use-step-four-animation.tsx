@@ -1,9 +1,11 @@
 import { type RefObject } from "react";
 import { gsap } from "gsap/gsap-core";
 import { useGSAP } from "@gsap/react";
+import { getPositionBetween } from "@/lib/get-position-between";
 
 export const useStepFourAnimation = (stepFourRef: RefObject<HTMLDivElement>) => {
   useGSAP(() => {
+    const container = stepFourRef.current;
     const details = stepFourRef.current?.querySelector('.step-details');
     const icon: HTMLElement = stepFourRef.current?.querySelector('.step-icon');
     const pin: HTMLElement = stepFourRef.current?.querySelector('.step-four-pin');
@@ -12,26 +14,13 @@ export const useStepFourAnimation = (stepFourRef: RefObject<HTMLDivElement>) => 
     if (!details || !icon || !pin || !illo) return;
 
     const iconRect = icon.getBoundingClientRect();
-
-    const iconPin = gsap.timeline({
-      scrollTrigger: {
-        trigger: icon,
-        start: () => `top ${window.innerHeight / 2 - (iconRect.height / 2)}px`,
-        end: 'bottom bottom',
-        endTrigger: stepFourRef.current,
-        scrub: true,
-        // pin: true,
-        // pinType: 'transform',
-        // pinSpacing: false,
-        // anticipatePin: 0.01
-      }
-    })
+    const pinRect = pin.getBoundingClientRect();
 
     const illoTl = gsap.timeline({
       scrollTrigger: {
-        trigger: illo,
+        trigger: container,
         start: 'top top',
-        end: 'bottom bottom',
+        end: 'bottom top-=100%',
         endTrigger: stepFourRef.current,
         scrub: true,
       }
@@ -83,6 +72,19 @@ export const useStepFourAnimation = (stepFourRef: RefObject<HTMLDivElement>) => 
       transformOrigin: 'center center',
       ease: 'none',
       duration: 1
+    }, 0)
+
+    illoTl.to(icon, {
+      y: () => -1 * getPositionBetween(pin, icon) - pinRect.height / 2 - iconRect.height / 2,
+      duration: () => illoTl.duration() * 0.75,
+      ease: 'none',
+    }, 0)
+
+    illoTl.to(illo, {
+      scale: 1.1,
+      transformOrigin: 'center center',
+      ease: 'none',
+      duration: () => illoTl.duration() * 0.75,
     }, 0)
   }, {
     scope: stepFourRef.current

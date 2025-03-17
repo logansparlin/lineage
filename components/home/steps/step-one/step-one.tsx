@@ -12,19 +12,19 @@ interface StepOneProps extends ComponentProps<'section'> {
   description: any
 }
 
-export const StepOne: FC<StepOneProps> = ({ title, description, className = '', ...rest }) => {
+export const StepOne: FC<StepOneProps> = ({ title, description }) => {
   const stepOneRef = useRef<HTMLDivElement>(null);
 
   useStepOneAnimation(stepOneRef);
 
   return (
-    <section className={className} ref={stepOneRef}>
+    <section className="md:flex-1 md:flex md:flex-col md:items-center" ref={stepOneRef}>
       <StepDetails
         step={1}
         title={title}
         description={description}
         icon={(
-          <div className="step-icon relative z-[10] h-[clamp(40px,6vw,120px)] w-[clamp(40px,6vw,120px)]">
+          <div className="step-icon relative z-[10] h-[clamp(30px,4vw,80px)] w-[clamp(30px,4vw,80px)]">
             <IconStepOne
               highlight
               className="w-full h-auto"
@@ -32,7 +32,7 @@ export const StepOne: FC<StepOneProps> = ({ title, description, className = '', 
           </div>
         )}
       />
-      <div className="relative self-start w-full min-h-screen-200">
+      <div className="relative w-full flex-1">
         <StepOneIllo />
       </div>
     </section>

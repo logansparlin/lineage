@@ -39,7 +39,7 @@ const ContainerLeft = () => {
 const ContainerRight = () => {
   return (
     <>
-    <svg className="hidden md:block w-full" width="423" height="468" viewBox="0 0 423 468" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg className="hidden md:block -ml-2 w-full" width="423" height="468" viewBox="0 0 423 468" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M188.39 467.347C317.284 467.347 421.773 362.858 421.773 233.964C421.773 105.07 317.284 0.580556 188.39 0.580556H0.579926V467.347H188.39Z"
         stroke="var(--color-off-white)"

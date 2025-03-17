@@ -5,12 +5,16 @@ import { getPositionBetween } from "@/lib/get-position-between";
 
 export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
   useGSAP(() => {
+    const container = stepTwoRef.current;
     const details = stepTwoRef.current?.querySelector('.step-details');
     const icon: HTMLElement = stepTwoRef.current?.querySelector('.step-icon');
     const pin: HTMLElement = stepTwoRef.current?.querySelector('.step-two-pin');
     const illo: HTMLElement = stepTwoRef.current?.querySelector('.step-illo');
 
     if (!details || !icon || !pin || !illo) return;
+
+    const pinRect = pin.getBoundingClientRect();
+    const iconRect = icon.getBoundingClientRect();
     
     const getIconScale = () => () => {
       const pinRect = pin.getBoundingClientRect();
@@ -28,64 +32,50 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
       return `top ${-1 * iconPinTop}px`
     }
 
-    const groupOneHighlights = gsap.utils.toArray(illo.querySelectorAll('.group-one .highlight'));
-    const groupTwoHighlights = gsap.utils.toArray(illo.querySelectorAll('.group-two .highlight'));
-    const groupThreeHighlights = gsap.utils.toArray(illo.querySelectorAll('.group-three .highlight'));
+    const groupOneHighlights = illo.querySelector('.group-one');
+    const groupTwoHighlights = illo.querySelector('.group-two');
+    const groupThreeHighlights = illo.querySelector('.group-three');
 
     const mainTl = gsap.timeline({
       scrollTrigger: {
         trigger: stepTwoRef.current,
         start: `top top`,
-        end: 'bottom top',
+        end: 'bottom top-=200%',
         scrub: 1,
       }
     })
 
     mainTl.to(icon, {
-      scale: getIconScale(),
-      duration: 0.5,
+      y: () => -1 * getPositionBetween(pin, icon) - pinRect.height / 2 - iconRect.height / 2,
+      duration: 0.75,
+      ease: 'none',
     }, 0)
 
-    mainTl.to({}, {}, '+=1')
+    mainTl.to(icon, {
+      scale: getIconScale(),
+      duration: 0.75,
+    }, 0)
 
-    const iconPin = gsap.timeline({
-      scrollTrigger: {
-        trigger: icon,
-        start: getIconPinStart(),
-        end: 'bottom bottom',
-        endTrigger: stepTwoRef.current,
-        scrub: 1,
-        pin: true,
-        pinType: 'fixed',
-        pinSpacing: false,
-        pinReparent: true,
-        anticipatePin: 0.01
-      }
-    })
+    mainTl.to({}, {}, '>')
 
-    groupOneHighlights.forEach((highlight: HTMLElement, index: number) => {
-      mainTl.to(highlight, {
-        opacity: 1,
-        duration: 0.5,
-        ease: 'power2.inOut',
-      }, 0.25)
-    })
 
-    groupTwoHighlights.forEach((highlight: HTMLElement, index: number) => {
-      mainTl.to(highlight, {
-        opacity: 1,
-        duration: 0.5,
-        ease: 'power2.inOut',
-      }, 0.75)
-    })
+    mainTl.to(groupOneHighlights, {
+      opacity: 1,
+      duration: 0.5,
+      ease: 'power2.inOut',
+    }, '>-=0.5')
 
-    groupThreeHighlights.forEach((highlight: HTMLElement, index: number) => {
-      mainTl.to(highlight, {
-        opacity: 1,
-        duration: 0.5,
-        ease: 'power2.inOut',
-      }, 1.25)
-    })
+    mainTl.to(groupTwoHighlights, {
+      opacity: 1,
+      duration: 0.5,
+      ease: 'power2.inOut',
+    }, '>')
+
+    mainTl.to(groupThreeHighlights, {
+      opacity: 1,
+      duration: 0.5,
+      ease: 'power2.inOut',
+    }, '>')
 
     mainTl.to({}, {}, '+=0.5')
   }, {

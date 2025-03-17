@@ -21,7 +21,7 @@ const badgeBorderStyles = cva(['absolute z-[1] w-[calc(100%+2px)] h-[calc(100%+2
 export const StepBadge: FC<StepBadgeProps> = ({ step }) => {
   return (
     <div className="relative">
-      <div className="text-20 px-16 py-3 bg-black rounded-30 relative z-[2]">Step {step}</div>
+      <div className="text-18 px-16 py-3 bg-black rounded-30 relative z-[2]">Step {step}</div>
       <div
         inert
         aria-hidden

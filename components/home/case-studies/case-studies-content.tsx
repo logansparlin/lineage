@@ -23,11 +23,12 @@ export const CaseStudiesContent: FC<CaseStudiesContentProps> = ({ items, ref, cl
       ref={ref}
       {...rest}
     >
-      {items?.map(caseStudy => {
+      {items?.map((caseStudy, index) => {
         return (
           <CaseStudiesSection
             key={caseStudy._id}
             isMain={isMain}
+            index={index}
             {...caseStudy}
           />
         )

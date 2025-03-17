@@ -18,18 +18,20 @@ export const StepThree: FC<StepThreeProps> = ({ title, description, className = 
   useStepThreeAnimation(stepThreeRef);
 
   return (
-    <section className={className} ref={stepThreeRef}>
+    <section className="md:flex-1 md:flex md:flex-col md:items-center" ref={stepThreeRef}>
       <StepDetails
         step={3}
         title={title}
         description={description}
         icon={(
-          <div className="step-icon will-change-transform relative z-[4] h-[clamp(40px,6vw,120px)] w-[clamp(40px,6vw,120px)]">
+          <div className="step-icon will-change-transform relative z-[4] h-[clamp(30px,4vw,80px)] w-[clamp(30px,4vw,80px)]">
             <IconStepThree highlight className="w-full h-auto" />
+            <div className="tracking-circle tracking-circle-one w-full h-full bg-linear-to-b from-blue-200 to-blue-300 rounded-full absolute inset-0 opacity-30 scale-0" data-scale="3.75" />
+            <div className="tracking-circle tracking-circle-two w-full h-full bg-linear-to-t from-blue-200 to-blue-300 rounded-full absolute inset-0 opacity-20 scale-0" data-scale="2.5" />
           </div>
         )}
       />
-      <div className="relative z-[2] w-full flex items-start">
+      <div className="relative z-[2] w-full flex-1 flex items-start">
         <StepThreeIllo />
       </div>
     </section>

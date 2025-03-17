@@ -3,21 +3,28 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { useHomeStore } from "../home/hooks/use-home-store";
 import { getStepColorsRGB } from "@/lib/get-step-colors";
 
-import { PerspectiveImage } from "@/components/home/case-studies/perspective-image";
 import { Color } from "three";
 
-export const CaseStudiesBackground = ({ items }: { items: any[] }) => {
+export const CaseStudiesBackground = ({ gradientOverride }: { gradientOverride?: string }) => {
   const currentStep = useHomeStore(state => state.currentStep)
   const blurRef = useRef<any>(null)
   const { viewport } = useThree();
 
   const colors = useMemo(() => {
+    if (gradientOverride) {
+      const overrideColors = getStepColorsRGB(gradientOverride)
+      return {
+        background: new Color(overrideColors[400]).convertLinearToSRGB(),
+        foreground: new Color(overrideColors[300]).convertLinearToSRGB(),
+      }
+    }
+
     const colors = getStepColorsRGB(currentStep)
     return {
       background: new Color(colors[400]).convertLinearToSRGB(),
       foreground: new Color(colors[300]).convertLinearToSRGB(),
     }
-  }, [currentStep])
+  }, [currentStep, gradientOverride])
 
   const initialColors = useRef({
     background: colors.background,
@@ -49,12 +56,6 @@ export const CaseStudiesBackground = ({ items }: { items: any[] }) => {
           transparent
         />
       </mesh>
-      
-      {/* <mesh position={[0, 0, 0]}>
-        {items.map((item, index) => (
-          <PerspectiveImage key={item.slug} {...item} index={index} />
-        ))}
-      </mesh> */}
     </group>
   )
 }
