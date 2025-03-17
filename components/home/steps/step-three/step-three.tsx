@@ -25,9 +25,9 @@ export const StepThree: FC<StepThreeProps> = ({ title, description, className = 
         description={description}
         icon={(
           <div className="step-icon will-change-transform relative z-[4] h-[clamp(30px,4vw,80px)] w-[clamp(30px,4vw,80px)]">
-            <IconStepThree highlight className="w-full h-auto" />
-            <div className="tracking-circle tracking-circle-one w-full h-full bg-linear-to-b from-blue-200 to-blue-300 rounded-full absolute inset-0 opacity-30 scale-0" data-scale="3.75" />
-            <div className="tracking-circle tracking-circle-two w-full h-full bg-linear-to-t from-blue-200 to-blue-300 rounded-full absolute inset-0 opacity-20 scale-0" data-scale="2.5" />
+            <IconStepThree highlight className="relative z-[2] w-full h-auto" />
+            <div className="tracking-circle tracking-circle-one w-full h-full bg-linear-to-b from-blue-200 to-blue-300 rounded-full absolute z-[1] inset-0 opacity-30 scale-0" data-scale="3.75" />
+            <div className="tracking-circle tracking-circle-two w-full h-full bg-linear-to-t from-blue-200 to-blue-300 rounded-full absolute z-[1] inset-0 opacity-20 scale-0" data-scale="2.5" />
           </div>
         )}
       />
