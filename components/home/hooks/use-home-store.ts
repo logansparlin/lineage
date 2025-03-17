@@ -8,6 +8,8 @@ interface HomeStore {
   setNextGradient: (gradient: string | null) => void;
   isColorChanging: boolean;
   setIsColorChanging: (isColorChanging: boolean) => void;
+  currentStep: string;
+  setCurrentStep: (currentStep: string) => void;
 }
 
 export const useHomeStore = create<HomeStore>((set) => ({
@@ -16,5 +18,7 @@ export const useHomeStore = create<HomeStore>((set) => ({
   nextGradient: null,
   setNextGradient: (gradient: string | null) => set({ nextGradient: gradient }),
   isColorChanging: false,
-  setIsColorChanging: (isColorChanging: boolean) => set({ isColorChanging })
+  setIsColorChanging: (isColorChanging: boolean) => set({ isColorChanging }),
+  currentStep: 'one',
+  setCurrentStep: (currentStep: string) => set({ currentStep })
 }));

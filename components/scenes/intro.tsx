@@ -1,14 +1,14 @@
 'use client';
 
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useCallback } from "react";
 import { useLenis } from "lenis/react";
-import { useHomeStore } from "../hooks/use-home-store";
+import { useHomeStore } from "@/components/home/hooks/use-home-store";
 import { useFrame, useThree } from "@react-three/fiber";
 import { lerp } from "@/lib/lerp";
 import { gsap } from "gsap";
 
 import { Vector3 } from "three";
-import { CurvedPlane } from "../intro/curved-plane";
+import { CurvedPlane } from "@/components/home/intro/curved-plane";
 import { getGradient } from "@/lib/gradients";
 import { useMeshColorAnimation } from "@/hooks/use-mesh-color-animation";
 
@@ -29,6 +29,7 @@ export const IntroScene = ({ container, sections }: { container: React.RefObject
   })
 
   const planes = useMemo(() => Array.from({ length: 8 }, (_, i) => i + 1), []);
+  const aspectRatio = useMemo(() => viewport.width / viewport.height, [viewport])
 
   useFrame(() => {
     if (typeof window === 'undefined') return;
@@ -82,15 +83,36 @@ export const IntroScene = ({ container, sections }: { container: React.RefObject
 
     meshChildren?.forEach((child, index) => {
       const reverseIndex = planes.length - 1 - index;
+      const aspectOffset = aspectRatio > 1 ? 1 : aspectRatio;
+      
       const stepOneScale = 0.3;
       const stepTwoScale = reverseIndex * (0.7 / (planes.length - 1))
       const stepThreeScale = (0.7 + (reverseIndex * 0.15))
-      const scale = (firstAnimationProgress * stepOneScale) + (secondAnimationProgress * stepTwoScale) + (lastAnimationProgress * stepThreeScale);
 
-      child.scale.x = scale;
-      child.scale.y = scale;
+      const scaleX = (
+        (firstAnimationProgress * stepOneScale) 
+        + (secondAnimationProgress * ((stepTwoScale - (0.25 * (1 - aspectOffset))) * aspectOffset))
+        + (lastAnimationProgress * ((stepThreeScale - (0.25 * (1 - aspectOffset))) * aspectOffset))
+      );
+
+      const scaleY = (
+        (firstAnimationProgress * stepOneScale) 
+        + (secondAnimationProgress * stepTwoScale)
+        + (lastAnimationProgress * stepThreeScale)
+      );
+
+      child.scale.x = scaleX;
+      child.scale.y = scaleY;
     })
   })
+
+  const scale = useMemo(() => {
+    return new Vector3(0, 0, 0)
+  }, [])
+
+  const calculatePosition = useCallback((index: number) => {
+    return new Vector3(0, 0, index * 0.001)
+  }, [])
 
   return (
     <mesh ref={meshRef}>
@@ -100,12 +122,12 @@ export const IntroScene = ({ container, sections }: { container: React.RefObject
             key={`plane-${plane}`}
             width={viewport.width}
             height={viewport.height}
-            aspectRatio={viewport.width / viewport.height}
+            aspectRatio={aspectRatio}
             curveIntensity={3}
             inner={currentGradient.inner}
             outer={currentGradient.outer}
-            scale={new Vector3(0, 0, 0)}
-            position={new Vector3(0, 0, index * 0.001)}
+            scale={scale}
+            position={calculatePosition(index)}
             opacity={1}
           />
         )

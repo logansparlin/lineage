@@ -24,7 +24,7 @@ export const IntroSection: FC<IntroSectionProps> = ({ text, variant }) => {
   const sectionClass = useMemo(() => `intro-section-${variant}`, [variant])
 
   return (
-    <div ref={sectionRef} className={`${introSectionStyles({ variant })} ${sectionClass}`}>
+    <div ref={sectionRef} data-title={`.intro-title-${variant}`} className={`${introSectionStyles({ variant })} ${sectionClass}`}>
       <div className={`section-title relative flex items-center justify-center min-h-screen`}>
         <h2 className={'sr-only'}>{text}</h2>
       </div>

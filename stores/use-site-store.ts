@@ -11,6 +11,8 @@ interface SiteStore {
   setCurrentStep: (step: string | null) => void;
   isAnimatingGradient: boolean;
   setIsAnimatingGradient: (animating: boolean) => void;
+  hasMounted: boolean;
+  setHasMounted: (mounted: boolean) => void;
 }
 
 export const useSiteStore = create<SiteStore>((set) => ({
@@ -24,4 +26,6 @@ export const useSiteStore = create<SiteStore>((set) => ({
   setCurrentStep: (step: string | null) => set({ currentStep: step }),
   isAnimatingGradient: false,
   setIsAnimatingGradient: (animating: boolean) => set({ isAnimatingGradient: animating }),
+  hasMounted: false,
+  setHasMounted: (mounted: boolean) => set({ hasMounted: mounted }),
 }))

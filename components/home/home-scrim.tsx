@@ -1,21 +1,23 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useSiteStore } from "@/stores/use-site-store";
 
 import { AnimatePresence, motion } from "motion/react";
 
 export const HomeScrim = () => {
-  const [mounted, setMounted] = useState(false);
+  const setHasMounted = useSiteStore(state => state.setHasMounted);
+  const hasMounted = useSiteStore(state => state.hasMounted);
 
   useEffect(() => {
-    if (!mounted) {
-      setMounted(true);
+    if (!hasMounted) {
+      setHasMounted(true);
     }
-  }, [mounted])
+  }, [hasMounted])
   
   return (
     <AnimatePresence>
-      {!mounted ? (
+      {!hasMounted ? (
         <motion.div
           key="home-scrim"
           aria-hidden="true"

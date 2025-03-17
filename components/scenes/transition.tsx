@@ -1,14 +1,14 @@
-import { type FC, RefObject, useMemo, useRef } from "react";
+import { type FC, RefObject, useCallback, useMemo, useRef } from "react";
 import { useMeshColorAnimation } from "@/hooks/use-mesh-color-animation";
 import { useFrame, useThree } from "@react-three/fiber"
-import { useHomeStore } from "../hooks/use-home-store";
-import { getGradient, Gradient } from "@/lib/gradients";
+import { useHomeStore } from "@/components/home/hooks/use-home-store";
+import { getGradient } from "@/lib/gradients";
 import { Vector3 } from "three";
 import { useLenis } from "lenis/react";
 import { gsap } from "gsap";
 
 import { View } from "@react-three/drei";
-import { CurvedPlane } from "../intro/curved-plane";
+import { CurvedPlane } from "@/components/home/intro/curved-plane";
 
 interface TransitionSceneProps {
   mode: 'enter' | 'exit';
@@ -16,12 +16,12 @@ interface TransitionSceneProps {
 }
 
 export const TransitionScene: FC<TransitionSceneProps> = ({ mode = 'enter', gradientOverride }) => {
-  const containerRef = useRef<any>(null);
+  const transitionRef = useRef<any>(null);
 
   return (
-    <div className="w-full h-screen-200" ref={containerRef}>
+    <div className="w-full h-screen-200" ref={transitionRef}>
       <View className="w-full h-full">
-        <Planes container={containerRef} mode={mode} gradientOverride={gradientOverride} />
+        <Planes container={transitionRef} mode={mode} gradientOverride={gradientOverride} />
       </View>
     </div>
   )
@@ -65,39 +65,48 @@ const Planes = ({ container, mode, gradientOverride }: PlanesProps) => {
     const progress = gsap.utils.clamp(0, 1, progressRaw);
 
     allPlanes.forEach((plane, index) => {
-      plane.material.uniforms.curveProgress.value = (index * 1) * progress * (mode === 'enter' ? -1 : 1);
+      const curveProgress = (index * 1) * progress * (mode === 'enter' ? -1 : 1);
+      
+      plane.material.uniforms.curveProgress.value = curveProgress;
     })
   })
 
   const yScale = useMemo(() => {
-    return aspectRatio > 1 ? 1 : 2;
+    return aspectRatio > 1 ? 1 : 1.5;
   }, [aspectRatio])
 
   const yStart = useMemo(() => {
     return ((((normalizedSize * yScale) - viewport.height) / 2) + viewport.height) - viewport.height;
   }, [normalizedSize, yScale, viewport])
 
+  const calculatePosition = useCallback((index: number) => {
+    const yOffset = (index * (normalizedSize * 0.075))
+    const yPosition = (yStart + yOffset) * (mode === 'enter' ? 1 : -1)
+    const zPosition = ((planes.length - 1) + index) * 0.001
+
+    return new Vector3(0, yPosition, zPosition)
+  }, [mode, yStart])
+
+  const scale = useMemo(() => {
+    return new Vector3(1.5, yScale, 1)
+  }, [yScale])
+
   return (
     <mesh ref={meshRef}>
-      {planes?.map((plane, index) => {
-        const yOffset = (index * (normalizedSize * 0.07))
-        const yPosition = (yStart + yOffset) * (mode === 'enter' ? 1 : -1)
-
-        const zPosition = ((planes.length - 1) + index) * 0.001
-        
+      {planes?.map((_, index) => {
         return (
           <CurvedPlane
             key={`plane-${index}`}
             width={viewport.width}
             height={viewport.height}
-            aspectRatio={viewport.width / viewport.height}
+            aspectRatio={aspectRatio}
             curveIntensity={3}
             inner={currentGradient.outer}
             outer={currentGradient.inner}
             center={index === (planes.length - 1) ? "#000000" : "#FFFFFF"}
-            scale={new Vector3(1.5, yScale, 1)}
-            position={new Vector3(0, yPosition, zPosition)}
-            inset={0.925}
+            scale={scale}
+            position={calculatePosition(index)}
+            inset={1}
             opacity={1}
           />
         )

@@ -11,8 +11,8 @@ interface StepObserverProps extends ComponentProps<'div'> {
 export const StepObserver: FC<StepObserverProps> = ({ step, children }) => {
   const currentStep = useHomeSteps((state) => state.currentStep)
   const setCurrentStep = useHomeSteps((state) => state.setCurrentStep)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const isInView = useInView(containerRef, { once: true })
+  const stepObserverRef = useRef<HTMLDivElement>(null)
+  const isInView = useInView(stepObserverRef, { once: true })
   
   useEffect(() => {
     if (!setCurrentStep) return;
@@ -28,19 +28,19 @@ export const StepObserver: FC<StepObserverProps> = ({ step, children }) => {
       threshold: 0,
     });
 
-    if (containerRef.current) {
-      intersectionObserver.observe(containerRef.current);
+    if (stepObserverRef.current) {
+      intersectionObserver.observe(stepObserverRef.current);
     }
 
     return () => {
-      if (containerRef.current) {
+      if (stepObserverRef.current) {
         intersectionObserver.disconnect();
       }
     }
   }, [])
 
   return (
-    <div className={`w-full ${isInView ? 'visible': 'invisible'}`} id={`step-${step}`} ref={containerRef}>
+    <div className={`w-full ${isInView ? 'visible': 'invisible'}`} id={`step-${step}`} ref={stepObserverRef}>
       {children}
     </div>
   )

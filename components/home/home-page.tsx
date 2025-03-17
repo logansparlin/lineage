@@ -75,11 +75,11 @@ export const HomePage = (props: HomePageProps) => {
 
       <CaseStudies items={caseStudies} />
       
-      <HomeScrollScene caseStudyGradient={caseStudyGradient} />
+      <HomeScrollScene />
 
       <Footer />
       
-      {/* <HomeScrim /> */}
+      <HomeScrim />
     </div>
   );
 };

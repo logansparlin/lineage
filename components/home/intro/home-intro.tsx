@@ -7,8 +7,8 @@ import { useInView } from "motion/react";
 
 import { ScrollIndicator } from "./scroll-indicator";
 import { IntroSection } from "./intro-section";
-import { IntroScene } from "../scenes/intro";
-import { TransitionScene } from "../scenes/transition";
+import { IntroScene } from "../../scenes/intro";
+import { TransitionScene } from "../../scenes/transition";
 import { Image } from "@/components/global/image";
 import { View } from "@react-three/drei";
 

@@ -2,8 +2,9 @@
 
 import { type FC, type ComponentProps, useEffect, useRef, memo } from "react";
 import { scrollConfig } from "@/lib/scroll-config";
-import { gsap } from "gsap";
+import { addEffect } from "@react-three/fiber";
 import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
 
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ReactLenis } from "lenis/react";
@@ -32,10 +33,11 @@ export const ScrollContainer: FC<ScrollContainerProps> = memo(({ children, ...pr
   useEffect(() => {
     const update = (time) => {
       // time * 1000 converts to milliseconds
-      lenisRef.current?.lenis?.raf(time * 1000);
+      lenisRef.current?.lenis?.raf(time);
     }
 
-    gsap.ticker.add(update);
+    addEffect(update);
+    // gsap.ticker.add(update);
     gsap.ticker.lagSmoothing(0);
 
     return () => {

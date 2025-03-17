@@ -44,7 +44,7 @@ export const StepsSection: FC<StepsSectionProps> = (props) => {
   if (!intro) return null;
 
   return (
-    <section className="w-full flex flex-col items-center relative z-[3]" {...rest}>
+    <section className="w-full flex flex-col items-center relative z-[3] -mt-screen-50" {...rest}>
       {intro ? <StepsIntro {...intro} /> : null}
 
       <div className="w-full relative flex flex-col items-center gap-y-250 pt-100 -mb-screen">

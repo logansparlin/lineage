@@ -1,11 +1,18 @@
 'use client'
 
-import { ComponentProps, type FC, useEffect, useRef, useMemo } from 'react';
+import { ComponentProps, type FC, useEffect, useRef, useMemo, memo, Suspense } from 'react';
 import { getStepColors } from '@/lib/get-step-colors';
+import { useInView } from 'motion/react';
+import { urlFor } from '@/sanity/lib/image';
+import dynamic from 'next/dynamic';
 
-import { BlurredBackground } from './blurred-background';
-import { Image } from '@/components/global/image';
+
 import Link from 'next/link';
+import { Image } from '@/components/global/image';
+import { View, Image as ImageTexture } from '@react-three/drei';
+import { useHomeStore } from '../hooks/use-home-store';
+
+const PerspectiveImage = dynamic(() => import('./perspective-image').then(mod => mod.PerspectiveImage), { ssr: false });
 
 interface CaseStudiesSectionProps extends ComponentProps<'div'> {
   _id: string
@@ -15,36 +22,26 @@ interface CaseStudiesSectionProps extends ComponentProps<'div'> {
   featuredImage: any
   shortDescription: string
   isMain?: boolean
-  setCurrentStep?: (step: string) => void
 }
 
-export const CaseStudiesSection: FC<CaseStudiesSectionProps> = ({ _id, title, slug, step, featuredImage, shortDescription, isMain = false, className = '', setCurrentStep, ...rest }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ _id, title, slug, step, featuredImage, shortDescription, isMain = true, className = '', ...rest }) => {
+  const setCurrentStep = useHomeStore(state => state.setCurrentStep)
+  
+  const imageRef = useRef<any>(null);
+  const caseSectionRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(caseSectionRef, {
+    margin: '0px 0px -30% 0px'
+  })
 
   useEffect(() => {
-    if (!setCurrentStep) return;
+    if (!isInView || !isMain) return;
 
-    const intersectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setCurrentStep(step);
-        }
-      })
-    }, {
-      rootMargin: '0px',
-      threshold: 0,
-    });
+    setCurrentStep(step)
+  }, [isInView])
 
-    if (containerRef.current) {
-      intersectionObserver.observe(containerRef.current);
-    }
-
-    return () => {
-      if (containerRef.current) {
-        intersectionObserver.disconnect();
-      }
-    }
-  }, [])
+  const imageUrl = useMemo(() => {
+    return urlFor(featuredImage).width(300).quality(75).auto('format').url()
+  }, [featuredImage])
 
   const stepColors = useMemo(() => {
     return getStepColors(step)
@@ -52,8 +49,8 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = ({ _id, title, sl
 
   return (
     <div
-      ref={containerRef}
-      className={`${className} group card overflow-hidden px-20 md:px-0 bg-[var(--local-color-400)] md:bg-transparent text-center md:text-left md:min-h-screen relative flex flex-col items-center justify-center gap-10 md:gap-15 py-100 md:py-[20vh]`}
+      ref={caseSectionRef}
+      className={`${className} group card overflow-hidden px-20 md:px-0 text-center md:text-left md:min-h-screen relative py-100 md:py-[20vh]`}
       style={{
         '--local-color-100': stepColors[100],
         '--local-color-200': stepColors[200],
@@ -61,41 +58,58 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = ({ _id, title, sl
         '--local-color-400': stepColors[400],
       } as React.CSSProperties}
     >
-      {isMain ? <BlurredBackground className="md:hidden absolute w-full h-full inset-0 z-[1] pointer-events-none text-[var(--local-color-300)]" /> : null}
-      
-      <h3
-        className={`z-[2] pb-10 md:pb-5 text-32 md:text-58 ${isMain ? 'visible' : 'invisible'}`}
-      >
-        {title}
-      </h3>
-      
-      <div
-        className={`
-          relative w-full md:w-[60%] aspect-video flex items-center justify-center rounded-10 md:rounded-20
-          ${isMain ? 'transition-[box-shadow] duration-1000 ease md:shadow-[0_0_80px_80px_var(--step-color-300)]' : ''}
-        `}
-      >
-        <div className="absolute inset-0 z-[1] overflow-hidden w-full h-full rounded-20 flex items-center justify-center">
-          <Image
-            image={featuredImage}
-            alt={title}
-            sizes={isMain ? '60vw' : '20vw'}
-            className="w-full h-full object-cover"
-          />
-        </div>
+      <div className="w-full relative flex flex-col items-center justify-center gap-10 md:gap-20">
+        <h3
+          className={`z-[2] pb-10 md:pb-5 text-32 md:text-52 ${isMain ? 'visible' : 'invisible'}`}
+        >
+          {title}
+        </h3>
+        
+        <Link
+          href={`/case-study/${slug}`}
+          scroll={false}
+          ref={imageRef}
+          id={`case-image-${slug}`}
+          className={`
+            block pointer-events-auto relative z-[1] w-full md:w-[60%] aspect-video flex items-center justify-center rounded-10 md:rounded-20
+          `}
+        >
+          {isMain ? (
+            <div
+              className={`
+                max-md:hidden absolute inset-0 w-full h-full rounded-20 scale-x-[1.125] scale-y-[1.2] bg-[var(--step-color-300)]
+                transition-colors duration-500 ease blur-[40px] pointer-events-none z-[0]
+              `}
+            />
+          ) : null}
+          <div
+            className="absolute inset-0 z-[2] overflow-hidden w-full h-full rounded-20 flex items-center justify-center"
+          >
+            {isMain ? (
+              <Image
+                image={featuredImage}
+                alt={title}
+                sizes={isMain ? '60vw' : '100px'}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <img src={imageUrl} alt="" className="w-full h-full object-cover" />
+            )}
+          </div>
+        </Link>
+
+        <p className={`relative z-[3] text-18 md:text-20 font-medium text-center max-w-750 pt-14 ${isMain ? 'visible' : 'invisible'}`}>
+          {shortDescription}
+        </p>
+
+        <Link
+          href={`/case-study/${slug}`}
+          scroll={false}
+          className={`z-[3] text-18 md:text-20 font-medium py-3 px-12 rounded-full border-1 transition-colors duration-300 ease border-white active:bg-white active:text-black hover:bg-white hover:text-black pointer-events-auto ${isMain ? 'visible' : 'invisible'}`}
+        >
+          Read More
+        </Link>
       </div>
-
-      <p className={`relative z-[2] text-18 md:text-23 font-medium text-center max-w-750 pt-12 ${isMain ? 'visible' : 'invisible'}`}>
-        {shortDescription}
-      </p>
-
-      <Link
-        href={`/case-study/${slug}`}
-        scroll={false}
-        className={`card-link z-[2] text-20 font-medium py-2 px-12 rounded-full border-1 transition-colors duration-300 ease border-white group-hover:bg-white group-hover:text-black ${isMain ? 'visible' : 'invisible'}`}
-      >
-        Read More
-      </Link>
     </div>
   )
-}
+})

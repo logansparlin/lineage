@@ -10,7 +10,7 @@ interface BackgroundTrailProps {
 export const BackgroundTrail: FC<BackgroundTrailProps> = ({
   colors = ['rgba(251, 197, 4, 1)', 'rgba(0, 191, 87, 1)', 'rgba(255, 126, 197, 1)']
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null)
+  const trailContainerRef = useRef<HTMLDivElement>(null)
   const mousePosition = useRef({ x: 0, y: 0 })
   const lastMousePosition = useRef({ x: 0, y: 0 })
   const mouseSpeed = useRef(0)
@@ -77,10 +77,10 @@ export const BackgroundTrail: FC<BackgroundTrailProps> = ({
   }
 
   useEffect(() => {
-    if (!containerRef.current) return
+    if (!trailContainerRef.current) return
 
     // Initialize Three.js
-    const container = containerRef.current
+    const container = trailContainerRef.current
     const width = window.innerWidth
     const height = window.innerHeight
     
@@ -361,7 +361,7 @@ export const BackgroundTrail: FC<BackgroundTrailProps> = ({
 
   return (
     <div 
-      ref={containerRef}
+      ref={trailContainerRef}
       className="fixed top-0 left-0 w-screen h-screen pointer-events-none z-0 opacity-40"
     />
   )

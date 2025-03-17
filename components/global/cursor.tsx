@@ -56,7 +56,7 @@ export const Cursor: FC<CursorProps> = () => {
     }
   }, [])
 
-  const handleClick = useCallback(() => {
+  const handleClick = useCallback((e) => {
     setCurrentStep(prev => prev === 4 ? 1 : prev + 1)
   }, [])
 

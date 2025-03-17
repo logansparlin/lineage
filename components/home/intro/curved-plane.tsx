@@ -1,5 +1,9 @@
-import { type FC, useMemo, useRef, type RefObject, RefCallback } from 'react'
+import { type FC, useMemo, RefCallback, memo } from 'react'
 import { Color, Object3D, Vector2, Vector3 } from 'three'
+import { BoxGradient } from "@/shaders/box-gradient";
+import { extend } from '@react-three/fiber';
+
+extend({ BoxGradient });
 
 interface CurvedPlaneProps {
   name?: string;
@@ -19,7 +23,7 @@ interface CurvedPlaneProps {
   opacity?: number;
 }
 
-export const CurvedPlane: FC<CurvedPlaneProps> = ({ 
+export const CurvedPlane: FC<CurvedPlaneProps> = memo(({ 
   ref,
   name,
   aspectRatio = 1,
@@ -58,4 +62,4 @@ export const CurvedPlane: FC<CurvedPlaneProps> = ({
       />
     </mesh>
   )
-}
+})
