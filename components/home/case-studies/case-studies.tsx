@@ -53,9 +53,13 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
 
     if (window.innerWidth < 800) return;
 
+    const firstSectionHeight = (caseStudiesRef.current.querySelector('.case-studies-section')?.clientHeight ?? 0) / 2;
     caseStudiesRef.current.style.height = `${mainRef.current.scrollHeight}px`
+    
     const containerRect = caseStudiesRef.current?.getBoundingClientRect();
-    const offset = clamp((-1 * containerRect.top), 0, caseStudiesRef.current.scrollHeight);
+    const offset = clamp((-1 * (containerRect.top - window.innerHeight)), window.innerHeight, (caseStudiesRef.current.scrollHeight));
+
+    console.log(offset)
 
     mainRef.current.scrollTop = offset;
     topRef.current.scrollTop = offset;

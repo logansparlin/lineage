@@ -42,7 +42,7 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ _id, inde
   }, [isInView])
 
   const imageUrl = useMemo(() => {
-    return urlFor(featuredImage).width(300).quality(75).auto('format').url()
+    return urlFor(featuredImage).width(500).quality(75).auto('format').url()
   }, [featuredImage])
 
   const stepColors = useMemo(() => {
@@ -53,7 +53,7 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ _id, inde
     <div
       id={isMain ? `case-study-${index}` : undefined}
       ref={caseSectionRef}
-      className={`${className} group card overflow-hidden px-20 md:px-0 text-center md:text-left md:min-h-screen relative py-100 md:py-[20vh]`}
+      className={`${className} case-studies-section group card overflow-hidden px-20 md:px-0 text-center md:text-left md:min-h-screen relative py-100 md:py-[20vh]`}
       style={{
         '--local-color-100': stepColors[100],
         '--local-color-200': stepColors[200],
@@ -77,7 +77,7 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ _id, inde
           ref={imageRef}
           id={`case-image-${slug}`}
           className={`
-            pointer-events-auto relative z-[1] w-full md:w-[60%] aspect-video flex items-center justify-center rounded-10 md:rounded-20
+            pointer-events-auto relative z-[1] w-full md:w-[61%] aspect-video flex items-center justify-center rounded-10 md:rounded-20
           `}
         >
           {isMain ? (
@@ -104,7 +104,7 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ _id, inde
           </div>
         </Link>
 
-        <p className={`relative z-[3] text-18 md:text-20 font-medium text-center max-w-750 pt-14 ${isMain ? 'visible' : 'invisible'}`}>
+        <p className={`relative z-[3] text-18 md:text-20 !leading-[140%] font-medium text-center max-w-750 pt-14 ${isMain ? 'visible' : 'invisible'}`}>
           {shortDescription}
         </p>
 
