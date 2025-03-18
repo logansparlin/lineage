@@ -6,8 +6,6 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 
 import { Color } from "three";
-import { useIsomorphicLayoutEffect } from "react-use";
-import { type Gradient } from "@/lib/gradients";
 
 export const CaseStudiesBackground = ({ gradientOverride }: { gradientOverride?: string }) => {
   const currentStep = useHomeStore(state => state.currentStep)

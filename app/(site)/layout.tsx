@@ -79,7 +79,7 @@ export default async function RootLayout({
         {/* <script src="https://unpkg.com/react-scan/dist/auto.global.js" /> */}
       </head>
       <body
-        className={`${PPNeueMontreal.variable} ${IBMPlexMono.variable} antialiased font-sans font-normal bg-black text-off-white cursor-none`}
+        className={`${PPNeueMontreal.variable} ${IBMPlexMono.variable} antialiased font-sans font-normal bg-black text-off-white md:cursor-none`}
       >
         <Cursor />
         <Favicon icons={settings?.seo?.favicon} />

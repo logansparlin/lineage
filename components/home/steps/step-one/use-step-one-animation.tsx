@@ -22,8 +22,8 @@ export const useStepOneAnimation = (stepOneRef: RefObject<HTMLDivElement>) => {
     const mainTl = gsap.timeline({
       scrollTrigger: {
         trigger: container,
-        start: 'top top',
-        end: 'bottom top-=150%',
+        start: () => window.innerWidth > 800 ? 'top top' : 'top bottom-=50%',
+        end: () => window.innerWidth > 800 ? 'bottom top-=150%' : 'bottom top-=100%',
         scrub: true,
       }
     })
@@ -44,7 +44,7 @@ export const useStepOneAnimation = (stepOneRef: RefObject<HTMLDivElement>) => {
 
     mainTl.to(icon, {
       y: () => -1 * getPositionBetween(pin, icon) - pinRect.height / 2 - iconRect.height / 2,
-      duration: mainTl.duration() * 0.75,
+      duration: () => window.innerWidth > 800 ? mainTl.duration() * 0.75 : mainTl.duration() * 0.5,
       ease: 'power3.inOut',
     }, 0)
   }, {

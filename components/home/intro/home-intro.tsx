@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTitlesAnimation } from "./use-titles-animation";
 import { useSiteStore } from "@/stores/use-site-store";
-import { usePathname } from "next/navigation";
 import { useInView } from "motion/react";
 
 import { ScrollIndicator } from "./scroll-indicator";
@@ -16,7 +15,6 @@ import { View } from "@react-three/drei";
 export const HomeIntro = ({ titles, description }) => {
   const setColorButtonVisible = useSiteStore((state) => state.setColorButtonVisible);
   const colorButtonVisible = useSiteStore((state) => state.colorButtonVisible);
-  const pathname = usePathname();
   
   const introRef = useRef<HTMLDivElement>(null);
   const inView = useInView(introRef, { once: false });
@@ -50,12 +48,12 @@ export const HomeIntro = ({ titles, description }) => {
   }, [inView])
 
   useEffect(() => {
-    if (inView && hasScrolled && !colorButtonVisible && pathname === '/') {
+    if (inView && hasScrolled && !colorButtonVisible) {
       setColorButtonVisible(true);
     } else if ((!inView || !hasScrolled)) {
       setColorButtonVisible(false);
     }
-  }, [inView, hasScrolled, colorButtonVisible, setColorButtonVisible, pathname])
+  }, [inView, hasScrolled, colorButtonVisible, setColorButtonVisible])
 
   return (
     <section className="w-full" id="home-intro">
@@ -66,7 +64,6 @@ export const HomeIntro = ({ titles, description }) => {
           <div className="home-intro-main w-full h-screen sticky top-0 grid-contain z-[5] text-white place-items-center">
             <View className="absolute inset-0 w-full h-screen">
               <IntroScene
-                container={introRef}
                 sections={sectionClasses}
               />
             </View>
@@ -92,7 +89,7 @@ export const HomeIntro = ({ titles, description }) => {
                     />
                   ) : (
                     <span
-                      className="text-32 lg:text-58 font-medium"
+                      className="text-32 md:text-58 font-medium"
                     >
                       {title.text}
                     </span>
@@ -100,7 +97,7 @@ export const HomeIntro = ({ titles, description }) => {
 
                   {variant === 'last' && description ? (
                     <div
-                      className="home-intro-description w-[80%] md:w-full max-w-800 text-18 lg:text-32 h-0 overflow-hidden will-change-transform"
+                      className="home-intro-description w-[80%] md:w-full max-w-800 text-18 md:text-32 h-0 overflow-hidden will-change-transform"
                       style={{
                         maskImage: 'linear-gradient(to top, transparent, black 80px)'
                       }}

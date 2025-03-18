@@ -19,8 +19,8 @@ export const useStepFourAnimation = (stepFourRef: RefObject<HTMLDivElement>) => 
     const illoTl = gsap.timeline({
       scrollTrigger: {
         trigger: container,
-        start: 'top top',
-        end: 'bottom top-=100%',
+        start: () => window.innerWidth > 800 ? 'top top' : 'top bottom-=50%',
+        end: () => window.innerWidth > 800 ? 'bottom top-=150%' : 'bottom top-=100%',
         endTrigger: stepFourRef.current,
         scrub: true,
       }
@@ -76,7 +76,7 @@ export const useStepFourAnimation = (stepFourRef: RefObject<HTMLDivElement>) => 
 
     illoTl.to(icon, {
       y: () => -1 * getPositionBetween(pin, icon) - pinRect.height / 2 - iconRect.height / 2 - 2,
-      duration: () => illoTl.duration() * 0.75,
+      duration: () => window.innerWidth > 800 ? illoTl.duration() * 0.75 : illoTl.duration() * 0.5,
       ease: 'none',
     }, 0)
 
@@ -84,7 +84,7 @@ export const useStepFourAnimation = (stepFourRef: RefObject<HTMLDivElement>) => 
       scale: 1.1,
       transformOrigin: 'center center',
       ease: 'none',
-      duration: () => illoTl.duration() * 0.75,
+      duration: () => window.innerWidth > 800 ? illoTl.duration() * 0.75 : illoTl.duration() * 0.5,
     }, 0)
   }, {
     scope: stepFourRef.current

@@ -39,8 +39,8 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
     const mainTl = gsap.timeline({
       scrollTrigger: {
         trigger: stepTwoRef.current,
-        start: `top top`,
-        end: 'bottom top-=150%',
+        start: () => window.innerWidth > 800 ? 'top top' : 'top bottom-=50%',
+        end: () => window.innerWidth > 800 ? 'bottom top-=150%' : 'bottom top-=100%',
         scrub: 1,
       }
     })

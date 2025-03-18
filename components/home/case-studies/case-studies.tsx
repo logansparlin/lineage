@@ -98,11 +98,9 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
         <CurrentColorProvider container={caseStudiesRef} />
         <div className="w-full overflow-hidden md:h-screen md:sticky z-[1] top-0 pointer-events-none">
           <CaseStudiesNavigation items={items} />
-          {!isMobile ? (
-            <View className="absolute inset-0 w-screen h-screen pointer-events-none">
-              <CaseStudiesBackground />
-            </View>
-          ) : null}
+          <View className="max-md:hidden absolute inset-0 w-screen h-screen pointer-events-none">
+            <CaseStudiesBackground />
+          </View>
           <div className="w-full md:h-screen relative z-[2] transform-3d md:perspective-[4000px] lg:perspective-[6500px]">
               {/* Top */}
               <CaseStudiesClone

@@ -4,7 +4,6 @@ import { ComponentProps, type FC, useEffect, useRef, useMemo, memo, Suspense } f
 import { getStepColors } from '@/lib/get-step-colors';
 import { useInView } from 'motion/react';
 import { urlFor } from '@/sanity/lib/image';
-import dynamic from 'next/dynamic';
 
 
 import Link from 'next/link';

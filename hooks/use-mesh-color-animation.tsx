@@ -34,7 +34,6 @@ export const useMeshColorAnimation = ({ meshRef, gradient }: UseMeshColorAnimati
 
       planes?.forEach(plane => {
         const uniforms = plane.material.uniforms;
-        console.log(uniforms.centerColor.value)
         uniforms.innerColor.value = nextInnerColor;
         uniforms.outerColor.value = nextOuterColor;
       })  

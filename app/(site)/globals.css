@@ -165,7 +165,7 @@
   }
 
   .card-link::after {
-    @apply absolute inset-0 w-full h-full cursor-none z-[2];
+    @apply absolute inset-0 w-full h-full md:cursor-none z-[2];
     content: '';
   }
   
@@ -393,8 +393,10 @@ i, em {
   font-style: normal;
 }
 
-body:not(.fullscreen) *:not(input, textarea, .disable-cursor) {
-  cursor: none;
+@media (min-width: 800px) {
+  body:not(.fullscreen) *:not(input, textarea, .disable-cursor) {
+    cursor: none;
+  }
 }
 
 .disable-cursor, .disable-cursor * {

@@ -24,8 +24,8 @@ export const StepTwo: FC<StepTwoProps> = ({ title, description, className = '', 
         title={title}
         description={description}
         icon={(
-          <div className="step-icon relative z-[10] h-[clamp(40px,5vw,100px)] w-[clamp(40px,5vw,100px)] flex items-center justify-center">
-            <IconStepTwo highlight className="absolute w-[clamp(40px,5vw,100px)] h-auto" />
+          <div className="step-icon relative z-[10] w-80 h-80 md:h-[clamp(40px,5vw,100px)] md:w-[clamp(40px,5vw,100px)] flex items-center justify-center">
+            <IconStepTwo highlight className="absolute h-50 w-auto md:w-[clamp(40px,5vw,100px)] md:h-auto" />
           </div>
         )}
       />

@@ -24,7 +24,7 @@ export const StepFour: FC<StepFourProps> = ({ title, description, className = ''
         title={title}
         description={description}
         icon={(
-          <div className="step-icon relative z-[5] h-[clamp(40px,5vw,100px)] w-[clamp(40px,5vw,100px)]">
+          <div className="step-icon relative z-[5] w-70 h-70 md:h-[clamp(40px,5vw,100px)] md:w-[clamp(40px,5vw,100px)]">
             <IconStepFour highlight className="w-full h-auto" />
           </div>
         )}

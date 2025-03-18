@@ -1,26 +1,25 @@
 'use client';
 
-import { useMemo, useRef, useCallback } from "react";
-import { useLenis } from "lenis/react";
+import { useMemo, useRef, useState } from "react";
 import { useHomeStore } from "@/components/home/hooks/use-home-store";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
+import { useLenis } from "lenis/react";
+import { useGSAP } from "@gsap/react";
 import { lerp } from "@/lib/lerp";
 import { gsap } from "gsap";
 
-import { Vector3 } from "three";
+import { Vector3, Color } from "three";
 import { CurvedPlane } from "@/components/home/intro/curved-plane";
 import { getGradient } from "@/lib/gradients";
-import { useMeshColorAnimation } from "@/hooks/use-mesh-color-animation";
 
-export const IntroScene = ({ container, sections }: { container: React.RefObject<HTMLDivElement>, sections: string[] }) => {
-  const { viewport } = useThree();
+export const IntroScene = ({ sections }: { sections: string[] }) => {
   const meshRef = useRef<any>(null);
   const lenis = useLenis();
   
   const gradient = useHomeStore(state => state.gradient);
-  const currentGradient = useMemo(() => getGradient(gradient), [])
+  const [currentGradient, setCurrentGradient] = useState(getGradient(gradient));
 
-  useMeshColorAnimation({ meshRef, gradient })
+  // useMeshColorAnimation({ meshRef, gradient })
 
   const progressRef = useRef<any>({
     first: 0,
@@ -29,7 +28,6 @@ export const IntroScene = ({ container, sections }: { container: React.RefObject
   })
 
   const planes = useMemo(() => Array.from({ length: 8 }, (_, i) => i + 1), []);
-  const aspectRatio = useMemo(() => viewport.width / viewport.height, [viewport])
 
   const scale = new Vector3(0, 0, 0);
 
@@ -37,6 +35,8 @@ export const IntroScene = ({ container, sections }: { container: React.RefObject
     if (typeof window === 'undefined') return;
 
     const size = viewport.getCurrentViewport();
+
+    const aspectRatio = size.width / size.height;
 
     const currentScroll = lenis?.scroll ?? window.scrollY;
     
@@ -95,8 +95,8 @@ export const IntroScene = ({ container, sections }: { container: React.RefObject
 
       const scaleX = (
         (firstAnimationProgress * stepOneScale) 
-        + (secondAnimationProgress * ((stepTwoScale - (0.25 * (1 - aspectOffset))) * aspectOffset))
-        + (lastAnimationProgress * ((stepThreeScale - (0.25 * (1 - aspectOffset))) * aspectOffset))
+        + (secondAnimationProgress * ((stepTwoScale - (0.2 * (1 - aspectOffset))) * aspectOffset))
+        + (lastAnimationProgress * ((stepThreeScale - (0.2 * (1 - aspectOffset))) * aspectOffset))
       );
 
       const scaleY = (
@@ -105,14 +105,50 @@ export const IntroScene = ({ container, sections }: { container: React.RefObject
         + (lastAnimationProgress * stepThreeScale)
       );
 
-      child.scale.x = scaleX * size.width;
-      child.scale.y = scaleY * size.height;
+      const normalizedSize = Math.max(size.width, size.height);
+
+      child.scale.x = scaleX * normalizedSize;
+      child.scale.y = scaleY * normalizedSize;
     })
   })
 
-  const calculatePosition = useCallback((index: number) => {
-    return new Vector3(0, 0, index * 0.001)
-  }, [])
+  useGSAP(() => {
+    if (!meshRef.current) return;
+    
+    const planes = meshRef.current.children;
+    const newGradient = getGradient(gradient);
+    
+    const innerColor = { value: currentGradient.inner };
+    const outerColor = { value: currentGradient.outer };
+
+    const updateColors = () => {
+      planes?.forEach(plane => {
+        const uniforms = plane.material.uniforms;
+        uniforms.outerColor.value = new Color(innerColor.value).convertLinearToSRGB();
+        uniforms.innerColor.value = new Color(outerColor.value).convertLinearToSRGB();
+      })
+    }
+
+    const onAnimationComplete = () => {
+      setCurrentGradient(newGradient);
+    }
+
+    requestAnimationFrame(() => {
+      gsap.to(innerColor, {
+        value: newGradient.inner,
+        duration: 0.5,
+        ease: 'power2.inOut',
+      })
+  
+      gsap.to(outerColor, {
+        value: newGradient.outer,
+        duration: 0.5,
+        ease: 'power2.inOut',
+        onUpdate: updateColors,
+        onComplete: onAnimationComplete,
+      })
+    })
+  }, [gradient])
 
   return (
     <mesh ref={meshRef}>
@@ -120,12 +156,10 @@ export const IntroScene = ({ container, sections }: { container: React.RefObject
         return (
           <CurvedPlane
             key={`intro-plane-${plane}`}
-            aspectRatio={aspectRatio}
             curveIntensity={3}
             inner={currentGradient.inner}
             outer={currentGradient.outer}
             center={'#ffffff'}
-            position={calculatePosition(index)}
             opacity={1}
           />
         )

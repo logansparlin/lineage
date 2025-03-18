@@ -8,6 +8,7 @@ export const useStepThreeAnimation = (stepThreeRef: RefObject<HTMLDivElement>) =
     const details = stepThreeRef.current?.querySelector('.step-details');
     const icon: HTMLElement = stepThreeRef.current?.querySelector('.step-icon');
     const illo: HTMLElement = stepThreeRef.current?.querySelector('.step-illo');
+    const svg: any = illo?.querySelector('svg');
     const trackingCircles = gsap.utils.toArray('.tracking-circle');
 
     if (!details || !icon || !illo || !trackingCircles) return;
@@ -21,31 +22,17 @@ export const useStepThreeAnimation = (stepThreeRef: RefObject<HTMLDivElement>) =
     const mainTl = gsap.timeline({
       scrollTrigger: {
         trigger: container,
-        start: 'top top',
-        end: 'bottom top-=100%',
+        start: () => window.innerWidth > 800 ? 'top top' : 'top bottom-=50%',
+        end: () => window.innerWidth > 800 ? 'bottom top-=150%' : 'bottom top-=100%',
         scrub: true,
       }
     })
-
-    // trackingCircleItems?.forEach((item: any, index: number) => {
-    //   mainTl.fromTo(item, {
-    //     scale: 0,
-    //     opacity: 0,
-    //     transformOrigin: 'center',
-    //     duration: 1,
-    //   }, {
-    //     scale: 1,
-    //     opacity: 0.2 + (index * 0.1),
-    //     transformOrigin: 'center',
-    //     duration: 1,
-    //   }, 0)
-    // })
 
     trackingCircles.forEach((circle: HTMLElement) => {
       const scale = parseFloat(circle.getAttribute('data-scale') || '0');
 
       mainTl.to(circle, {
-        scale: scale,
+        scale: () => window.innerWidth > 800 ? scale : scale / 2,
         duration: 0.4,
       }, 0.3)
     })
@@ -66,9 +53,14 @@ export const useStepThreeAnimation = (stepThreeRef: RefObject<HTMLDivElement>) =
     }, '>-=0.5')
 
     mainTl.to(icon, {
-      y: () => window.innerHeight - (iconHeight * 5),
-      duration: mainTl.duration(),
+      y: () => window.innerWidth > 800 ? (window.innerHeight - (iconHeight * 5)) : (window.innerHeight - (iconHeight * 4)),
+      duration: () => window.innerWidth > 800 ? mainTl.duration() : mainTl.duration() * 0.5,
     }, 0)
+
+    mainTl.to(svg, {
+      scale: () => 1,
+      duration: () => mainTl.duration() * 0.75,
+    }, mainTl.duration() * 0.25)
   }, {
     dependencies: [stepThreeRef]
   });
