@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTitlesAnimation } from "./use-titles-animation";
 import { useSiteStore } from "@/stores/use-site-store";
+import { usePathname } from "next/navigation";
 import { useInView } from "motion/react";
 
 import { ScrollIndicator } from "./scroll-indicator";
@@ -15,6 +16,7 @@ import { View } from "@react-three/drei";
 export const HomeIntro = ({ titles, description }) => {
   const setColorButtonVisible = useSiteStore((state) => state.setColorButtonVisible);
   const colorButtonVisible = useSiteStore((state) => state.colorButtonVisible);
+  const pathname = usePathname();
   
   const introRef = useRef<HTMLDivElement>(null);
   const inView = useInView(introRef, { once: false });
@@ -48,12 +50,12 @@ export const HomeIntro = ({ titles, description }) => {
   }, [inView])
 
   useEffect(() => {
-    if (inView && hasScrolled && !colorButtonVisible) {
+    if (inView && hasScrolled && !colorButtonVisible && pathname === '/') {
       setColorButtonVisible(true);
     } else if ((!inView || !hasScrolled)) {
       setColorButtonVisible(false);
     }
-  }, [inView, hasScrolled, colorButtonVisible, setColorButtonVisible])
+  }, [inView, hasScrolled, colorButtonVisible, setColorButtonVisible, pathname])
 
   return (
     <section className="w-full" id="home-intro">

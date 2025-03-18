@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useRef, type FC } from "react";
+import { useCallback, useEffect, useRef, type FC } from "react";
 import { useHomeStore } from "../home/hooks/use-home-store";
 import { useSiteStore } from "@/stores/use-site-store";
 import { useClickAway } from "react-use";
@@ -13,15 +13,22 @@ import { Button } from "./button";
 import { MainMenu } from "./main-menu";
 import Link from "next/link";
 import { easings } from "@/lib/easings";
+import { usePathname } from "next/navigation";
 
 export interface HeaderProps {}
 
 export const Header: FC<HeaderProps> = (props) => {
   const menuOpen = useSiteStore((state) => state.menuOpen);
   const colorButtonVisible = useSiteStore((state) => state.colorButtonVisible);
+  const setColorButtonVisible = useSiteStore((state) => state.setColorButtonVisible);
   const isAnimatingGradient = useSiteStore((state) => state.isAnimatingGradient);
   const setMenuOpen = useSiteStore((state) => state.setMenuOpen);
   const setGradient = useHomeStore((state) => state.setGradient);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setColorButtonVisible(false);
+  }, [pathname])
 
   const menuRef = useRef<HTMLDivElement>(null);
 
