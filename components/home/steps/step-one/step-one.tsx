@@ -18,13 +18,13 @@ export const StepOne: FC<StepOneProps> = ({ title, description }) => {
   useStepOneAnimation(stepOneRef);
 
   return (
-    <section className="md:flex-1 md:flex md:flex-col md:items-center" ref={stepOneRef}>
+    <section className="flex-1 flex flex-col items-center gap-y-50 md:gap-y-0" ref={stepOneRef}>
       <StepDetails
         step={1}
         title={title}
         description={description}
         icon={(
-          <div className="step-icon relative z-[10] h-[clamp(30px,4vw,80px)] w-[clamp(30px,4vw,80px)]">
+          <div className="step-icon relative z-[10] w-80 h-80 md:h-[clamp(30px,4vw,80px)] md:w-[clamp(30px,4vw,80px)]">
             <IconStepOne
               highlight
               className="w-full h-auto"

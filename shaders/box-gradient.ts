@@ -81,7 +81,7 @@ export const BoxGradient = shaderMaterial(
     // Use UV-based coordinates for the SDF
     float sdf = smoothBox(sdfInset, size, roundness);
 
-    vec2 innerSize = size * 0.75;
+    vec2 innerSize = size * 0.85;
     float innerSdf = smoothBox(sdfInset, innerSize, roundness);
     
     // Adjust the smoothstep values to control the blur amount
@@ -100,11 +100,7 @@ export const BoxGradient = shaderMaterial(
 
     vec3 finalColor = mix(outerColor, innerColor, alpha);
 
-    if (centerColor.r < 0.99) {
-      finalColor = mix(centerColor, finalColor, innerAlpha);
-    }
-
-    if (centerColor.r < 0.99) {
+    if (centerColor.r < 0.9) {
       finalColor = mix(centerColor, finalColor, innerAlpha);
     }
 

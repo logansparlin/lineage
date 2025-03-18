@@ -18,7 +18,7 @@ export const StepThree: FC<StepThreeProps> = ({ title, description, className = 
   useStepThreeAnimation(stepThreeRef);
 
   return (
-    <section className="md:flex-1 md:flex md:flex-col md:items-center" ref={stepThreeRef}>
+    <section className="flex-1 flex flex-col items-center" ref={stepThreeRef}>
       <StepDetails
         step={3}
         title={title}

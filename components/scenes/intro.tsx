@@ -31,8 +31,12 @@ export const IntroScene = ({ container, sections }: { container: React.RefObject
   const planes = useMemo(() => Array.from({ length: 8 }, (_, i) => i + 1), []);
   const aspectRatio = useMemo(() => viewport.width / viewport.height, [viewport])
 
-  useFrame(() => {
+  const scale = new Vector3(0, 0, 0);
+
+  useFrame(({ viewport }) => {
     if (typeof window === 'undefined') return;
+
+    const size = viewport.getCurrentViewport();
 
     const currentScroll = lenis?.scroll ?? window.scrollY;
     
@@ -101,14 +105,10 @@ export const IntroScene = ({ container, sections }: { container: React.RefObject
         + (lastAnimationProgress * stepThreeScale)
       );
 
-      child.scale.x = scaleX;
-      child.scale.y = scaleY;
+      child.scale.x = scaleX * size.width;
+      child.scale.y = scaleY * size.height;
     })
   })
-
-  const scale = useMemo(() => {
-    return new Vector3(0, 0, 0)
-  }, [])
 
   const calculatePosition = useCallback((index: number) => {
     return new Vector3(0, 0, index * 0.001)
@@ -119,14 +119,12 @@ export const IntroScene = ({ container, sections }: { container: React.RefObject
       {planes.map((plane, index) => {
         return (
           <CurvedPlane
-            key={`plane-${plane}`}
-            width={viewport.width}
-            height={viewport.height}
+            key={`intro-plane-${plane}`}
             aspectRatio={aspectRatio}
             curveIntensity={3}
             inner={currentGradient.inner}
             outer={currentGradient.outer}
-            scale={scale}
+            center={'#ffffff'}
             position={calculatePosition(index)}
             opacity={1}
           />

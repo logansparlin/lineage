@@ -1,35 +1,68 @@
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useHomeStore } from "../home/hooks/use-home-store";
 import { getStepColorsRGB } from "@/lib/get-step-colors";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
 
 import { Color } from "three";
+import { useIsomorphicLayoutEffect } from "react-use";
+import { type Gradient } from "@/lib/gradients";
 
 export const CaseStudiesBackground = ({ gradientOverride }: { gradientOverride?: string }) => {
   const currentStep = useHomeStore(state => state.currentStep)
   const blurRef = useRef<any>(null)
+  const [internalGradient, setInternalGradient] = useState<any>(
+    getStepColorsRGB(gradientOverride ?? currentStep)
+  )
+
   const { viewport } = useThree();
 
-  const colors = useMemo(() => {
-    if (gradientOverride) {
-      const overrideColors = getStepColorsRGB(gradientOverride)
-      return {
-        background: new Color(overrideColors[400]).convertLinearToSRGB(),
-        foreground: new Color(overrideColors[300]).convertLinearToSRGB(),
-      }
-    }
-
-    const colors = getStepColorsRGB(currentStep)
+  const initialColors = useMemo(() => {
     return {
-      background: new Color(colors[400]).convertLinearToSRGB(),
-      foreground: new Color(colors[300]).convertLinearToSRGB(),
+      background: new Color(internalGradient[400]).convertLinearToSRGB(),
+      foreground: new Color(internalGradient[300]).convertLinearToSRGB(),
     }
-  }, [currentStep, gradientOverride])
+  }, [internalGradient])
 
-  const initialColors = useRef({
-    background: colors.background,
-    foreground: colors.foreground,
-  })
+  useGSAP(() => {
+    if (gradientOverride || !blurRef.current) return;
+
+    const nextGradient = getStepColorsRGB(currentStep)
+
+    const uniforms = blurRef.current.material.uniforms as any;
+
+    let backgroundColor = { value: internalGradient[400] };
+    let foregroundColor = { value: internalGradient[300] };
+
+    const updateColors = () => {
+      const nextBackgroundColor = new Color(backgroundColor.value).convertLinearToSRGB();
+      const nextForegroundColor = new Color(foregroundColor.value).convertLinearToSRGB();
+
+      uniforms.bgColor.value = nextBackgroundColor;
+      uniforms.fgColor.value = nextForegroundColor;
+    }
+
+    const onAnimationComplete = () => {
+      setInternalGradient(nextGradient);
+    }
+
+    requestAnimationFrame(() => {
+      gsap.to(backgroundColor, {
+        value: nextGradient[400],
+        duration: 0.5,
+        ease: 'power2.inOut',
+      })
+  
+      gsap.to(foregroundColor, {
+        value: nextGradient[300],
+        duration: 0.5,
+        ease: 'power2.inOut',
+        onUpdate: updateColors,
+        onComplete: onAnimationComplete,
+      })
+    })
+  }, [currentStep, gradientOverride])
 
   useFrame(() => {
     if (!blurRef.current) return;
@@ -37,8 +70,6 @@ export const CaseStudiesBackground = ({ gradientOverride }: { gradientOverride?:
     const uniforms = blurRef.current.material.uniforms as any;
 
     uniforms.resolution.value.set(viewport.width, viewport.height)
-    uniforms.bgColor.value.lerp(colors.background, 0.025)
-    uniforms.fgColor.value.lerp(colors.foreground, 0.025)
   })
 
   if (!viewport.width || !viewport.height) return null;
@@ -50,8 +81,8 @@ export const CaseStudiesBackground = ({ gradientOverride }: { gradientOverride?:
         <planeGeometry args={[viewport.width * 2, viewport.height * 2, 1, 1]} />
         {/* @ts-ignore */}
         <blurShader
-          bgColor={initialColors.current.background}
-          fgColor={initialColors.current.foreground}
+          bgColor={initialColors.background}
+          fgColor={initialColors.foreground}
           resolution={[viewport.width, viewport.height]}
           radius={0.2}
           strength={1.5}

@@ -18,7 +18,7 @@ export const StepFour: FC<StepFourProps> = ({ title, description, className = ''
   useStepFourAnimation(stepFourRef);
 
   return (
-    <section className="md:flex-1 md:flex md:flex-col md:items-center gap-y-50" ref={stepFourRef}>
+    <section className="flex-1 flex flex-col items-center gap-y-50" ref={stepFourRef}>
       <StepDetails
         step={4}
         title={title}

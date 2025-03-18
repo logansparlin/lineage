@@ -5,13 +5,15 @@ import { Canvas, extend } from "@react-three/fiber"
 import { ReflectionShader } from "@/shaders/reflection-shader";
 import { BoxGradient } from "@/shaders/box-gradient";
 import { BlurShader } from "@/shaders/blur-shader";
+import { SRGBColorSpace } from "three";
 
 extend({ ReflectionShader, BoxGradient, BlurShader })
 
 export const HomeScrollScene = () => {
   return (
     <Canvas
-      gl={{ antialias: true, alpha: true, stencil: true }}
+      linear
+      gl={{ antialias: true, alpha: true, outputColorSpace: SRGBColorSpace }}
       resize={{
         scroll: false,
         debounce: 50,

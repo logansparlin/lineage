@@ -23,8 +23,8 @@ export const useMeshColorAnimation = ({ meshRef, gradient }: UseMeshColorAnimati
 
     const planes = meshRef.current.children;
 
-    let innerColor = { value: internalGradient.outer };
-    let outerColor = { value: internalGradient.inner };
+    let innerColor = { value: internalGradient.inner };
+    let outerColor = { value: internalGradient.outer };
 
     const nextGradient = getGradient(gradient);
     
@@ -34,6 +34,7 @@ export const useMeshColorAnimation = ({ meshRef, gradient }: UseMeshColorAnimati
 
       planes?.forEach(plane => {
         const uniforms = plane.material.uniforms;
+        console.log(uniforms.centerColor.value)
         uniforms.innerColor.value = nextInnerColor;
         uniforms.outerColor.value = nextOuterColor;
       })  
@@ -49,13 +50,13 @@ export const useMeshColorAnimation = ({ meshRef, gradient }: UseMeshColorAnimati
 
     requestAnimationFrame(() => {
       gsap.to(innerColor, {
-        value: nextGradient.outer,
+        value: nextGradient.inner,
         duration: 0.75,
         ease: 'power2.inOut',
       })
   
       gsap.to(outerColor, {
-        value: nextGradient.inner,
+        value: nextGradient.outer,
         duration: 0.75,
         ease: 'power2.inOut',
         onUpdate: updateColors,

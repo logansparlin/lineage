@@ -15,6 +15,7 @@ export const ScrollToCaseStudies = () => {
 
     if (hash && lenis) {
       lenis.scrollTo(hash, { immediate: true })
+      window.history.replaceState({}, '', window.location.pathname)
     }
   }, [params, lenis])
 
