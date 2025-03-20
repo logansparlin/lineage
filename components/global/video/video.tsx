@@ -2,7 +2,7 @@
 
 import { type FC, ComponentProps, useEffect, useRef, useState } from "react"
 import { useVideoControls } from "./use-video-controls"
-import { useInView, useIsomorphicLayoutEffect } from "motion/react"
+import { AnimatePresence, motion, useInView, useIsomorphicLayoutEffect } from "motion/react"
 import { createBlurUp } from "@mux/blurup"
 import dynamic from "next/dynamic"
 
@@ -56,7 +56,8 @@ export const Video: FC<VideoProps> = (props) => {
       quality: 1,
       width: 1,
       height: 1,
-      blur: 100,
+      time: 2,
+      blur: 50,
     })
       .then((props) => {
         setBlurUp(props.blurDataURL)
@@ -82,19 +83,35 @@ export const Video: FC<VideoProps> = (props) => {
       className={`${className} cursor-default overflow-hidden`}
       {...containerProps}
     >
-      {blurUp ? (
-        <img src={blurUp} alt="" className="absolute inset-0 w-full h-full object-cover z-[1]" />
-      ) : null}
+      <AnimatePresence initial={false}>
+        {!isLoaded && blurUp ? (
+          <motion.div
+            className="absolute inset-0 w-full h-full object-cover z-[3] overflow-hidden"
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <motion.img
+              src={blurUp}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover"
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.75 }}
+            />
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
       <PlayButtonOverlay onClick={handlePlay} hidden={hasPlayed} />
       <div
-        className={`
-          absolute inset-0 w-full h-full z-[2] transition-opacity duration-500 ease
-          ${isLoaded ? 'opacity-100' : 'opacity-0'}
-        `}
+        className="absolute inset-0 w-full h-full z-[2]"
         role="presentation"
         onClick={togglePlay}
       >
         <MuxVideo
+          poster={`https://image.mux.com/${playbackId}/thumbnail.webp?time=${(duration / 2)}`}
           preload="metadata"
           ref={playerRef}
           className="mux-video"
