@@ -51,6 +51,7 @@ export const ScrollContainer: FC<ScrollContainerProps> = memo(({ children, ...pr
     <ReactLenis
       root
       ref={lenisRef}
+      className="relative"
       options={{
         ...scrollConfig,
         infinite: true,

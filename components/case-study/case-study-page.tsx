@@ -28,7 +28,7 @@ export const CaseStudyPage = (props) => {
       } as React.CSSProperties}
     >
       <SetCurrentStep step={step} />
-      <div className="pt-90 md:pt-0 relative z-[1] w-full md:h-screen md:w-fit flex flex-col md:flex-row gap-y-40 md:gap-y-0 md:gap-x-150">
+      <div className="pt-90 md:pt-0 relative z-[2] w-full md:h-screen md:w-fit flex flex-col md:flex-row gap-y-40 md:gap-y-0 md:gap-x-150">
         
         <div className="px-20 md:px-0 md:w-screen md:max-w-960 md:pl-100 md:h-screen flex flex-col items-start justify-center gap-60 md:gap-130">
           <div className="flex flex-col gap-y-4 md:gap-y-20">
@@ -41,7 +41,7 @@ export const CaseStudyPage = (props) => {
 
         <Modules modules={content} />
       </div>
-      <BackgroundTrail colors={[stepColorsRGB[400], stepColorsRGB[300], stepColorsRGB[200], stepColorsRGB[100]]} />
+      {/* <BackgroundTrail colors={[stepColorsRGB[400], stepColorsRGB[300], stepColorsRGB[200], stepColorsRGB[100]]} /> */}
     </div>
   )
 }

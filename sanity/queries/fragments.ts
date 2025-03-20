@@ -6,6 +6,8 @@ export const imageFields = groq`
   asset,
   alt,
   "aspectRatio": asset -> metadata.dimensions.aspectRatio,
+  "width": asset -> metadata.dimensions.width,
+  "height": asset -> metadata.dimensions.height,
   "lqip": asset -> metadata.lqip
 `
 

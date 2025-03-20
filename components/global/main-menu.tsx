@@ -66,11 +66,11 @@ export const MainMenu: FC<MainMenuProps> = ({ className }) => {
   }
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence>
       {menuOpen ? (
         <motion.div 
           className="
-            max-md:absolute max-md:w-full max-md:bg-black max-md:top-0 max-md:left-0 z-[1] md:pr-180 overflow-hidden
+            absolute max-md:w-full max-md:bg-black max-md:left-0 z-[1] md:pr-180 md:fixed right-180 top-0 md:top-20 overflow-hidden
             [--h-from:0px] md:[--h-from:100%]
           "
           initial={{ height: 'var(--h-from)' }}

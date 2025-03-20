@@ -21,7 +21,7 @@ export const TransitionScene: FC<TransitionSceneProps> = ({ mode = 'enter', grad
 
   return (
     <div className={`${className} w-full h-screen-200`} ref={transitionRef}>
-      <View className="w-full h-full">
+      <View className="w-full h-full pointer-events-none">
         <Planes container={transitionRef} mode={mode} gradientOverride={gradientOverride} />
       </View>
     </div>
@@ -108,7 +108,10 @@ const Planes = ({ container, mode, gradientOverride }: PlanesProps) => {
       
       plane.material.uniforms.curveProgress.value = curveProgress * (isMobile ? size.height : size.width);
       plane.scale.set(uScale.x, uScale.y, uScale.z);
-      plane.position.set(0, yPosition, zPosition);
+
+      if (typeof yPosition === 'number' && typeof zPosition === 'number') {
+        plane.position.set(0, yPosition, zPosition);
+      }
 
       uniforms.size.value = uSize;
       uniforms.aspect.value = aspectRatio;

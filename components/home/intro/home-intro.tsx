@@ -62,7 +62,7 @@ export const HomeIntro = ({ titles, description }) => {
           <ScrollIndicator />
           
           <div className="home-intro-main w-full h-screen sticky top-0 grid-contain z-[5] text-white place-items-center">
-            <View className="absolute inset-0 w-full h-screen">
+            <View className="absolute inset-0 w-full h-screen pointer-events-none -z-[1]">
               <IntroScene
                 sections={sectionClasses}
               />
@@ -78,18 +78,20 @@ export const HomeIntro = ({ titles, description }) => {
                   className={`px-20 flex flex-col items-center justify-center intro-title-${variant} ${variant !== 'first' ? 'invisible' : ''}`}
                 >
                   {title?.svg ? (
-                    <Image
-                      image={title.svg}
-                      alt={title.text}
-                      className="w-auto h-28 md:h-45"
-                      height={100}
-                      style={{
-                        aspectRatio: title.svg.aspectRatio,
-                      }}
-                    />
+                    <div className="max-md:w-[75%] relative py-8">
+                      <Image
+                        image={title.svg}
+                        alt={title.text}
+                        className="w-auto h-28 md:h-45"
+                        height={100}
+                        style={{
+                          aspectRatio: title.svg.aspectRatio,
+                        }}
+                      />
+                    </div>
                   ) : (
                     <span
-                      className="text-32 md:text-58 font-medium"
+                      className="text-32 md:text-58 !leading-[100%] font-medium"
                     >
                       {title.text}
                     </span>
@@ -97,12 +99,12 @@ export const HomeIntro = ({ titles, description }) => {
 
                   {variant === 'last' && description ? (
                     <div
-                      className="home-intro-description w-[80%] md:w-full max-w-800 text-18 md:text-32 h-0 overflow-hidden will-change-transform"
+                      className="home-intro-description max-md:font-medium w-[75%] md:w-full max-w-800 text-18 md:text-32 h-0 overflow-hidden will-change-transform"
                       style={{
                         maskImage: 'linear-gradient(to top, transparent, black 80px)'
                       }}
                     >
-                      <div className="flex flex-col gap-y-[1.1em] py-30 md:py-80">
+                      <div className="flex flex-col gap-y-[1.1em] py-30 max-md:pb-80 md:py-80">
                         {description?.split('\n').map((line, index) => (
                           <p key={`description-line-${index}`}>{line}</p>
                         ))}

@@ -1,8 +1,8 @@
 import { Footer } from "../global/footer";
 import { CaseStudies } from "./case-studies/case-studies";
+// import { CaseStudies } from "./case-studies-new/case-studies";
 import { HomeScrim } from "./home-scrim";
 import { HomeIntro } from "./intro/home-intro";
-import { HomeScrollScene } from "./intro/home-scroll-scene";
 import { ScrollToCaseStudies } from "./scroll-to-case-studies";
 import { StepsSection } from "./steps/steps-section";
 
@@ -61,7 +61,7 @@ export const HomePage = (props: HomePageProps) => {
   const { title, intro, caseStudies, steps } = props
 
   return (
-    <div className="relative w-full select-none">
+    <div className="relative z-[2] w-full select-none">
       <h1 className="sr-only">{title}</h1>
 
       <ScrollToCaseStudies />
@@ -71,8 +71,6 @@ export const HomePage = (props: HomePageProps) => {
       <StepsSection {...steps} />
 
       <CaseStudies items={caseStudies} />
-      
-      <HomeScrollScene />
 
       <Footer />
       

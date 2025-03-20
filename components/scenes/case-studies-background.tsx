@@ -5,16 +5,16 @@ import { getStepColorsRGB } from "@/lib/get-step-colors";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 
-import { Color } from "three";
+import { Color, Vector2 } from "three";
+import { BlurShader } from "@/shaders/blur-shader";
 
 export const CaseStudiesBackground = ({ gradientOverride }: { gradientOverride?: string }) => {
   const currentStep = useHomeStore(state => state.currentStep)
   const blurRef = useRef<any>(null)
+  
   const [internalGradient, setInternalGradient] = useState<any>(
     getStepColorsRGB(gradientOverride ?? currentStep)
   )
-
-  const { viewport } = useThree();
 
   const initialColors = useMemo(() => {
     return {
@@ -48,42 +48,47 @@ export const CaseStudiesBackground = ({ gradientOverride }: { gradientOverride?:
     requestAnimationFrame(() => {
       gsap.to(backgroundColor, {
         value: nextGradient[400],
-        duration: 0.5,
-        ease: 'power2.inOut',
+        duration: 0.3,
+        ease: 'linear',
       })
   
       gsap.to(foregroundColor, {
         value: nextGradient[300],
-        duration: 0.5,
-        ease: 'power2.inOut',
+        duration: 0.3,
+        ease: 'linear',
         onUpdate: updateColors,
         onComplete: onAnimationComplete,
       })
     })
-  }, [currentStep, gradientOverride])
+  }, [currentStep])
 
-  useFrame(() => {
+  useFrame(({ viewport }) => {
     if (!blurRef.current) return;
-
+    
+    const size = viewport.getCurrentViewport();
     const uniforms = blurRef.current.material.uniforms as any;
 
-    uniforms.resolution.value.set(viewport.width, viewport.height)
+    blurRef.current.scale.set(size.width * 2, size.height * 2)
+    uniforms.resolution.value.set(size.width, size.height)
   })
 
-  if (!viewport.width || !viewport.height) return null;
+  const resolution = new Vector2(1, 1);
 
   return (
     <group>
-      
       <mesh ref={blurRef} position={[0, 0, -5]}>
-        <planeGeometry args={[viewport.width * 2, viewport.height * 2, 1, 1]} />
+        <planeGeometry args={[1, 1, 1, 1]} />
         {/* @ts-ignore */}
-        <blurShader
-          bgColor={initialColors.background}
-          fgColor={initialColors.foreground}
-          resolution={[viewport.width, viewport.height]}
-          radius={0.2}
-          strength={1.5}
+        <primitive
+          attach="material"
+          object={new BlurShader()}
+          uniforms={{
+            bgColor: { value: initialColors.background },
+            fgColor: { value: initialColors.foreground },
+            radius: { value: 0.2 },
+            strength: { value: 1.5 },
+            resolution: { value: resolution }
+          }}
           transparent
         />
       </mesh>

@@ -46,7 +46,10 @@ export const Header: FC<HeaderProps> = (props) => {
     }
   }, [menuOpen])
 
-  const toggleMenu = useCallback(() => {
+  const toggleMenu = useCallback((e: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+
     setMenuOpen(!menuOpen);
   }, [menuOpen, setMenuOpen])
 

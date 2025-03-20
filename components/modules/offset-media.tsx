@@ -22,7 +22,7 @@ interface OffsetMediaProps {
   secondMedia: MediaItem
 }
 
-const mediaStyles = cva('relative h-full w-full flex items-center gap-x-120 flex flex-col gap-y-20', {
+const mediaStyles = cva('relative h-full w-full flex items-center gap-x-120 flex gap-y-20', {
   variants: {
     position: {
       first: 'justify-start',
@@ -62,7 +62,7 @@ export const OffsetMedia: FC<OffsetMediaProps> = ({
   }
 
   return (
-    <div className="flex flex-col gap-y-20 w-full md:min-w-screen md:w-auto md:h-screen md:grid md:grid-cols-1 md:grid-rows-2 md:gap-y-24 lg:py-100">
+    <div className="flex flex-col gap-y-20 w-full md:min-w-screen-70 md:w-auto md:h-screen md:flex md:flex-col md:gap-y-24 lg:py-100">
       {renderMedia(firstMedia, mediaStyles({ position: 'first' }))}
       {renderMedia(secondMedia, mediaStyles({ position: 'last' }))}
     </div>

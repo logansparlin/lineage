@@ -1,7 +1,7 @@
 export const StepFourIllo = () => {
   return (
-    <div className="step-illo z-[1] absolute w-full h-full inset-0 flex justify-center overflow-hidden">
-      <svg className="step-illo-svg absolute top-0 left-1/2 -translate-x-1/2 h-full w-auto" width="1672" height="876" viewBox="0 0 1672 876" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div className="step-illo z-[1] absolute w-full h-[70vh] md:h-[75vh] bottom-0 left-0 flex justify-center overflow-hidden">
+      <svg className="step-illo-svg absolute bottom-0 left-1/2 -translate-x-1/2 h-full w-auto" width="1672" height="876" viewBox="0 0 1672 876" fill="none" xmlns="http://www.w3.org/2000/svg">
         
         <path d="M836.158 1022.85V-147.067" stroke="url(#paint0_linear_22_401)" strokeWidth="1.16111"/>
         <path d="M549.898 1051.78L1122.42 -176" stroke="url(#paint1_linear_22_401)" strokeWidth="1.16111"/>
@@ -10,7 +10,6 @@ export const StepFourIllo = () => {
         <path d="M1821.32 755.06L-149 120.723" stroke="url(#paint4_linear_22_401)" strokeWidth="1.16111"/>
         <path d="M1681.31 1035.25L-9 -159.47" stroke="url(#paint5_linear_22_401)" strokeWidth="1.16111"/>
         <path d="M6.64993 435.935L1665.66 435.935" stroke="url(#paint6_linear_22_401)" strokeWidth="1.16111"/>
-        <rect opacity="0.1" x="328.752" y="82.5581" width="1014.81" height="705.956" rx="352.978" stroke="url(#paint8_linear_22_401)" strokeWidth="1.16111"/>
         <path d="M1122.42 1051.78L549.896 -176" stroke="url(#paint9_linear_22_401)" strokeWidth="1.16111"/>
         
         <rect className="star-one" x="1276.64" y="267.588" width="37.9621" height="37.9621" rx="4.79192" transform="rotate(45 1276.64 267.588)" fill="#010101" stroke="url(#paint10_linear_22_401)" strokeWidth="1.16111"/>
