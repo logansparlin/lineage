@@ -16,16 +16,7 @@ export interface HomePageProps {
     }[]
     description: string
   }
-  caseStudies: {
-    _id: string
-    title: string
-    slug: string
-    palette: string
-    featuredImage: any
-    shortDescription: string
-    isMain?: boolean
-    step: string
-  }[]
+  caseStudies: any[]
   steps: {
     intro: {
       heading: string
