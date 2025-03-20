@@ -71,7 +71,7 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
         </div>
         <section
           id="case-studies"
-          className="w-full relative h-auto -mt-screen -mb-screen-50"
+          className="w-full relative h-auto md:-mt-screen md:-mb-screen-50"
           style={{
             contentVisibility: 'auto',
             containIntrinsicSize: '5000px',
