@@ -20,7 +20,7 @@ export const LegalPage: FC<LegalPageProps> = ({ title, lastUpdated, content }) =
         </div>
         <LegalRichText content={content} />
       </div>
-      <BackgroundTrail colors={['rgba(254, 152, 7, 1)', 'rgba(0, 140, 95, 1)', 'rgba(174, 79, 242, 1)']} />
+      {/* <BackgroundTrail colors={['rgba(254, 152, 7, 1)', 'rgba(0, 140, 95, 1)', 'rgba(174, 79, 242, 1)']} /> */}
     </div>
   )
 }

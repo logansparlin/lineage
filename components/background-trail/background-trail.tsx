@@ -33,7 +33,6 @@ export const BackgroundTrail: FC<BackgroundTrailProps> = ({
         >
           <Canvas
             linear
-            eventSource={document.getElementById('case-study-layout')}
             dpr={[1, 2]}
             camera={{ position: [0, 0, 10], fov: 120, near: 0.01, far: 100 }} 
             gl={{ antialias: true, alpha: true, outputColorSpace: SRGBColorSpace }}
