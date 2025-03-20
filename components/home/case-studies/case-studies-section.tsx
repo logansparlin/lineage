@@ -39,7 +39,7 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ index, ti
   }, [isInView])
 
   const stepColors = useMemo(() => {
-    return getStepColors(step)
+    return getStepColors(step ?? 'one')
   }, [step])
 
   return (
@@ -48,10 +48,10 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ index, ti
       ref={caseSectionRef}
       className={`${className} case-studies-section group card overflow-hidden px-20 md:px-0 text-center md:text-left md:min-h-screen relative py-100 md:py-[20vh]`}
       style={{
-        '--local-color-100': stepColors[100],
-        '--local-color-200': stepColors[200],
-        '--local-color-300': stepColors[300],
-        '--local-color-400': stepColors[400],
+        '--local-color-100': stepColors?.[100],
+        '--local-color-200': stepColors?.[200],
+        '--local-color-300': stepColors?.[300],
+        '--local-color-400': stepColors?.[400],
       } as React.CSSProperties}
     >
       <View className="md:hidden absolute inset-0 w-screen h-full pointer-events-none">
