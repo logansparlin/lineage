@@ -22,10 +22,19 @@ export const HomeScrollScene = memo(() => {
       linear
       dpr={[1, 2]}
       camera={{ position: [0, 0, 10], fov: 120, near: 0.01, far: 100 }} 
-      gl={{ antialias: true, alpha: true, outputColorSpace: SRGBColorSpace }}
+      gl={{
+        antialias: true,
+        alpha: true,
+        outputColorSpace: SRGBColorSpace,
+        precision: 'highp',
+        powerPreference: 'high-performance',
+      }}
       resize={{
         scroll: false,
-        debounce: 50,
+        debounce: {
+          scroll: 0,
+          resize: 250
+        },
       }}
       style={{
         position: 'fixed',

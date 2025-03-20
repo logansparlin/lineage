@@ -6,7 +6,7 @@ import { StepThree } from './step-three/step-three';
 import { StepFour } from './step-four/step-four';
 import { StepsIntro } from './steps-intro';
 import { StepObserver } from './step-observer';
-import { StepsNavigation } from './steps-navigation';
+
 
 interface StepsSectionProps extends ComponentProps<'section'> {
   intro: {

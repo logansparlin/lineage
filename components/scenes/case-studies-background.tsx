@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from "react";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import { useHomeStore } from "../home/hooks/use-home-store";
 import { getStepColorsRGB } from "@/lib/get-step-colors";
 import { useGSAP } from "@gsap/react";
@@ -48,13 +48,13 @@ export const CaseStudiesBackground = ({ gradientOverride }: { gradientOverride?:
     requestAnimationFrame(() => {
       gsap.to(backgroundColor, {
         value: nextGradient[400],
-        duration: 0.3,
+        duration: 0.75,
         ease: 'linear',
       })
   
       gsap.to(foregroundColor, {
         value: nextGradient[300],
-        duration: 0.3,
+        duration: 0.75,
         ease: 'linear',
         onUpdate: updateColors,
         onComplete: onAnimationComplete,

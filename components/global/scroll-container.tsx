@@ -10,6 +10,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ReactLenis } from "lenis/react";
 
 import 'lenis/dist/lenis.css'
+import { ScrollTriggerUpdate } from "./scroll-trigger-update";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -28,12 +29,24 @@ export const ScrollContainer: FC<ScrollContainerProps> = memo(({ children, ...pr
       scrub: true,
       invalidateOnRefresh: false,
     })
-  })
 
-  useEffect(() => {
+    gsap.config({ force3D: true });
+
+    ScrollTrigger.defaults({
+      immediateRender: false,
+      scrub: true,
+      invalidateOnRefresh: false,
+    })
+    
+    gsap.ticker.lagSmoothing(0);
+    gsap.ticker.remove(gsap.updateRoot);
+
+    ScrollTrigger.clearScrollMemory('manual')
+
     const update = (time) => {
       // time * 1000 converts to milliseconds
       lenisRef.current?.lenis?.raf(time);
+      gsap.updateRoot(time / 1000)
     }
 
     addEffect(update);
@@ -43,7 +56,7 @@ export const ScrollContainer: FC<ScrollContainerProps> = memo(({ children, ...pr
     return () => {
       gsap.ticker.remove(update);
     }
-  }, [])
+  })
 
   // return (<div>{children}</div>)
 
@@ -60,6 +73,7 @@ export const ScrollContainer: FC<ScrollContainerProps> = memo(({ children, ...pr
         touchInertiaMultiplier: 20
       }}
     >
+      <ScrollTriggerUpdate />
       {children}
     </ReactLenis>
   )

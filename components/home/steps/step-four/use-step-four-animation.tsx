@@ -84,7 +84,7 @@ export const useStepFourAnimation = (stepFourRef: RefObject<HTMLDivElement>) => 
       scale: 1.1,
       transformOrigin: 'center center',
       ease: 'none',
-      duration: () => window.innerWidth > 800 ? illoTl.duration() * 0.75 : illoTl.duration() * 0.5,
+      duration: () => window.innerWidth > 800 ? illoTl.duration() * 0.65 : illoTl.duration() * 0.5,
     }, 0)
   }, {
     scope: stepFourRef.current

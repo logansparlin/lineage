@@ -28,7 +28,7 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ index, ti
   const caseSectionRef = useRef<HTMLDivElement>(null);
   
   const isInView = useInView(caseSectionRef, {
-    margin: '0px 0px -40% 0px'
+    margin: '0px 0px -50% 0px'
   })
 
   useEffect(() => {

@@ -1,6 +1,5 @@
 import { Footer } from "../global/footer";
 import { CaseStudies } from "./case-studies/case-studies";
-// import { CaseStudies } from "./case-studies-new/case-studies";
 import { HomeScrim } from "./home-scrim";
 import { HomeIntro } from "./intro/home-intro";
 import { ScrollToCaseStudies } from "./scroll-to-case-studies";

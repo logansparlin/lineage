@@ -99,7 +99,7 @@ export const HomeIntro = ({ titles, description }) => {
 
                   {variant === 'last' && description ? (
                     <div
-                      className="home-intro-description max-md:font-medium w-[75%] md:w-full max-w-800 text-18 md:text-32 h-0 overflow-hidden will-change-transform"
+                      className="home-intro-description max-md:font-medium w-[75%] md:w-full max-w-800 text-18 md:text-32 h-0 overflow-hidden will-change-auto transform-gpu"
                       style={{
                         maskImage: 'linear-gradient(to top, transparent, black 80px)'
                       }}

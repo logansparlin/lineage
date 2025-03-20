@@ -64,7 +64,7 @@ export const useTitlesAnimation = ({ container, sections }) => {
       })
     })
     
-    ScrollTrigger.refresh();
+    // ScrollTrigger.refresh();
   }, {
     scope: container.current,
   })

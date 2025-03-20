@@ -2,6 +2,7 @@ import { type RefObject } from "react";
 import { gsap } from "gsap/gsap-core";
 import { useGSAP } from "@gsap/react";
 import { getPositionBetween } from "@/lib/get-position-between";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
   useGSAP(() => {
@@ -18,18 +19,10 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
     
     const getIconScale = () => () => {
       const pinRect = pin.getBoundingClientRect();
-      const iconRect = icon.getBoundingClientRect();
+      const iconSvg = icon.querySelector('svg');
+      const iconSvgRect = iconSvg?.getBoundingClientRect();
 
-      return pinRect.width / iconRect.width;
-    }
-    
-    const getIconPinStart = () => () => {
-      const iconRect = icon.getBoundingClientRect();
-      const iconScale = getIconScale();
-      const pinDistance = getPositionBetween(pin, illo);
-      const iconExtraHeight = (iconScale() - 1) * iconRect.height
-      const iconPinTop = pinDistance + (iconRect.height - (iconExtraHeight / 2));
-      return `top ${-1 * iconPinTop}px`
+      return pinRect.width / iconSvgRect.width;
     }
 
     const groupOneHighlights = illo.querySelector('.group-one');
@@ -78,6 +71,8 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
     }, '>')
 
     mainTl.to({}, {}, '+=0.5')
+
+    ScrollTrigger.refresh();
   }, {
     dependencies: [stepTwoRef]
   });
