@@ -418,16 +418,19 @@ body.fullscreen .site-cursor {
 }
 
 mux-player,
-mux-video {
+mux-video,
+.mux-video {
   width: 100%;
   height: 100%;
   transform: translateZ(0) skew(0deg);
+  object-fit: cover;
   --media-object-fit: cover;
   --media-object-position: center;
   --controls: none;
 }
 
-mux-video video {
+mux-video video,
+.mux-video video {
   width: 100%;
   height: 100%;
   object-fit: cover;

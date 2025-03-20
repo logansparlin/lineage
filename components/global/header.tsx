@@ -1,19 +1,20 @@
 'use client'
 
-import { useCallback, useEffect, useRef, type FC } from "react";
+import { useCallback, useEffect, useMemo, useRef, type FC } from "react";
 import { useHomeStore } from "../home/hooks/use-home-store";
 import { useSiteStore } from "@/stores/use-site-store";
 import { useClickAway } from "react-use";
 import { getRandomGradient } from "@/lib/gradients";
+import { usePathname } from "next/navigation";
+import { easings } from "@/lib/easings";
 
 import { AnimatePresence, motion } from "motion/react";
 import { Logo } from "./logo";
 import { IconDice } from "../icons/icon-dice";
 import { Button } from "./button";
+import { ButtonLink } from "./button-link";
 import { MainMenu } from "./main-menu";
 import Link from "next/link";
-import { easings } from "@/lib/easings";
-import { usePathname } from "next/navigation";
 
 export interface HeaderProps {}
 
@@ -24,10 +25,15 @@ export const Header: FC<HeaderProps> = (props) => {
   const isAnimatingGradient = useSiteStore((state) => state.isAnimatingGradient);
   const setMenuOpen = useSiteStore((state) => state.setMenuOpen);
   const setGradient = useHomeStore((state) => state.setGradient);
+  const caseSlugs = useSiteStore((state) => state.caseSlugs);
   const pathname = usePathname();
 
   useEffect(() => {
     setColorButtonVisible(false);
+  }, [pathname])
+
+  const isCaseStudy = useMemo(() => {
+    return pathname.includes('/case-study/')
   }, [pathname])
 
   const menuRef = useRef<HTMLDivElement>(null);
@@ -80,11 +86,37 @@ export const Header: FC<HeaderProps> = (props) => {
             </motion.div>
           ) : null}
         </AnimatePresence>
+        <AnimatePresence initial={false}>
+          {isCaseStudy && caseSlugs?.next && caseSlugs?.previous ? (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="flex items-center gap-6 pr-10 md:pr-40"
+            >
+              <ButtonLink
+                href={`/case-study/${caseSlugs.previous}`}
+                className="px-12 flex items-center gap-x-6"
+              >
+                <span className="max-md:hidden">&larr; </span>
+                <span>Back</span>
+              </ButtonLink>
+              <ButtonLink
+                href={`/case-study/${caseSlugs.next}`}
+                className="px-12 flex items-center gap-x-6"
+              >
+                <span>Next</span>
+                <span className="max-md:hidden">&rarr; </span>
+              </ButtonLink>
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
         <Button
-          className="relative z-[2]"
+          className="relative z-[2] w-80"
           onClick={toggleMenu}
         >
-          <AnimatePresence mode="popLayout">
+          <AnimatePresence mode="popLayout" initial={false}>
             {!menuOpen ? (
               <motion.div
                 key="menu"

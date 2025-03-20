@@ -1,7 +1,7 @@
 "use client";
  
 import { useContext, useEffect, useRef, useCallback } from "react";
-import { usePathname, useSelectedLayoutSegment } from "next/navigation";
+import { useSelectedLayoutSegment } from "next/navigation";
 import { useLenis } from "lenis/react";
 
 import { LayoutRouterContext } from "next/dist/shared/lib/app-router-context.shared-runtime";
@@ -80,7 +80,11 @@ export function LayoutTransition({
   const lenis = useLenis();
 
   const scrollToTop = useCallback(() => {
-    lenis?.scrollTo(0, { immediate: true });
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
   }, [lenis])
  
   return (

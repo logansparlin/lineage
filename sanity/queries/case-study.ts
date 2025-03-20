@@ -12,11 +12,16 @@ export const caseStudyQuery = defineQuery(
     ${seoQuery},
     title,
     step,
+    "slug": slug.current,
     featuredImage,
     shortDescription,
     description,
     content[] {
       ${modulesFields}
+    },
+    "all": *[_type == "caseStudy"] | order(orderRank asc) {
+      title,
+      "slug": slug.current
     }
   }`
 )

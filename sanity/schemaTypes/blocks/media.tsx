@@ -35,6 +35,14 @@ export default defineType({
       hidden: ({ parent }) => parent?.mediaType !== 'video'
     },
     {
+      name: 'controls',
+      title: 'With Controls?',
+      type: 'boolean',
+      description: 'If false, the video will autoplay and loop without controls',
+      initialValue: true,
+      hidden: ({ parent }) => parent?.mediaType !== 'video'
+    },
+    {
       name: 'videoThumbnail',
       title: 'Video Thumbnail',
       type: 'image',
@@ -49,7 +57,7 @@ export default defineType({
       title: 'Caption',
       type: 'string',
       hidden: ({ parent }) => parent?.size === 'full'
-    }
+    },
   ],
   preview: {
     select: {

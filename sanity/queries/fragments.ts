@@ -30,6 +30,7 @@ export const mediaFields = groq`
     }
   },
   mediaType == 'video' => {
+    controls,
     video {
       ${muxVideoFields}
     }
