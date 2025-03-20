@@ -6,7 +6,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="md:w-screen md:h-screen md:overflow-hidden">
+    <div id="case-study-layout" className="md:w-screen md:h-screen md:overflow-hidden">
       <ReactLenis
         root={false}
         options={{ orientation: 'horizontal', gestureOrientation: 'both', syncTouch: false }}

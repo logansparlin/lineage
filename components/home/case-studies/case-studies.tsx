@@ -21,7 +21,7 @@ interface CaseStudiesProps {
     step: string
     featuredImage: any
     shortDescription: string
-    isMain?: boolean
+    index: number
   }[]
 }
 

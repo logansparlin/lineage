@@ -13,7 +13,6 @@ import { CaseStudiesScrollItem } from "./case-studies-scroll-item";
 const DEPTH = 5;
 
 export const CaseStudiesScene = memo(({ items }: { items: any[] }) => {
-  const { viewport } = useThree();
   
   const backRef = useRef<any>(null);
   const topRef = useRef<any>(null);

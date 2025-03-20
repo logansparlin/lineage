@@ -1,6 +1,6 @@
 'use client'
 
-import { type FC, Suspense, useMemo, useEffect, useRef } from 'react'
+import { type FC, Suspense, useMemo, useRef } from 'react'
 import { Canvas, extend, useFrame, useThree } from '@react-three/fiber'
 import { useTrailTexture, AdaptiveDpr } from '@react-three/drei'
 
@@ -17,6 +17,7 @@ interface BackgroundTrailProps {
 export const BackgroundTrail: FC<BackgroundTrailProps> = ({
   colors = ['rgba(251, 197, 4, 1)', 'rgba(0, 191, 87, 1)', 'rgba(255, 126, 197, 1)']
 }) => {
+  const containerRef = useRef<HTMLDivElement>(null)
   const { width } = useWindowSize()
 
   const isMobile = useMemo(() => {
@@ -26,27 +27,32 @@ export const BackgroundTrail: FC<BackgroundTrailProps> = ({
   return (
     <Suspense fallback={null}>
       {!isMobile ? (
-        <Canvas
-          linear
-          eventSource={document.body}
-          dpr={[1, 2]}
-          camera={{ position: [0, 0, 10], fov: 120, near: 0.01, far: 100 }} 
-          gl={{ antialias: true, alpha: true, outputColorSpace: SRGBColorSpace }}
-          resize={{
-            scroll: false,
-            debounce: 50,
-          }}
-          style={{
-            position: 'fixed',
-            width: '100%',
-            height: '100vh',
-            inset: 0,
-            zIndex: 1
-          }}
+        <div 
+          ref={containerRef}
+          className="fixed inset-0 w-full h-full z-[1]"
         >
-          <AdaptiveDpr />
-          <BackgroundTrailCanvas colors={colors} />
-        </Canvas>
+          <Canvas
+            linear
+            eventSource={document.getElementById('case-study-layout')}
+            dpr={[1, 2]}
+            camera={{ position: [0, 0, 10], fov: 120, near: 0.01, far: 100 }} 
+            gl={{ antialias: true, alpha: true, outputColorSpace: SRGBColorSpace }}
+            resize={{
+              scroll: false,
+              debounce: 50,
+            }}
+            style={{
+              position: 'fixed',
+              width: '100%',
+              height: '100vh',
+              inset: 0,
+              zIndex: 1
+            }}
+          >
+            <AdaptiveDpr />
+            <BackgroundTrailCanvas colors={colors} />
+          </Canvas>
+        </div>
       ) : null}
     </Suspense>
   )
@@ -71,8 +77,6 @@ const BackgroundTrailCanvas: FC<BackgroundTrailProps> = ({
 
     const { viewport } = props;
     const size = viewport.getCurrentViewport();
-
-    // console.log(pointer)
 
     // onMove({ x: pointer.x, y: pointer.y })
 
