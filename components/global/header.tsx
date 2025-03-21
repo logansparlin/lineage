@@ -51,8 +51,6 @@ export const Header: FC<HeaderProps> = (props) => {
         setMenuOpen(false);
       }
 
-      console.log(window.scrollY, window.innerHeight)
-
       if (window.scrollY > window.innerHeight) {
         setHasScrolled(true);
       } else {

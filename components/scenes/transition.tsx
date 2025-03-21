@@ -45,32 +45,6 @@ const Planes = ({ container, mode, gradientOverride }: PlanesProps) => {
   
   const planes = useMemo(() => Array.from({ length: 5 }, (_, i) => i + 1), []);
 
-  // const aspectRatio = useMemo(() => viewport.width / viewport.height, [viewport])
-
-  // const normalizedSize = useMemo(() => {
-  //   return Math.max(viewport.width, viewport.height);
-  // }, [])
-
-  // const yScale = useMemo(() => {
-  //   return aspectRatio > 1 ? 1 : 1.5;
-  // }, [])
-
-  // const yStart = useMemo(() => {
-  //   return ((((normalizedSize * yScale) - viewport.height) / 2) + viewport.height) - viewport.height;
-  // }, [normalizedSize, yScale, viewport])
-
-  // const calculatePosition = useCallback((index: number) => {
-  //   const yOffset = (index * (normalizedSize * 0.06))
-  //   const yPosition = (yStart + yOffset) * (mode === 'enter' ? 1 : -1)
-  //   const zPosition = ((planes.length - 1) + index) * 0.001
-
-  //   return new Vector3(0, yPosition, zPosition)
-  // }, [mode, yStart])
-
-  // const scale = useMemo(() => {
-  //   return new Vector3(1.25, yScale, 1)
-  // }, [yScale])
-
   const uSize = new Vector2(0, 0);
   const uScale = new Vector3(0, 0, 0);
 

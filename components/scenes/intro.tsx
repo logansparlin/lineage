@@ -2,6 +2,7 @@
 
 import { useMemo, useRef, useState } from "react";
 import { useHomeStore } from "@/components/home/hooks/use-home-store";
+import { useMeshColorAnimation } from "@/hooks/use-mesh-color-animation";
 import { useFrame } from "@react-three/fiber";
 import { useLenis } from "lenis/react";
 import { useGSAP } from "@gsap/react";
@@ -19,7 +20,7 @@ export const IntroScene = ({ sections }: { sections: string[] }) => {
   const gradient = useHomeStore(state => state.gradient);
   const [currentGradient, setCurrentGradient] = useState(getGradient(gradient));
 
-  // useMeshColorAnimation({ meshRef, gradient })
+  useMeshColorAnimation({ meshRef, gradient })
 
   const progressRef = useRef<any>({
     first: 0,
@@ -133,44 +134,6 @@ export const IntroScene = ({ sections }: { sections: string[] }) => {
       child.scale.y = scaleY * normalizedSize;
     })
   })
-
-  useGSAP(() => {
-    if (!meshRef.current) return;
-    
-    const planes = meshRef.current.children;
-    const newGradient = getGradient(gradient);
-    
-    const innerColor = { value: currentGradient.inner };
-    const outerColor = { value: currentGradient.outer };
-
-    const updateColors = () => {
-      planes?.forEach(plane => {
-        const uniforms = plane.material.uniforms;
-        uniforms.outerColor.value = new Color(innerColor.value).convertLinearToSRGB();
-        uniforms.innerColor.value = new Color(outerColor.value).convertLinearToSRGB();
-      })
-    }
-
-    const onAnimationComplete = () => {
-      setCurrentGradient(newGradient);
-    }
-
-    requestAnimationFrame(() => {
-      gsap.to(innerColor, {
-        value: newGradient.inner,
-        duration: 0.5,
-        ease: 'power2.inOut',
-      })
-  
-      gsap.to(outerColor, {
-        value: newGradient.outer,
-        duration: 0.5,
-        ease: 'power2.inOut',
-        onUpdate: updateColors,
-        onComplete: onAnimationComplete,
-      })
-    })
-  }, [gradient])
 
   return (
     <mesh ref={meshRef}>

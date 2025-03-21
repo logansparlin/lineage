@@ -30,35 +30,22 @@ export const CaseStudiesBackground = ({ gradientOverride }: { gradientOverride?:
 
     const uniforms = blurRef.current.material.uniforms as any;
 
-    let backgroundColor = { value: internalGradient[400] };
-    let foregroundColor = { value: internalGradient[300] };
+    gsap.to(uniforms.bgColor.value, {
+      r: new Color(nextGradient[400]).convertLinearToSRGB().r,
+      g: new Color(nextGradient[400]).convertLinearToSRGB().g,
+      b: new Color(nextGradient[400]).convertLinearToSRGB().b,
+      duration: 0.75,
+      overwrite: true,
+      ease: 'linear',
+    })
 
-    const updateColors = () => {
-      const nextBackgroundColor = new Color(backgroundColor.value).convertLinearToSRGB();
-      const nextForegroundColor = new Color(foregroundColor.value).convertLinearToSRGB();
-
-      uniforms.bgColor.value = nextBackgroundColor;
-      uniforms.fgColor.value = nextForegroundColor;
-    }
-
-    const onAnimationComplete = () => {
-      setInternalGradient(nextGradient);
-    }
-
-    requestAnimationFrame(() => {
-      gsap.to(backgroundColor, {
-        value: nextGradient[400],
-        duration: 0.75,
-        ease: 'linear',
-      })
-  
-      gsap.to(foregroundColor, {
-        value: nextGradient[300],
-        duration: 0.75,
-        ease: 'linear',
-        onUpdate: updateColors,
-        onComplete: onAnimationComplete,
-      })
+    gsap.to(uniforms.fgColor.value, {
+      r: new Color(nextGradient[300]).convertLinearToSRGB().r,
+      g: new Color(nextGradient[300]).convertLinearToSRGB().g,
+      b: new Color(nextGradient[300]).convertLinearToSRGB().b,
+      duration: 0.75,
+      overwrite: true,
+      ease: 'linear',
     })
   }, [currentStep])
 

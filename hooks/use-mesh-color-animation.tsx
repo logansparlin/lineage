@@ -14,52 +14,43 @@ export const useMeshColorAnimation = ({ meshRef, gradient }: UseMeshColorAnimati
   const [internalGradient, setInternalGradient] = useState<Gradient>(getGradient(gradient))
   const setIsAnimatingGradient = useSiteStore((state) => state.setIsAnimatingGradient);
 
-  const isSameGradient = (one: Gradient, two: Gradient) => {
-    return one?.label === two?.label;
-  }
-
   useGSAP(() => {
-    if (!meshRef.current || isSameGradient(internalGradient, getGradient(gradient))) return;
+    if (!meshRef.current) return;
 
     const planes = meshRef.current.children;
 
-    let innerColor = { value: internalGradient.inner };
-    let outerColor = { value: internalGradient.outer };
-
     const nextGradient = getGradient(gradient);
-    
-    const updateColors = () => {
-      const nextInnerColor = new Color(innerColor.value).convertLinearToSRGB();
-      const nextOuterColor = new Color(outerColor.value).convertLinearToSRGB();
 
-      planes?.forEach(plane => {
-        const uniforms = plane.material.uniforms;
-        uniforms.innerColor.value = nextInnerColor;
-        uniforms.outerColor.value = nextOuterColor;
-      })  
-    }
-
-    updateColors();
-    setIsAnimatingGradient(true);
+    // setIsAnimatingGradient(true);
 
     const onAnimationComplete = () => {
-      setIsAnimatingGradient(false);
-      setInternalGradient(nextGradient);
+      // setIsAnimatingGradient(false);
     }
 
-    requestAnimationFrame(() => {
-      gsap.to(innerColor, {
-        value: nextGradient.inner,
+    planes?.forEach((plane, index) => {
+      const uniforms = plane.material.uniforms;
+      
+      gsap.to(uniforms.innerColor.value, {
+        r: new Color(nextGradient.inner).convertLinearToSRGB().r,
+        g: new Color(nextGradient.inner).convertLinearToSRGB().g,
+        b: new Color(nextGradient.inner).convertLinearToSRGB().b,
         duration: 0.75,
+        overwrite: true,
         ease: 'power2.inOut',
       })
-  
-      gsap.to(outerColor, {
-        value: nextGradient.outer,
+
+      gsap.to(uniforms.outerColor.value, {
+        r: new Color(nextGradient.outer).convertLinearToSRGB().r,
+        g: new Color(nextGradient.outer).convertLinearToSRGB().g,
+        b: new Color(nextGradient.outer).convertLinearToSRGB().b,
         duration: 0.75,
+        overwrite: true,
         ease: 'power2.inOut',
-        onUpdate: updateColors,
-        onComplete: onAnimationComplete,
+        onComplete: () => {
+          if (index !== planes?.length - 1) return;
+
+          onAnimationComplete();
+        },
       })
     })
   }, [internalGradient, gradient])
