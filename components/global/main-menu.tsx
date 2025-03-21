@@ -124,9 +124,17 @@ const MenuItem = ({ label, url = undefined, type, index, onClick, total, offset 
     onClick?.()
   }, [onClick, isCaseStudiesLink, lenis])
 
+  const interactiveClass = useMemo(() => {
+    if (type === 'text') {
+      return 'text-white'
+    }
+
+    return 'will-change-transform transform-gpu group-hover:text-white/30 group-hover:hover:text-white transition-colors duration-300 ease'
+  }, [type])
+
   return (
     <motion.li
-      className="will-change-transform transform-gpu group-hover:text-white/30 group-hover:hover:text-white transition-colors duration-300 ease"
+      className={interactiveClass}
       initial={{ opacity: 0, y: 8 }}
       animate={{ 
         opacity: 1,
