@@ -6,26 +6,26 @@ export interface Gradient {
 
 const orange: Gradient = {
   label: 'orange',
-  inner: '#F44318',
-  outer: '#FE9807'
+  outer: '#F44318',
+  inner: '#FE9807'
 }
 
 const pink: Gradient = {
   label: 'pink',
-  inner: '#5900FF',
-  outer: '#AE4FF2'
+  outer: '#5900FF',
+  inner: '#AE4FF2'
 }
 
 const green: Gradient = {
   label: 'green',
-  inner: '#005921',
-  outer: '#008C5F'
+  outer: '#005921',
+  inner: '#008C5F'
 }
 
 const blue: Gradient = {
   label: 'blue',
-  inner: '#0E3BDD',
-  outer: '#087EEE'
+  outer: '#0E3BDD',
+  inner: '#087EEE'
 }
 
 const stepGradients = {

@@ -41,7 +41,7 @@ const Planes = ({ container, mode, gradientOverride }: PlanesProps) => {
   const gradient = useHomeStore(state => state.gradient);
   const currentGradient = useMemo(() => gradientOverride ? getGradient(gradientOverride) : getGradient(gradient), [gradientOverride])
   
-  useMeshColorAnimation({ meshRef, gradient: gradientOverride ? currentGradient?.label : gradient })
+  useMeshColorAnimation({ meshRef, gradient: gradientOverride ? currentGradient?.label : gradient, invert: true })
   
   const planes = useMemo(() => Array.from({ length: 5 }, (_, i) => i + 1), []);
 
@@ -99,8 +99,8 @@ const Planes = ({ container, mode, gradientOverride }: PlanesProps) => {
           <CurvedPlane
             key={`transition-plane-${index}`}
             curveIntensity={3}
-            inner={currentGradient?.outer}
-            outer={currentGradient?.inner}
+            inner={currentGradient?.inner}
+            outer={currentGradient?.outer}
             center={index === (planes.length - 1) ? "#000000" : "#FFFFFF"}
             inset={1}
             opacity={1}

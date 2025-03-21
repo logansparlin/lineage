@@ -1,19 +1,15 @@
-import { type Gradient, getGradient } from "@/lib/gradients";
-import { useSiteStore } from "@/stores/use-site-store";
+import { getGradient } from "@/lib/gradients";
 import { useGSAP } from "@gsap/react";
-import { useState } from "react";
 import { gsap } from "gsap";
 import { Color } from "three";
 
 interface UseMeshColorAnimationProps {
   meshRef: React.RefObject<any>;
   gradient: string;
+  invert?: boolean;
 }
 
-export const useMeshColorAnimation = ({ meshRef, gradient }: UseMeshColorAnimationProps) => {
-  const [internalGradient, setInternalGradient] = useState<Gradient>(getGradient(gradient))
-  const setIsAnimatingGradient = useSiteStore((state) => state.setIsAnimatingGradient);
-
+export const useMeshColorAnimation = ({ meshRef, gradient, invert = false }: UseMeshColorAnimationProps) => {
   useGSAP(() => {
     if (!meshRef.current) return;
 
@@ -21,37 +17,29 @@ export const useMeshColorAnimation = ({ meshRef, gradient }: UseMeshColorAnimati
 
     const nextGradient = getGradient(gradient);
 
-    // setIsAnimatingGradient(true);
-
-    const onAnimationComplete = () => {
-      // setIsAnimatingGradient(false);
-    }
+    const nextInnerColor = invert ? nextGradient.outer : nextGradient.inner;
+    const nextOuterColor = invert ? nextGradient.inner : nextGradient.outer;
 
     planes?.forEach((plane, index) => {
       const uniforms = plane.material.uniforms;
       
       gsap.to(uniforms.innerColor.value, {
-        r: new Color(nextGradient.inner).convertLinearToSRGB().r,
-        g: new Color(nextGradient.inner).convertLinearToSRGB().g,
-        b: new Color(nextGradient.inner).convertLinearToSRGB().b,
+        r: new Color(nextInnerColor).convertLinearToSRGB().r,
+        g: new Color(nextInnerColor).convertLinearToSRGB().g,
+        b: new Color(nextInnerColor).convertLinearToSRGB().b,
         duration: 0.75,
         overwrite: true,
         ease: 'power2.inOut',
       })
 
       gsap.to(uniforms.outerColor.value, {
-        r: new Color(nextGradient.outer).convertLinearToSRGB().r,
-        g: new Color(nextGradient.outer).convertLinearToSRGB().g,
-        b: new Color(nextGradient.outer).convertLinearToSRGB().b,
+        r: new Color(nextOuterColor).convertLinearToSRGB().r,
+        g: new Color(nextOuterColor).convertLinearToSRGB().g,
+        b: new Color(nextOuterColor).convertLinearToSRGB().b,
         duration: 0.75,
         overwrite: true,
         ease: 'power2.inOut',
-        onComplete: () => {
-          if (index !== planes?.length - 1) return;
-
-          onAnimationComplete();
-        },
       })
     })
-  }, [internalGradient, gradient])
+  }, [gradient])
 }
