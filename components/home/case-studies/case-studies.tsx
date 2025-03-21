@@ -63,7 +63,7 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
       <TransitionScene mode="enter" gradientOverride={firstItemGradient} className="-mt-screen-50" />
       <div ref={caseStudiesRef} className="relative">
         <CurrentColorProvider container={caseStudiesRef} />
-        <div id="case-studies-scroll" className="max-md:hidden pointer-events-none w-full h-screen sticky top-0 z-[1] flex items-center justify-center">
+        <div id="case-studies-scroll" className="pointer-events-none w-full h-screen sticky top-0 z-[1] flex items-center justify-center">
           <CaseStudiesNavigation items={items} />
           <View className="absolute inset-0 w-full h-full z-[1] pointer-events-none">
             <CaseStudiesScene items={items} />
@@ -71,7 +71,7 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
         </div>
         <section
           id="case-studies"
-          className="w-full relative h-auto md:mt-[-100vh] md:-mb-screen-50"
+          className="w-full relative h-auto mt-[-95svh] mb-[-25svh] md:-mb-screen-50"
           style={{
             contentVisibility: 'auto',
             containIntrinsicSize: '5000px',

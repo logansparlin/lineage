@@ -2,18 +2,18 @@
 
 import { memo, Suspense, useEffect, useMemo, useRef, lazy, useCallback } from "react";
 import { urlFor } from "@/sanity/lib/image";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
+import { useWindowSize } from "react-use";
 
 import { PlaneGeometry } from "three";
 import { CaseStudiesBackground } from "./case-studies-background";
 import { CaseStudiesScrollItem } from "./case-studies-scroll-item";
 
-// const CaseStudiesScrollItem = lazy(() => import('./case-studies-scroll-item').then(mod => ({ default: mod.CaseStudiesScrollItem })))
-
 const DEPTH = 5;
 
 export const CaseStudiesScene = memo(({ items }: { items: any[] }) => {
-  
+  const { width } = useWindowSize();
+
   const backRef = useRef<any>(null);
   const topRef = useRef<any>(null);
   const bottomRef = useRef<any>(null);
@@ -44,22 +44,22 @@ export const CaseStudiesScene = memo(({ items }: { items: any[] }) => {
     })
   }, [items])
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
+  // useEffect(() => {
+  //   if (typeof window === 'undefined') return;
 
-    const handlePointerMove = (event: PointerEvent) => {
-      const x = (event.clientX / window.innerWidth) * 2 - 1;
-      const y = -((event.clientY / window.innerHeight) * 2 - 1);
+  //   const handlePointerMove = (event: PointerEvent) => {
+  //     const x = (event.clientX / window.innerWidth) * 2 - 1;
+  //     const y = -((event.clientY / window.innerHeight) * 2 - 1);
       
-      pointerPosition.current = { x, y };
-    }
+  //     pointerPosition.current = { x, y };
+  //   }
 
-    window.addEventListener('pointermove', handlePointerMove)
+  //   window.addEventListener('pointermove', handlePointerMove)
 
-    return () => {
-      window.removeEventListener('pointermove', handlePointerMove)
-    }
-  }, [])
+  //   return () => {
+  //     window.removeEventListener('pointermove', handlePointerMove)
+  //   }
+  // }, [])
 
   const setSizes = useCallback((size: any) => {
     if (!size.height || !size.width) return;
@@ -78,50 +78,55 @@ export const CaseStudiesScene = memo(({ items }: { items: any[] }) => {
     setSizes(size);
   })
 
+  const isMobile = useMemo(() => {
+    return width < 800;
+  }, [width])
+
   return (
     <Suspense fallback={null}>
       <CaseStudiesBackground />
-      <group>
-        <mesh ref={backRef} geometry={planeGeometry} position={[0, 0, -1 * (DEPTH / 2)]}>
-          <meshBasicMaterial color="black" transparent opacity={0} />
-          {mappedItems?.map((item) => {
-            return (
-              <CaseStudiesScrollItem key={`back-${item._id}`} zPosition={DEPTH / 2} {...item} />
-            )
-          })}
-        </mesh>
+      {!isMobile ? (
+        <group>
+          <mesh ref={backRef} geometry={planeGeometry} position={[0, 0, -1 * (DEPTH / 2)]}>
+            <meshBasicMaterial color="black" transparent opacity={0} />
+            {mappedItems?.map((item) => {
+              return (
+                <CaseStudiesScrollItem key={`back-${item._id}`} zPosition={DEPTH / 2} {...item} />
+              )
+            })}
+          </mesh>
 
-        <mesh ref={topRef} geometry={planeGeometry} position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
-          <meshBasicMaterial color="black" transparent opacity={0} />
-          {mappedItems?.map((item) => {
-            return (
-              <CaseStudiesScrollItem
-                key={`top-${item._id}`}
-                startOffset={0.8}
-                zPosition={DEPTH / 2}
-                gradientDirection="down"
-                {...item}
-              />
-            )
-          })}
-        </mesh>
-        
-        <mesh ref={bottomRef} geometry={planeGeometry} position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-          <meshBasicMaterial color="black" transparent opacity={0} />
-          {mappedItems?.map((item) => {
-            return (
-              <CaseStudiesScrollItem
-                key={`bottom-${item._id}`}
-                startOffset={-0.8}
-                zPosition={DEPTH / 2}
-                gradientDirection="up"
-                {...item}
-              />
-            )
-          })}
-        </mesh>
-        {/* <OrbitControls enableZoom={false} /> */}
-      </group>
+          <mesh ref={topRef} geometry={planeGeometry} position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
+            <meshBasicMaterial color="black" transparent opacity={0} />
+            {mappedItems?.map((item) => {
+              return (
+                <CaseStudiesScrollItem
+                  key={`top-${item._id}`}
+                  startOffset={0.8}
+                  zPosition={DEPTH / 2}
+                  gradientDirection="down"
+                  {...item}
+                />
+              )
+            })}
+          </mesh>
+          
+          <mesh ref={bottomRef} geometry={planeGeometry} position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+            <meshBasicMaterial color="black" transparent opacity={0} />
+            {mappedItems?.map((item) => {
+              return (
+                <CaseStudiesScrollItem
+                  key={`bottom-${item._id}`}
+                  startOffset={-0.8}
+                  zPosition={DEPTH / 2}
+                  gradientDirection="up"
+                  {...item}
+                />
+              )
+            })}
+          </mesh>
+        </group>
+      ) : null}
     </Suspense>
   )
 })

@@ -54,9 +54,6 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ index, ti
         '--local-color-400': stepColors?.[400],
       } as React.CSSProperties}
     >
-      <View className="md:hidden absolute inset-0 w-screen h-full pointer-events-none">
-        <CaseStudiesBackground gradientOverride={step} />
-      </View>
       <div className="w-full relative flex flex-col items-center justify-center gap-10 md:gap-16">
         <h3
           className={`z-[2] pb-10 text-32 lg:text-41`}

@@ -92,7 +92,7 @@ export const Header: FC<HeaderProps> = (props) => {
 
   return (
     <header className="w-full px-20 py-20 md:px-40 md:py-24 fixed top-0 left-0 z-[500] flex items-center md:items-start justify-between">
-      <div inert className="absolute top-0 left-0 w-full h-[calc(100%+12px)] bg-linear-to-b from-black from-70% to-transparent -z-[1] md:hidden"></div>
+      <div inert className="absolute top-0 left-0 w-full h-full bg-white/10 backdrop-blur-[50px] -z-[1] md:hidden"></div>
       <Link href="/" scroll={false} className="relative z-[2]" onClick={onLogoClick}>
         <span className="sr-only">Lineage</span>
         <Logo className="h-22 w-auto" />
@@ -193,7 +193,7 @@ export const Header: FC<HeaderProps> = (props) => {
               duration: 0.65, delay: 0.25, ease: easings.outExpo
             } }}
             transition={{ duration: 0.65, ease: easings.outExpo }}
-            className="max-md:hidden absolute top-0 left-0 w-full h-full bg-black z-[-1]"></motion.div>
+            className="max-md:hidden absolute top-0 left-0 w-full h-[calc(150%)] bg-white/10 backdrop-blur-[50px] z-[-1]"></motion.div>
         ) : null}
       </AnimatePresence>
     </header>
