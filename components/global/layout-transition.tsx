@@ -1,7 +1,7 @@
 "use client";
  
 import { useContext, useEffect, useRef, useCallback } from "react";
-import { useSelectedLayoutSegment } from "next/navigation";
+import { usePathname, useSelectedLayoutSegment } from "next/navigation";
 import { useLenis } from "lenis/react";
 
 import { LayoutRouterContext } from "next/dist/shared/lib/app-router-context.shared-runtime";
@@ -25,13 +25,21 @@ function FrozenRouter(props: { children: React.ReactNode }) {
   const context = useContext(LayoutRouterContext);
   const prevContext = usePreviousValue(context) || null;
  
+  const url = context?.url;
+  const prevUrl = prevContext?.url;
   const segment = useSelectedLayoutSegment();
   const prevSegment = usePreviousValue(segment);
  
   const changed =
-    segment !== prevSegment &&
-    segment !== undefined &&
-    prevSegment !== undefined;
+    (
+      segment !== prevSegment &&
+      segment !== undefined &&
+      prevSegment !== undefined
+    ) || (
+      url !== prevUrl &&
+      url !== undefined &&
+      prevUrl !== undefined
+    )
  
   return (
     <LayoutRouterContext.Provider value={changed ? prevContext : context}>
@@ -78,6 +86,7 @@ export function LayoutTransition({
 }: LayoutTransitionProps) {
   const segment = useSelectedLayoutSegment();
   const lenis = useLenis();
+  const pathname = usePathname();
 
   const scrollToTop = useCallback(() => {
     if (lenis) {
@@ -92,7 +101,7 @@ export function LayoutTransition({
       <motion.div
         className={className}
         style={style}
-        key={segment}
+        key={`${segment}-${pathname}`}
         initial={initial}
         animate={animate}
         exit={{

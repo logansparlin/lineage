@@ -45,7 +45,6 @@ export const Header: FC<HeaderProps> = (props) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      console.log(window.scrollY, scrollStart.current)
       if (Math.abs(window.scrollY - scrollStart.current) > 100) {
         setMenuOpen(false);
       }
