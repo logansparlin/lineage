@@ -18,8 +18,8 @@ export const CaseStudiesBackground = ({ gradientOverride }: { gradientOverride?:
 
   const initialColors = useMemo(() => {
     return {
-      background: new Color(internalGradient[400]).convertLinearToSRGB(),
-      foreground: new Color(internalGradient[300]).convertLinearToSRGB(),
+      background: new Color(internalGradient?.[400]).convertLinearToSRGB(),
+      foreground: new Color(internalGradient?.[300]).convertLinearToSRGB(),
     }
   }, [internalGradient])
 

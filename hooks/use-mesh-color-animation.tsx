@@ -15,7 +15,7 @@ export const useMeshColorAnimation = ({ meshRef, gradient }: UseMeshColorAnimati
   const setIsAnimatingGradient = useSiteStore((state) => state.setIsAnimatingGradient);
 
   const isSameGradient = (one: Gradient, two: Gradient) => {
-    return one.label === two.label;
+    return one?.label === two?.label;
   }
 
   useGSAP(() => {

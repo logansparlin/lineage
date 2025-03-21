@@ -1,6 +1,6 @@
-import { type FC, RefObject, useCallback, useMemo, useRef } from "react";
+import { type FC, RefObject, useMemo, useRef } from "react";
 import { useMeshColorAnimation } from "@/hooks/use-mesh-color-animation";
-import { useFrame, useThree } from "@react-three/fiber"
+import { useFrame } from "@react-three/fiber"
 import { useHomeStore } from "@/components/home/hooks/use-home-store";
 import { getGradient } from "@/lib/gradients";
 import { Vector2, Vector3 } from "three";
@@ -41,7 +41,7 @@ const Planes = ({ container, mode, gradientOverride }: PlanesProps) => {
   const gradient = useHomeStore(state => state.gradient);
   const currentGradient = useMemo(() => gradientOverride ? getGradient(gradientOverride) : getGradient(gradient), [gradientOverride])
   
-  useMeshColorAnimation({ meshRef, gradient: gradientOverride ? currentGradient.label : gradient })
+  useMeshColorAnimation({ meshRef, gradient: gradientOverride ? currentGradient?.label : gradient })
   
   const planes = useMemo(() => Array.from({ length: 5 }, (_, i) => i + 1), []);
 
@@ -125,8 +125,8 @@ const Planes = ({ container, mode, gradientOverride }: PlanesProps) => {
           <CurvedPlane
             key={`transition-plane-${index}`}
             curveIntensity={3}
-            inner={currentGradient.outer}
-            outer={currentGradient.inner}
+            inner={currentGradient?.outer}
+            outer={currentGradient?.inner}
             center={index === (planes.length - 1) ? "#000000" : "#FFFFFF"}
             inset={1}
             opacity={1}

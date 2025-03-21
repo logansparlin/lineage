@@ -28,18 +28,14 @@ export const CaseStudyPage = (props) => {
     return getStepColors(step)
   }, [step])
 
-  const stepColorsRGB = useMemo(() => {
-    return getStepColorsRGB(step)
-  }, [step])
-
   return (
     <div
       className="md:w-fit md:h-screen md:flex md:items-center"
       style={{
-        '--step-color-100': stepColors[100],
-        '--step-color-200': stepColors[200],
-        '--step-color-300': stepColors[300],
-        '--step-color-400': stepColors[400],
+        '--step-color-100': stepColors?.[100],
+        '--step-color-200': stepColors?.[200],
+        '--step-color-300': stepColors?.[300],
+        '--step-color-400': stepColors?.[400],
       } as React.CSSProperties}
     >
       <CaseNavigationSetters

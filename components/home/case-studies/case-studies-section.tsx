@@ -67,7 +67,7 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ index, ti
         <Link
           href={`/case-study/${slug}`}
           scroll={false}
-          className={`case-image-container pointer-events-auto relative z-[1] w-full h-auto md:h-[50vh] md:w-auto aspect-video flex items-center justify-center rounded-10 md:rounded-20`}
+          className={`case-image-container pointer-events-auto relative z-[1] w-full h-auto md:w-[60%] md:h-auto lg:w-auto lg:h-[50vh] aspect-video flex items-center justify-center rounded-10 md:rounded-20`}
         >
           <div
             className="case-image absolute inset-0 z-[2] overflow-hidden w-full h-full rounded-20 flex items-center justify-center"
