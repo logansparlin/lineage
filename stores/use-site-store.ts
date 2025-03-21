@@ -19,6 +19,10 @@ interface SiteStore {
   }
   setCaseSlugs: (slugs: { next: string | null; previous: string | null }) => void;
   resetCaseSlugs: () => void;
+  publish: any;
+  subscribe: any;
+  setPublish: (publish: any) => void;
+  setSubscribe: (subscribe: any) => void;
 }
 
 export const useSiteStore = create<SiteStore>((set) => ({
@@ -40,4 +44,8 @@ export const useSiteStore = create<SiteStore>((set) => ({
   },
   setCaseSlugs: (slugs: { next: string | null; previous: string | null }) => set({ caseSlugs: slugs }),
   resetCaseSlugs: () => set({ caseSlugs: { next: null, previous: null } }),
+  publish: () => {},
+  subscribe: () => {},
+  setPublish: (publish: any) => set({ publish }),
+  setSubscribe: (subscribe: any) => set({ subscribe }),
 }))

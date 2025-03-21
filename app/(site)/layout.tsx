@@ -15,6 +15,7 @@ import { Cursor } from '@/components/global/cursor';
 import { Favicon } from '@/components/global/favicon';
 
 import "./globals.css";
+import { PubSubProvider } from '@/components/global/pub-sub-provider';
 
 const PPNeueMontreal = localFont({
   src: [
@@ -85,10 +86,11 @@ export default async function RootLayout({
         <Favicon icons={settings?.seo?.favicon} />
         <Header {...settings?.header} />
         <SetVH />
-        <SanityLive />
+        <PubSubProvider />
         <LayoutTransition className="w-full">
             {children}
         </LayoutTransition>
+        <SanityLive />
         {(await draftMode()).isEnabled && <VisualEditing />}
       </body>
     </html>

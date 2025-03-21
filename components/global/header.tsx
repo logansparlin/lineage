@@ -19,6 +19,7 @@ import Link from "next/link";
 export interface HeaderProps {}
 
 export const Header: FC<HeaderProps> = (props) => {
+  const publish = useSiteStore((state) => state.publish);
   const menuOpen = useSiteStore((state) => state.menuOpen);
   const colorButtonVisible = useSiteStore((state) => state.colorButtonVisible);
   const setColorButtonVisible = useSiteStore((state) => state.setColorButtonVisible);
@@ -80,10 +81,19 @@ export const Header: FC<HeaderProps> = (props) => {
     setMenuOpen(!menuOpen);
   }, [menuOpen, setMenuOpen])
 
+  const onLogoClick = useCallback((e: any) => {
+    if (pathname === '/') {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('calling publish')
+      publish('scroll-to-top', null);
+    }
+  }, [publish, pathname])
+
   return (
     <header className="w-full px-20 py-20 md:px-40 md:py-24 fixed top-0 left-0 z-[500] flex items-center md:items-start justify-between">
       <div inert className="absolute top-0 left-0 w-full h-[calc(100%+12px)] bg-linear-to-b from-black from-70% to-transparent -z-[1] md:hidden"></div>
-      <Link href="/" scroll={false} className="relative z-[2]">
+      <Link href="/" scroll={false} className="relative z-[2]" onClick={onLogoClick}>
         <span className="sr-only">Lineage</span>
         <Logo className="h-22 w-auto" />
       </Link>
