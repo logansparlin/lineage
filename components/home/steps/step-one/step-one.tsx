@@ -18,7 +18,7 @@ export const StepOne: FC<StepOneProps> = ({ title, description }) => {
   useStepOneAnimation(stepOneRef);
 
   return (
-    <section className="flex-1 flex flex-col items-center gap-y-50 md:gap-y-0" ref={stepOneRef}>
+    <section className="flex-1 flex flex-col items-center gap-y-24 md:gap-y-0" ref={stepOneRef}>
       <StepDetails
         step={1}
         title={title}
