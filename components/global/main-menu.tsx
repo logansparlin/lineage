@@ -70,8 +70,8 @@ export const MainMenu: FC<MainMenuProps> = ({ className }) => {
       {menuOpen ? (
         <motion.div 
           className="
-            absolute max-md:w-full max-md:bg-black max-md:left-0 z-[1] md:fixed right-0 md:right-[470px] top-0 md:top-20 overflow-hidden
-            [--h-from:0px] md:[--h-from:100%]
+            absolute max-md:w-full max-md:bg-black max-md:left-0 z-[1] md:relative right-0 top-0 overflow-hidden
+            [--h-from:0px] md:[--h-from:auto]
           "
           initial={{ height: 'var(--h-from)' }}
           animate={{ height: 'auto' }}

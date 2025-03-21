@@ -56,8 +56,6 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
     return items?.[0]?.step ?? 'one';
   }, [items])
 
-  console.log(Array.from(items?.[0]?.step).map(c => c.codePointAt(0).toString(16)))
-
   if (!items) return null
 
   return (
