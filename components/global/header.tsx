@@ -60,7 +60,7 @@ export const Header: FC<HeaderProps> = (props) => {
   }, [menuOpen, setMenuOpen])
 
   return (
-    <header className="w-full px-20 py-20 md:px-40 md:py-24 fixed top-0 left-0 z-[500] flex items-start justify-between">
+    <header className="w-full px-20 py-20 md:px-40 md:py-24 fixed top-0 left-0 z-[500] flex items-center md:items-start justify-between">
       <Link href="/" scroll={false} className="relative z-[2]">
         <span className="sr-only">Lineage</span>
         <Logo className="h-22 w-auto" />
@@ -93,27 +93,27 @@ export const Header: FC<HeaderProps> = (props) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
-              className="flex items-center gap-6 pr-10 md:pr-40"
+              className="flex items-center gap-6 md:pr-40"
             >
               <ButtonLink
                 href={`/case-study/${caseSlugs.previous}`}
-                className="px-12 flex items-center gap-x-6"
+                className="px-10 md:px-12 flex items-center gap-x-6"
               >
-                <span className="max-md:hidden">&larr; </span>
-                <span>Back</span>
+                <span>&larr; </span>
+                <span className="max-md:sr-only">Back</span>
               </ButtonLink>
               <ButtonLink
                 href={`/case-study/${caseSlugs.next}`}
-                className="px-12 flex items-center gap-x-6"
+                className="px-10 md:px-12 flex items-center gap-x-6"
               >
-                <span>Next</span>
-                <span className="max-md:hidden">&rarr; </span>
+                <span className="max-md:sr-only">Next</span>
+                <span>&rarr; </span>
               </ButtonLink>
             </motion.div>
           ) : null}
         </AnimatePresence>
         <Button
-          className="relative z-[2] w-80"
+          className="relative z-[2] w-70 md:w-80"
           onClick={toggleMenu}
         >
           <AnimatePresence mode="popLayout" initial={false}>

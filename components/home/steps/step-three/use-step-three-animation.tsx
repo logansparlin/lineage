@@ -32,7 +32,7 @@ export const useStepThreeAnimation = (stepThreeRef: RefObject<HTMLDivElement>) =
       const scale = parseFloat(circle.getAttribute('data-scale') || '0');
 
       mainTl.to(circle, {
-        scale: () => window.innerWidth > 800 ? scale : scale / 2,
+        scale: () => window.innerWidth > 800 ? scale : scale / 1.5,
         duration: 0.4,
       }, 0.3)
     })
@@ -53,7 +53,8 @@ export const useStepThreeAnimation = (stepThreeRef: RefObject<HTMLDivElement>) =
     }, '>-=0.5')
 
     mainTl.to(icon, {
-      y: () => window.innerWidth > 800 ? (window.innerHeight - (iconHeight * 5)) : (window.innerHeight - (iconHeight * 4)),
+      y: () => window.innerWidth > 800 ? (window.innerHeight - (iconHeight * 5)) : (window.innerHeight - (iconHeight * 3)),
+      scale: () => window.innerWidth > 800 ? 1 : 0.75,
       duration: () => window.innerWidth > 800 ? mainTl.duration() : mainTl.duration() * 0.5,
     }, 0)
 

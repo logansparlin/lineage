@@ -1,10 +1,12 @@
 'use client'
 
 import { type FC, type ComponentProps, useRef } from "react";
+import { motion, useInView } from "motion/react";
+import { useWindowSize } from "react-use";
+import { easings } from "@/lib/easings";
+
 import { SitePortableText } from "@/components/global/site-portable-text";
 import { SplitDescriptionContainer } from "./split-description-container";
-import { motion, useInView } from "motion/react";
-import { easings } from "@/lib/easings";
 
 interface StepsIntroProps extends ComponentProps<'section'> {
   heading: string;
@@ -21,10 +23,12 @@ interface StepsIntroProps extends ComponentProps<'section'> {
 export const StepsIntro: FC<StepsIntroProps> = (props) => {
   const { heading, subheading, splitDescription, description, ...rest } = props;
   const splitDescriptionRef = useRef<HTMLDivElement>(null);
+  const { width } = useWindowSize();
 
   const isInView = useInView(splitDescriptionRef, {
     amount: 0.01,
-    margin: '0px 0px -50% 0px'
+    margin: width > 800 ? '0px 0px -60% 0px' : '0px 0px -80% 0px',
+    once: true
   })
 
   return (
