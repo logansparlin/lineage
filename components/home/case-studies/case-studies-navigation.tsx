@@ -25,8 +25,6 @@ export const CaseStudiesNavigation: FC<CaseStudiesNavigationProps> = ({ items, c
   const handleClick = (e: any, index: number) => {
     e.preventDefault();
     e.stopPropagation();
-
-    console.log('scrolling to')
     
     lenis?.scrollTo(`#case-study-${index}`, {
       offset: 45

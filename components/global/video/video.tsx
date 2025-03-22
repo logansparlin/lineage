@@ -1,6 +1,6 @@
 'use client'
 
-import { type FC, ComponentProps, useEffect, useRef, useState } from "react"
+import { type FC, ComponentProps, useEffect, useMemo, useRef, useState } from "react"
 import { useVideoControls } from "./use-video-controls"
 import { AnimatePresence, motion, useInView, useIsomorphicLayoutEffect } from "motion/react"
 import { createBlurUp } from "@mux/blurup"
@@ -20,10 +20,11 @@ interface VideoProps extends ComponentProps<'video'> {
   muted?: boolean
   loop?: boolean
   autoPlay?: boolean
+  controls?: boolean
 }
 
 export const Video: FC<VideoProps> = (props) => {
-  const { playbackId, duration, className = 'relative w-full h-full', muted = true, loop = true, autoPlay = false } = props;
+  const { playbackId, duration, className = 'relative w-full h-full', controls = true } = props;
   const [blurUp, setBlurUp] = useState<string | null>(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -32,6 +33,14 @@ export const Video: FC<VideoProps> = (props) => {
   const isInView = useInView(containerRef, {
     amount: 0.5,
   })
+
+  const withControls = useMemo(() => {
+    if (controls !== null && controls === false) {
+      return false
+    }
+
+    return true;
+  }, [controls])
 
   const {
     hasPlayed,
@@ -71,6 +80,10 @@ export const Video: FC<VideoProps> = (props) => {
     if (!isInView) {
       handlePause()
     }
+
+    if (isInView && !withControls) {
+      handlePlay()
+    }
   }, [isInView])
 
   const handleLoaded = () => {
@@ -104,20 +117,23 @@ export const Video: FC<VideoProps> = (props) => {
           </motion.div>
         ) : null}
       </AnimatePresence>
-      <PlayButtonOverlay onClick={handlePlay} hidden={hasPlayed} />
+      {withControls ? (
+        <PlayButtonOverlay onClick={handlePlay} hidden={hasPlayed} />
+      ) : null}
       <div
         className="absolute inset-0 w-full h-full z-[2]"
         role="presentation"
         onClick={togglePlay}
       >
         <MuxVideo
-          poster={`https://image.mux.com/${playbackId}/thumbnail.webp?time=${(duration / 2)}`}
+          poster={`https://image.mux.com/${playbackId}/thumbnail.webp?time=${5}`}
           preload="metadata"
           ref={playerRef}
+          muted={!withControls}
           className="mux-video"
           playbackId={playbackId}
           streamType="on-demand"
-          loop={loop}
+          loop={!withControls}
           crossOrigin="anonymous"
           onCanPlay={handleLoaded}
           onPlay={() => {
@@ -128,20 +144,22 @@ export const Video: FC<VideoProps> = (props) => {
           }}
         />
       </div>
-      <VideoControls
-        hidden={!controlsVisible || !hasPlayed}
-        volume={isMuted ? 0 : volume}
-        isMuted={isMuted}
-        progress={progress}
-        duration={duration}
-        isPlaying={isPlaying}
-        setVolume={setVolume}
-        toggleMute={toggleMute}
-        handlePlay={handlePlay}
-        setProgress={setProgress}
-        handlePause={handlePause}
-        handleFullscreen={handleFullscreen}
-      />
+      {withControls ? (
+        <VideoControls
+          hidden={!controlsVisible || !hasPlayed}
+          volume={isMuted ? 0 : volume}
+          isMuted={isMuted}
+          progress={progress}
+          duration={duration}
+          isPlaying={isPlaying}
+          setVolume={setVolume}
+          toggleMute={toggleMute}
+          handlePlay={handlePlay}
+          setProgress={setProgress}
+          handlePause={handlePause}
+          handleFullscreen={handleFullscreen}
+        />
+      ) : null}
     </div>
   )
 }

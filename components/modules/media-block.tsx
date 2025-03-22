@@ -34,6 +34,7 @@ interface FullBleedMediaProps {
     aspectRatio: string
   }
   videoThumbnail?: any
+  controls?: boolean
   size: 'full' | 'large' | 'medium' | 'small'
   caption?: string
 }
@@ -43,6 +44,7 @@ export const MediaBlock: FC<FullBleedMediaProps> = ({
   image,
   video,
   videoThumbnail,
+  controls,
   size = 'full',
   caption,
 }) => {
@@ -62,7 +64,7 @@ export const MediaBlock: FC<FullBleedMediaProps> = ({
 
         {mediaType === 'video' && video ? (
           <div className="relative w-full h-full">
-            <Video {...video} className="absolute inset-0 w-full h-full" />
+            <Video {...video} className="absolute inset-0 w-full h-full" controls={controls} />
           </div>
         ) : null}
       </div>

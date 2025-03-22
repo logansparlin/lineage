@@ -77,6 +77,7 @@ export const modulesFields = groq`
       ${muxVideoFields}
     },
     videoThumbnail,
+    controls,
   },
   _type == 'textBlock' => {
     _type,
@@ -97,6 +98,7 @@ export const modulesFields = groq`
         ${muxVideoFields}
       },
       videoThumbnail,
+      controls,
       caption
     },
     secondMedia {
@@ -106,6 +108,7 @@ export const modulesFields = groq`
         ${muxVideoFields}
       },
       videoThumbnail,
+      controls,
       caption
     }
   },
@@ -119,7 +122,8 @@ export const modulesFields = groq`
         ${muxVideoFields}
       },
       videoThumbnail,
-      text
+      controls,
+      caption
     },
     secondMedia {
       mediaType,
@@ -128,7 +132,8 @@ export const modulesFields = groq`
         ${muxVideoFields}
       },
       videoThumbnail,
-      text
+      controls,
+      caption
     }
   },
   _type == 'mediaCarousel' => {

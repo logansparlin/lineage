@@ -92,7 +92,6 @@ export const Header: FC<HeaderProps> = (props) => {
     if (pathname === '/') {
       e.preventDefault();
       e.stopPropagation();
-      console.log('calling publish')
       publish('scroll-to-top', null);
     }
   }, [publish, pathname])

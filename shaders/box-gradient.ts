@@ -14,7 +14,6 @@ export const BoxGradient = shaderMaterial(
     curveProgress: 0.0,
     curveIntensity: 4.0,
     inset: 0.85,
-    opacity: 1.0,
   },
   // Vertex Shader
   `
@@ -59,7 +58,6 @@ export const BoxGradient = shaderMaterial(
   uniform vec3 innerColor;
   uniform vec3 outerColor;
   uniform vec3 centerColor;
-  uniform float opacity;
 
   float smoothBox(vec2 p, vec2 b, float r) {
     vec2 d = abs(p) - b + r;
@@ -104,7 +102,7 @@ export const BoxGradient = shaderMaterial(
       finalColor = mix(centerColor, finalColor, innerAlpha);
     }
 
-    gl_FragColor = vec4(finalColor, opacity);
+    gl_FragColor = vec4(finalColor, 1.0);
   }
   `
 )

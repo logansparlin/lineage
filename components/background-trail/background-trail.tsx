@@ -21,13 +21,13 @@ export const BackgroundTrail: FC<BackgroundTrailProps> = ({
 
   const [texture, onMove] = useTrailTexture({ 
     size: 1024,
-    radius: 0.1,
-    intensity: 0.1,
-    interpolate: 5,
-    smoothing: 0.1,
-    maxAge: 660,
-    minForce: 0.75,
-    blend: 'screen',
+    radius: 0.15,
+    intensity: 0.55,
+    interpolate: 8,
+    smoothing: 0.85,
+    maxAge: 650,
+    minForce: 1.0,
+    blend: 'lighten',
   })
 
   useFrame((props) => {
@@ -38,36 +38,33 @@ export const BackgroundTrail: FC<BackgroundTrailProps> = ({
 
     meshRef.current.scale.set(size.width, size.height, 1)
     meshRef.current.material.uniforms.time.value = clock.getElapsedTime() * 0.1;
+    meshRef.current.material.uniforms.resolution.value = new Vector2(size.width, size.height);
   })
 
-  // const events = useThree((state) => state.events)
-
   useIsomorphicLayoutEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const handleMouseMove = (event: MouseEvent) => {
       const { clientX, clientY } = event
       
       const normalizedX = (clientX / window.innerWidth) * 2 - 1;
       const normalizedY = -((clientY / window.innerHeight) * 2 - 1);
       
-      // Convert normalized coordinates back to screen coordinates for the trail
-      const screenX = (normalizedX + 1) * window.innerWidth / 2;
-      const screenY = (-normalizedY + 1) * window.innerHeight / 2;
-      
-      // Use screen coordinates for the trail function
-      console.log(normalizedX, normalizedY)
       onMove({
         uv: {
           x: normalizedX * 0.5 + 0.5,
           y: normalizedY * 0.5 + 0.5,
         }
       })
-      // onMove(screenX, screenY);
-      // onMove(event.clientX, event.clientY)
     }
 
     window.addEventListener('mousemove', handleMouseMove)
 
-    return () => window.removeEventListener('mousemove', handleMouseMove)
+    return () => {
+      if (typeof window === 'undefined') return;
+
+      window.removeEventListener('mousemove', handleMouseMove)
+    }
   }, [onMove])
 
   const resolution = new Vector2(0, 0);

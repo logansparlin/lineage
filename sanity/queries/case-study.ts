@@ -1,5 +1,5 @@
 import { defineQuery, groq } from "next-sanity";
-import { seoQuery, modulesFields } from "./fragments";
+import { seoQuery, modulesFields, imageFields } from "./fragments";
 
 export const caseStudyPathsQuery = defineQuery(
   groq`*[_type == "caseStudy"] {
@@ -22,6 +22,15 @@ export const caseStudyQuery = defineQuery(
     "all": *[_type == "caseStudy"] | order(orderRank asc) {
       title,
       "slug": slug.current
-    }
+    },
+    "next": *[_type == "caseStudy" && orderRank > ^.orderRank] | order(orderRank asc) {
+      "slug": slug.current,
+      title,
+      description,
+      step,
+      featuredImage {
+        ${imageFields}
+      }
+    }[0]
   }`
 )

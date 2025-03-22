@@ -1,14 +1,15 @@
 import { useMemo } from "react";
-import { getStepColors } from "@/lib/get-step-colors";
+import { getStepColors, getStepColorsRGB } from "@/lib/get-step-colors";
 
 import { Modules } from "../modules"
-import { StepText } from "../steps/step-text"
+import { CaseStudyIntro } from "./case-study-intro";
+import { SetCurrentStep } from "./set-current-step";
 import { CaseStudyCanvas } from "./case-study-canvas";
 import { CaseNavigationSetters } from "./case-navigation-setters";
-import { SetCurrentStep } from "./set-current-step";
+import { NextCaseStudyPreview } from "./next-case-study-preview";
 
 export const CaseStudyPage = (props) => {
-  const { content, title, slug, step, description, all } = props;
+  const { content, slug, step, all, next } = props;
 
   const currentIndex = useMemo(() => {
     return all.findIndex((caseStudy) => caseStudy.slug === slug);
@@ -28,6 +29,10 @@ export const CaseStudyPage = (props) => {
     return getStepColors(step)
   }, [step])
 
+  const stepColorsRGB = useMemo(() => {
+    return getStepColorsRGB(step)
+  }, [step])
+
   return (
     <div
       className="md:w-fit md:h-screen md:flex md:items-center relative z-[2]"
@@ -45,17 +50,21 @@ export const CaseStudyPage = (props) => {
       <SetCurrentStep step={step} />
       <div className="pt-90 md:pt-0 relative z-[2] w-full md:h-screen md:w-fit flex flex-col md:flex-row gap-y-40 md:gap-y-0 md:gap-x-150">
         
-        <div className="px-20 md:px-0 md:w-screen md:max-w-960 md:pl-100 md:h-screen flex flex-col items-start justify-center gap-60 md:gap-130">
-          <div className="flex flex-col gap-y-4 md:gap-y-20">
-            <h1 className="text-46 md:text-case-title">{title}</h1>
-            <StepText step={step} />
-          </div>
-
-          <p className="text-18 md:text-23 max-w-600 font-medium">{description}</p>
-        </div>
+        <CaseStudyIntro {...props} />
 
         <Modules modules={content} />
+        {next?.slug ? (
+          <NextCaseStudyPreview {...next} />
+        ) : null}
       </div>
+      <CaseStudyCanvas
+        colors={[
+          stepColorsRGB?.[100],
+          stepColorsRGB?.[200],
+          stepColorsRGB?.[300],
+          stepColorsRGB?.[400],
+        ]}
+      />
     </div>
   )
 }

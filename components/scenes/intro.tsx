@@ -145,7 +145,6 @@ export const IntroScene = ({ sections }: { sections: string[] }) => {
             inner={currentGradient.inner}
             outer={currentGradient.outer}
             center={'#ffffff'}
-            opacity={1}
           />
         )
       })}

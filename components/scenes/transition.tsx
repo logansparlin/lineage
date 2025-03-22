@@ -103,7 +103,6 @@ const Planes = ({ container, mode, gradientOverride }: PlanesProps) => {
             outer={currentGradient?.outer}
             center={index === (planes.length - 1) ? "#000000" : "#FFFFFF"}
             inset={1}
-            opacity={1}
           />
         )
       })}

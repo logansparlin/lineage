@@ -1,5 +1,5 @@
-import { type FC, useMemo, RefCallback, memo } from 'react'
-import { Color, Object3D, FloatType, Vector2, Vector3 } from 'three'
+import { type FC, useMemo, memo, RefObject } from 'react'
+import { Color, Vector2, Vector3 } from 'three'
 import { BoxGradient } from "@/shaders/box-gradient";
 
 interface CurvedPlaneProps {
@@ -13,11 +13,10 @@ interface CurvedPlaneProps {
   outer?: string;
   inner?: string;
   center?: string;
-  ref?: RefCallback<Object3D>;
+  ref?: RefObject<any>;
   scale?: Vector3;
   position?: Vector3;
   inset?: number;
-  opacity?: number;
 }
 
 export const CurvedPlane: FC<CurvedPlaneProps> = memo(({ 
@@ -35,7 +34,6 @@ export const CurvedPlane: FC<CurvedPlaneProps> = memo(({
   position = new Vector3(0, 0, 0),
   scale = new Vector3(1, 1, 1),
   inset = 0.85,
-  opacity = 1.0,
 }) => {
   const innerColor = useMemo(() => new Color(outer).convertLinearToSRGB(), [outer])
   const outerColor = useMemo(() => new Color(inner).convertLinearToSRGB(), [inner])
@@ -57,7 +55,6 @@ export const CurvedPlane: FC<CurvedPlaneProps> = memo(({
           size: { value: new Vector2(width, height) },
           curveIntensity: { value: curveIntensity },
           curveProgress: { value: curveProgress },
-          opacity: { value: opacity },
         }}
         transparent={true}
       />

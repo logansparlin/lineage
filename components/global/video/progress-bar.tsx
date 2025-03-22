@@ -12,7 +12,6 @@ export const ProgressBar: FC<ProgressBarProps> = (props) => {
   const { progress, setProgress } = props;
 
   const handleProgressChange = (value: number[]) => {
-    console.log('setting progress', value)
     setProgress(value[0]);
   }
 

@@ -30,8 +30,6 @@ export const CaseStudiesScrollItem = memo(({
   gradientDirection,
 }: CaseStudiesScrollItemProps) => {
   const meshRef = useRef<any>(null);
-  const pointerPosition = useRef({ x: 0, y: 0 });
-  const pointerTarget = useRef({ x: 0, y: 0 });
 
   const texture = useTexture(img?.currentSrc ?? url, (tex) => {
     if (tex && meshRef.current) {
@@ -40,24 +38,6 @@ export const CaseStudiesScrollItem = memo(({
       meshRef.current.material.uniforms.map.value = tex;
     }
   });
-
-  // useIsomorphicLayoutEffect(() => {
-  //   console.log(gradientDirection)
-  //   if (typeof window === 'undefined' || gradientDirection) return;
-
-  //   const handlePointerMove = (event: PointerEvent) => {
-  //     const x = (event.clientX / window.innerWidth) * 2 - 1;
-  //     const y = -((event.clientY / window.innerHeight) * 2 - 1);
-      
-  //     pointerPosition.current = { x, y };
-  //   }
-
-  //   window.addEventListener('pointermove', handlePointerMove)
-
-  //   return () => {
-  //     window.removeEventListener('pointermove', handlePointerMove)
-  //   }
-  // }, [])
 
   useFrame(({ viewport, camera }) => {
     if (!meshRef.current) return;
