@@ -17,7 +17,7 @@ export const StepDetails: FC<StepDetailsProps> = (props) => {
         <span className="block md:-translate-x-1/2 md:-translate-y-[calc(50%-16px)]">{icon}</span>
       </div>
       <div className="text-center md:text-left md:col-start-2 md:row-start-1 flex items-center md:items-start gap-x-24 md:pl-[4vw]">
-        <div className="hidden md:block w-180 h-1 mt-15 md:mt-20 bg-white" />
+        <div className="hidden md:block w-180 h-1 rounded-full mt-15 md:mt-20 bg-white" />
         <div className="flex flex-col items-center md:items-start gap-y-15 max-w-330">
           <StepBadge step={step} />
           <div className="flex flex-col gap-y-10">
