@@ -1,9 +1,9 @@
 import { useMemo } from "react";
-import { getStepColors, getStepColorsRGB } from "@/lib/get-step-colors";
+import { getStepColors } from "@/lib/get-step-colors";
 
 import { Modules } from "../modules"
 import { StepText } from "../steps/step-text"
-import { BackgroundTrail } from "../background-trail/background-trail";
+import { CaseStudyCanvas } from "./case-study-canvas";
 import { CaseNavigationSetters } from "./case-navigation-setters";
 import { SetCurrentStep } from "./set-current-step";
 
@@ -30,7 +30,7 @@ export const CaseStudyPage = (props) => {
 
   return (
     <div
-      className="md:w-fit md:h-screen md:flex md:items-center"
+      className="md:w-fit md:h-screen md:flex md:items-center relative z-[2]"
       style={{
         '--step-color-100': stepColors?.[100],
         '--step-color-200': stepColors?.[200],
@@ -43,7 +43,7 @@ export const CaseStudyPage = (props) => {
         previousCaseStudy={previousCaseStudy}
       />
       <SetCurrentStep step={step} />
-      <div className="pt-90 md:pt-0 relative z-[2] w-full md:h-screen md:w-fit flex flex-col md:flex-row gap-y-40 md:gap-y-0 md:gap-x-150">
+      <div className="pt-90 md:pt-0 relative z-[2] w-full md:h-screen md:w-fit flex flex-col md:flex-row gap-y-40 md:gap-y-0 md:gap-x-150 pointer-events-none">
         
         <div className="px-20 md:px-0 md:w-screen md:max-w-960 md:pl-100 md:h-screen flex flex-col items-start justify-center gap-60 md:gap-130">
           <div className="flex flex-col gap-y-4 md:gap-y-20">
@@ -56,7 +56,6 @@ export const CaseStudyPage = (props) => {
 
         <Modules modules={content} />
       </div>
-      {/* <BackgroundTrail colors={[stepColorsRGB[400], stepColorsRGB[300], stepColorsRGB[200], stepColorsRGB[100]]} /> */}
     </div>
   )
 }

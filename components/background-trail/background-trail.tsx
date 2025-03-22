@@ -1,11 +1,11 @@
 'use client'
 
-import { type FC, Suspense, useMemo, useRef } from 'react'
-import { Canvas, extend, useFrame, useThree } from '@react-three/fiber'
-import { useTrailTexture, AdaptiveDpr } from '@react-three/drei'
+import { type FC, useRef } from 'react'
+import { extend, useFrame } from '@react-three/fiber'
+import { useTrailTexture } from '@react-three/drei'
+import { useIsomorphicLayoutEffect } from 'react-use'
 
-import { useIsomorphicLayoutEffect, useWindowSize } from 'react-use'
-import { SRGBColorSpace, Color } from 'three'
+import { Color, Vector2 } from 'three'
 import { TrailShader } from '@/shaders/trail-shader'
 
 extend({ TrailShader })
@@ -15,104 +15,89 @@ interface BackgroundTrailProps {
 }
 
 export const BackgroundTrail: FC<BackgroundTrailProps> = ({
-  colors = ['rgba(251, 197, 4, 1)', 'rgba(0, 191, 87, 1)', 'rgba(255, 126, 197, 1)']
-}) => {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const { width } = useWindowSize()
-
-  const isMobile = useMemo(() => {
-    return width < 800
-  }, [width])
-
-  return (
-    <Suspense fallback={null}>
-      {!isMobile ? (
-        <div 
-          ref={containerRef}
-          className="fixed inset-0 w-full h-full z-[1]"
-        >
-          <Canvas
-            linear
-            dpr={[1, 2]}
-            camera={{ position: [0, 0, 10], fov: 120, near: 0.01, far: 100 }} 
-            gl={{ antialias: true, alpha: true, outputColorSpace: SRGBColorSpace }}
-            resize={{
-              scroll: false,
-              debounce: 50,
-            }}
-            style={{
-              position: 'fixed',
-              width: '100%',
-              height: '100vh',
-              inset: 0,
-              zIndex: 1
-            }}
-          >
-            <AdaptiveDpr />
-            <BackgroundTrailCanvas colors={colors} />
-          </Canvas>
-        </div>
-      ) : null}
-    </Suspense>
-  )
-}
-
-const BackgroundTrailCanvas: FC<BackgroundTrailProps> = ({
-  colors = ['rgba(251, 197, 4, 1)', 'rgba(0, 191, 87, 1)', 'rgba(255, 126, 197, 1)']
+  colors = ['#FBC504', '#FF7EC5', '#01C2FF', '#00BF57']
 }) => {
   const meshRef = useRef<any>(null)
 
   const [texture, onMove] = useTrailTexture({ 
-    size: 40,
-    radius: 0.075,
-    intensity: 0.05,
-    maxAge: 400,
-    minForce: 0.2,
+    size: 1024,
+    radius: 0.1,
+    intensity: 0.1,
+    interpolate: 5,
+    smoothing: 0.1,
+    maxAge: 660,
+    minForce: 0.75,
     blend: 'screen',
   })
 
   useFrame((props) => {
     if (!meshRef.current) return
 
-    const { viewport } = props;
+    const { viewport, clock } = props;
     const size = viewport.getCurrentViewport();
 
-    // onMove({ x: pointer.x, y: pointer.y })
-
     meshRef.current.scale.set(size.width, size.height, 1)
+    meshRef.current.material.uniforms.time.value = clock.getElapsedTime() * 0.1;
   })
 
   // const events = useThree((state) => state.events)
 
-  // useIsomorphicLayoutEffect(() => {
-  //   console.log(events, document.body)
-  //   events.connect(document.body)
-  //   const handleMouseMove = (event: MouseEvent) => {
-  //     // console.log(event.clientX, event.clientY)
-  //     // onMove(event.clientX, event.clientY)
-  //   }
+  useIsomorphicLayoutEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      const { clientX, clientY } = event
+      
+      const normalizedX = (clientX / window.innerWidth) * 2 - 1;
+      const normalizedY = -((clientY / window.innerHeight) * 2 - 1);
+      
+      // Convert normalized coordinates back to screen coordinates for the trail
+      const screenX = (normalizedX + 1) * window.innerWidth / 2;
+      const screenY = (-normalizedY + 1) * window.innerHeight / 2;
+      
+      // Use screen coordinates for the trail function
+      console.log(normalizedX, normalizedY)
+      onMove({
+        uv: {
+          x: normalizedX * 0.5 + 0.5,
+          y: normalizedY * 0.5 + 0.5,
+        }
+      })
+      // onMove(screenX, screenY);
+      // onMove(event.clientX, event.clientY)
+    }
 
-  //   // window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mousemove', handleMouseMove)
 
-  //   return () => window.removeEventListener('mousemove', handleMouseMove)
-  // }, [onMove])
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [onMove])
+
+  const resolution = new Vector2(0, 0);
+
+  const trailColorOne = new Color(new Color(colors?.[0] ?? '#000000').convertLinearToSRGB())
+  const trailColorTwo = new Color(new Color(colors?.[1] ?? '#000000').convertLinearToSRGB())
+  const trailColorThree = new Color(new Color(colors?.[2] ?? '#000000').convertLinearToSRGB())
+  const trailColorFour = new Color(new Color(colors?.[3] ?? '#000000').convertLinearToSRGB())
 
   return (
     <mesh
       ref={meshRef}
       position={[0, 0, 0]}
       scale={[1, 1, 1]}
-      onPointerMove={onMove}
+      rotation={[0, 0, 0]}
     >
-      <planeGeometry args={[1, 1]} />
+      <planeGeometry args={[1, 1, 256, 256]} />
       <primitive
+        key={TrailShader.key}
         object={new TrailShader()}
         attach="material"
         transparent
         uniforms={{
-          colorOne: { value: new Color('#000000') },
-          colorTwo: { value: new Color('#ffffff') },
+          colorOne: { value: trailColorOne },
+          colorTwo: { value: trailColorTwo },
+          colorThree: { value: trailColorThree },
+          colorFour: { value: trailColorFour },
           map: { value: texture },
+          resolution: { value: resolution },
+          time: { value: 0 },
         }}
       />
     </mesh>

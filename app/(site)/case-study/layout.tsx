@@ -1,4 +1,5 @@
 import { ReactLenis } from "lenis/react";
+import { CaseStudyCanvas } from "@/components/case-study/case-study-canvas";
 
 export default async function RootLayout({
   children,
@@ -6,7 +7,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div id="case-study-layout" className="md:w-screen md:h-screen md:overflow-hidden">
+    <div className="relative md:w-screen md:h-screen md:overflow-hidden case-layout">
+      <CaseStudyCanvas />
+      
       <ReactLenis
         root={false}
         options={{ orientation: 'horizontal', gestureOrientation: 'both', syncTouch: false }}
