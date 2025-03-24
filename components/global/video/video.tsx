@@ -2,8 +2,7 @@
 
 import { type FC, ComponentProps, useEffect, useMemo, useRef, useState } from "react"
 import { useVideoControls } from "./use-video-controls"
-import { AnimatePresence, motion, useInView, useIsomorphicLayoutEffect } from "motion/react"
-import { createBlurUp } from "@mux/blurup"
+import { AnimatePresence, motion, useInView } from "motion/react"
 import dynamic from "next/dynamic"
 
 import MuxPlayer from '@mux/mux-player-react/lazy'
@@ -25,7 +24,6 @@ interface VideoProps extends ComponentProps<'video'> {
 
 export const Video: FC<VideoProps> = (props) => {
   const { playbackId, duration, className = 'relative w-full h-full', controls = true } = props;
-  const [blurUp, setBlurUp] = useState<string | null>(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const playerRef = useRef<any>(null)
@@ -60,22 +58,6 @@ export const Video: FC<VideoProps> = (props) => {
     setProgress,
   } = useVideoControls({ playerRef, containerRef })
 
-  useIsomorphicLayoutEffect(() => {
-    createBlurUp(playbackId, {
-      quality: 1,
-      width: 1,
-      height: 1,
-      time: 2,
-      blur: 50,
-    })
-      .then((props) => {
-        setBlurUp(props.blurDataURL)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-  }, [playbackId])
-
   useEffect(() => {
     if (!isInView) {
       handlePause()
@@ -97,7 +79,7 @@ export const Video: FC<VideoProps> = (props) => {
       {...containerProps}
     >
       <AnimatePresence initial={false}>
-        {!isLoaded && blurUp ? (
+        {!isLoaded ? (
           <motion.div
             className="absolute inset-0 w-full h-full object-cover z-[3] overflow-hidden"
             initial={{ opacity: 1 }}
@@ -106,7 +88,7 @@ export const Video: FC<VideoProps> = (props) => {
             transition={{ duration: 0.5 }}
           >
             <motion.img
-              src={blurUp}
+              src={`https://image.mux.com/${playbackId}/thumbnail.webp?time=${5}&width=1`}
               alt=""
               className="absolute inset-0 w-full h-full object-cover"
               initial={{ opacity: 1 }}
@@ -117,9 +99,11 @@ export const Video: FC<VideoProps> = (props) => {
           </motion.div>
         ) : null}
       </AnimatePresence>
+      
       {withControls ? (
         <PlayButtonOverlay onClick={handlePlay} hidden={hasPlayed} />
       ) : null}
+
       <div
         className="absolute inset-0 w-full h-full z-[2]"
         role="presentation"
@@ -135,7 +119,7 @@ export const Video: FC<VideoProps> = (props) => {
           streamType="on-demand"
           loop={!withControls}
           crossOrigin="anonymous"
-          onCanPlay={handleLoaded}
+          onLoadedMetadata={handleLoaded}
           onPlay={() => {
             setIsPlaying(true)
           }}

@@ -1,5 +1,10 @@
+'use client'
+
 import { type FC, useMemo } from 'react'
-import { getStepColors, getStepColorsRGB } from '@/lib/get-step-colors'
+import { getStepColorsRGB } from '@/lib/get-step-colors'
+import { useRouter } from 'next/navigation'
+import { useLenis } from 'lenis/react'
+import { useEvent } from 'react-use'
 
 import { CurvedPlaneBackground } from '@/components/global/curved-plane-background'
 import { CaseStudyIntro } from './case-study-intro';
@@ -15,6 +20,25 @@ interface NextCaseStudyPreviewProps {
 
 export const NextCaseStudyPreview: FC<NextCaseStudyPreviewProps> = (props) => {
   const { slug, title, description, step, featuredImage } = props;
+  const router = useRouter()
+  const lenis = useLenis(({ progress }) => {
+    if (progress >= 1) {
+      router.push(`/case-study/${slug}`)
+    }
+  })
+
+  // useEvent('wheel', (e) => {
+  //   if (lenis?.progress < 1) return;
+
+  //   const { deltaX, deltaY } = e
+  //   const delta = Math.max(deltaX, deltaY)
+
+  //   console.log(delta)
+
+  //   // if (delta > 20) {
+  //   //   router.push(`/case-study/${slug}`)
+  //   // }
+  // })
 
   const stepColorsRGB = useMemo(() => {
     return getStepColorsRGB(step)

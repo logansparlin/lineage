@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
-    "@mux/blurup": "^1.0.1",
     "@mux/mux-player-react": "^3.3.0",
     "@mux/mux-video-react": "^0.24.3",
     "@radix-ui/react-slider": "^1.2.3",

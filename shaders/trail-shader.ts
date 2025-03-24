@@ -85,7 +85,7 @@ export const TrailShader = shaderMaterial(
 
       finalColor = mix(black, (col + (finalColor * 0.75)), vDisplace);
       
-      gl_FragColor.rgba = vec4(finalColor, 0.75);
+      gl_FragColor.rgba = vec4(finalColor, 0.7);
     }
   `
 )

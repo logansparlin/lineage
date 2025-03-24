@@ -19,6 +19,8 @@ export const LegalCanvas = memo(() => {
           antialias: true,
           alpha: true,
           outputColorSpace: SRGBColorSpace,
+          precision: 'highp',
+          powerPreference: 'high-performance',
         }}
         resize={{
           scroll: false,

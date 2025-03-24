@@ -12,14 +12,15 @@ export const CaseStudyCanvas = ({ colors }: { colors: string[] }) => {
   return (
     <div className="fixed inset-0 w-full h-full z-[1] pointer-events-none">
       <Canvas
-        linear
-        dpr={[1, 3]}
+        dpr={1}
         camera={{ position: [0, 0, 10], fov: 50, near: 0.01, far: 100 }} 
         gl={{
           antialias: true,
           alpha: true,
+          depth: true,
           outputColorSpace: SRGBColorSpace,
           precision: 'highp',
+          powerPreference: 'high-performance',
         }}
         resize={{
           scroll: false,

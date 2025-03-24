@@ -4,6 +4,7 @@ import { type FC, useRef } from 'react'
 import { extend, useFrame } from '@react-three/fiber'
 import { useTrailTexture } from '@react-three/drei'
 import { useIsomorphicLayoutEffect } from 'react-use'
+import { useIsSafari } from '@/hooks/use-is-safari'
 
 import { Color, Vector2 } from 'three'
 import { TrailShader } from '@/shaders/trail-shader'
@@ -18,14 +19,15 @@ export const BackgroundTrail: FC<BackgroundTrailProps> = ({
   colors = ['#FBC504', '#FF7EC5', '#01C2FF', '#00BF57']
 }) => {
   const meshRef = useRef<any>(null)
+  const isSafari = useIsSafari()
 
   const [texture, onMove] = useTrailTexture({ 
-    size: 1024,
-    radius: 0.15,
-    intensity: 0.55,
-    interpolate: 8,
-    smoothing: 0.85,
-    maxAge: 650,
+    size: 256,
+    radius: isSafari ? 0.1 : 0.175,
+    intensity: isSafari ? 0.35 : 0.55,
+    interpolate: isSafari ? 2 : 4,
+    smoothing: isSafari ? 0.25 : 0.85,
+    maxAge: 450,
     minForce: 1.0,
     blend: 'lighten',
   })
