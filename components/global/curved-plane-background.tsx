@@ -33,8 +33,6 @@ const BackgroundPlane = ({ inner, outer }) => {
     meshRef.current.position.set(0, 0, 1)
   })
 
-  console.log(inner, outer)
-
   return (
     <CurvedPlane
       width={1}
