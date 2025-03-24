@@ -40,7 +40,7 @@ export const StepObserver: FC<StepObserverProps> = ({ step, children }) => {
 
   return (
     <div className={`w-full h-screen-300 relative ${isInView ? 'visible': 'invisible'}`} id={`step-${step}`} ref={stepObserverRef}>
-      <div className="w-full overflow-hidden md:pt-50 flex flex-col gap-y-40 sticky top-[-60px] md:top-10 min-h-[calc(100vh+100px)] md:min-h-[calc(100vh-60px)] pb-60 self-start">
+      <div className="w-full overflow-hidden md:pt-50 flex flex-col gap-y-40 sticky top-[-45px] md:top-10 min-h-[calc(100vh+100px)] md:min-h-[calc(100vh-60px)] pb-60 self-start">
         {children}
       </div>
     </div>
