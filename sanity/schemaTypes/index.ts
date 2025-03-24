@@ -1,7 +1,7 @@
 import { type SchemaTypeDefinition } from 'sanity'
 
 import { EarthGlobeIcon } from '@sanity/icons'
-import { ComponentType } from 'react'
+import type { ComponentType } from 'react'
 
 /** Types */
 type SchemaTypeGroup = {

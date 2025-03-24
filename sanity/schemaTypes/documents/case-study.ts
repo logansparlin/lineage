@@ -1,5 +1,5 @@
 import { defineType, defineField } from "sanity";
-import { lineageSteps } from "@/sanity/lib/lineage-steps";
+import { lineageSteps } from "../../lib/lineage-steps";
 import { orderRankOrdering, orderRankField } from "@sanity/orderable-document-list";
 
 import {HomeIcon} from '@sanity/icons'

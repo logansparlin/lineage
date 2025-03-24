@@ -67,7 +67,7 @@ export const TrailShader = shaderMaterial(
       vec2 uv = vUv / 4.0;
 
       float trailPosition = uv.y;
-      float animatedPosition = fract(trailPosition + time * 0.5);
+      float animatedPosition = fract(trailPosition + time * 0.25);
       
       vec3 mixedColorOne = mix(colorOne, colorTwo, sin(animatedPosition * PI));
       vec3 mixedColorTwo = mix(colorTwo, colorThree, sin(animatedPosition * PI));
@@ -81,11 +81,11 @@ export const TrailShader = shaderMaterial(
       
       float smoothAlpha = smoothstep(0.25, 0.9, vDisplace);
 
-      vec3 finalColor = col + (2.25 * (vDisplace - 1.5)) + 0.5;
+      vec3 finalColor = col + (2.5 * (vDisplace - 1.5)) + 0.5;
 
-      finalColor = mix(black, (col + (finalColor * 0.25)) - 0.5, vDisplace);
+      finalColor = mix(black, (col + (finalColor * 0.75)), vDisplace);
       
-      gl_FragColor.rgba = vec4(finalColor, 0.65);
+      gl_FragColor.rgba = vec4(finalColor, 0.75);
     }
   `
 )

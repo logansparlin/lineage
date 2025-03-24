@@ -1,0 +1,1679 @@
+[
+  {
+    "fields": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "max_width",
+        "type": "number"
+      },
+      {
+        "name": "max_frame_rate",
+        "type": "number"
+      },
+      {
+        "name": "duration",
+        "type": "number"
+      },
+      {
+        "name": "max_height",
+        "type": "number"
+      }
+    ],
+    "name": "mux.track",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "policy",
+        "type": "string"
+      }
+    ],
+    "name": "mux.playbackId",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "name": "ext",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "width",
+        "type": "number"
+      },
+      {
+        "name": "bitrate",
+        "type": "number"
+      },
+      {
+        "name": "filesize",
+        "type": "number"
+      },
+      {
+        "name": "height",
+        "type": "number"
+      }
+    ],
+    "name": "mux.staticRenditionFile",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "type": "mux.staticRenditionFile"
+          }
+        ],
+        "name": "files",
+        "type": "array"
+      }
+    ],
+    "name": "mux.staticRenditions",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "name": "resolution_tier",
+        "type": "string"
+      },
+      {
+        "name": "upload_id",
+        "type": "string"
+      },
+      {
+        "name": "created_at",
+        "type": "string"
+      },
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "name": "max_stored_resolution",
+        "type": "string"
+      },
+      {
+        "name": "passthrough",
+        "type": "string"
+      },
+      {
+        "name": "encoding_tier",
+        "type": "string"
+      },
+      {
+        "name": "master_access",
+        "type": "string"
+      },
+      {
+        "name": "aspect_ratio",
+        "type": "string"
+      },
+      {
+        "name": "duration",
+        "type": "number"
+      },
+      {
+        "name": "max_stored_frame_rate",
+        "type": "number"
+      },
+      {
+        "name": "mp4_support",
+        "type": "string"
+      },
+      {
+        "name": "max_resolution_tier",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "type": "mux.track"
+          }
+        ],
+        "name": "tracks",
+        "type": "array"
+      },
+      {
+        "of": [
+          {
+            "type": "mux.playbackId"
+          }
+        ],
+        "name": "playback_ids",
+        "type": "array"
+      },
+      {
+        "name": "static_renditions",
+        "type": "mux.staticRenditions"
+      }
+    ],
+    "name": "mux.assetData",
+    "type": "object",
+    "title": "Mux asset data"
+  },
+  {
+    "fields": [
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "name": "assetId",
+        "type": "string"
+      },
+      {
+        "name": "playbackId",
+        "type": "string"
+      },
+      {
+        "name": "filename",
+        "type": "string"
+      },
+      {
+        "name": "thumbTime",
+        "type": "number"
+      },
+      {
+        "name": "data",
+        "type": "mux.assetData"
+      }
+    ],
+    "name": "mux.videoAsset",
+    "type": "document",
+    "title": "Video asset"
+  },
+  {
+    "fields": [
+      {
+        "weak": true,
+        "to": [
+          {
+            "type": "mux.videoAsset"
+          }
+        ],
+        "name": "asset",
+        "type": "reference",
+        "title": "Video"
+      }
+    ],
+    "name": "mux.video",
+    "type": "object",
+    "title": "Video asset reference"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "rows": 2,
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "options": {
+          "collapsible": true,
+          "collapsed": false
+        },
+        "fields": [
+          {
+            "name": "one",
+            "type": "image",
+            "title": "Step One"
+          },
+          {
+            "name": "two",
+            "type": "image",
+            "title": "Step Two"
+          },
+          {
+            "name": "three",
+            "type": "image",
+            "title": "Step Three"
+          },
+          {
+            "name": "four",
+            "type": "image",
+            "title": "Step Four"
+          }
+        ],
+        "name": "favicon",
+        "type": "object"
+      },
+      {
+        "name": "ogImage",
+        "type": "image",
+        "title": "OG Image"
+      }
+    ],
+    "name": "settingsSeo",
+    "type": "document",
+    "title": "Global SEO"
+  },
+  {
+    "fields": [
+      {
+        "of": [
+          {
+            "type": "internalLink",
+            "name": "link"
+          }
+        ],
+        "name": "links",
+        "type": "array",
+        "title": "Main Links"
+      },
+      {
+        "fields": [
+          {
+            "name": "label",
+            "type": "string"
+          },
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "uri",
+                    "constraint": {
+                      "options": {
+                        "scheme": [
+                          "/^http$/",
+                          "/^https$/",
+                          "/^mailto$/",
+                          "/^tel$/"
+                        ],
+                        "allowRelative": false,
+                        "relativeOnly": false,
+                        "allowCredentials": false
+                      }
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "url",
+            "type": "url",
+            "title": "Contact URL"
+          },
+          {
+            "of": [
+              {
+                "description": "Leave url blank for simple text",
+                "type": "externalLink",
+                "name": "row",
+                "title": "Content Row"
+              }
+            ],
+            "name": "content",
+            "type": "array",
+            "title": "Expanded Content"
+          }
+        ],
+        "name": "contact",
+        "type": "object"
+      },
+      {
+        "fields": [
+          {
+            "name": "label",
+            "type": "string"
+          },
+          {
+            "name": "content",
+            "type": "richTextSimple"
+          }
+        ],
+        "name": "information",
+        "type": "object"
+      }
+    ],
+    "name": "settingsHeader",
+    "type": "document",
+    "title": "Header"
+  },
+  {
+    "fields": [
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "text",
+                "type": "richTextSimple"
+              }
+            ],
+            "type": "object",
+            "name": "column"
+          }
+        ],
+        "name": "columns",
+        "type": "array"
+      },
+      {
+        "of": [
+          {
+            "type": "externalLink"
+          }
+        ],
+        "name": "externalLinks",
+        "type": "array"
+      }
+    ],
+    "name": "settingsFooter",
+    "type": "document",
+    "title": "Footer"
+  },
+  {
+    "fields": [
+      {
+        "options": {
+          "collapsible": true,
+          "collapsed": true
+        },
+        "name": "seo",
+        "type": "seo",
+        "title": "SEO Meta"
+      },
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "fields": [
+          {
+            "of": [
+              {
+                "fields": [
+                  {
+                    "description": "Used for accessible text if SVG is used",
+                    "name": "text",
+                    "type": "string"
+                  },
+                  {
+                    "options": {
+                      "accept": "image/svg+xml"
+                    },
+                    "description": "Optional, used for logo text that needs to be precise",
+                    "name": "svg",
+                    "type": "image",
+                    "title": "SVG"
+                  }
+                ],
+                "type": "object"
+              }
+            ],
+            "name": "titles",
+            "type": "array"
+          },
+          {
+            "rows": 8,
+            "name": "description",
+            "type": "text"
+          }
+        ],
+        "name": "intro",
+        "type": "object",
+        "title": "Site Intro"
+      },
+      {
+        "fields": [
+          {
+            "options": {
+              "collapsible": true,
+              "collapsed": false
+            },
+            "fields": [
+              {
+                "name": "heading",
+                "type": "string"
+              },
+              {
+                "name": "subheading",
+                "type": "string"
+              },
+              {
+                "fields": [
+                  {
+                    "name": "headingOne",
+                    "type": "string"
+                  },
+                  {
+                    "rows": 2,
+                    "name": "descriptionOne",
+                    "type": "text"
+                  },
+                  {
+                    "name": "headingTwo",
+                    "type": "string"
+                  },
+                  {
+                    "rows": 2,
+                    "name": "descriptionTwo",
+                    "type": "text"
+                  }
+                ],
+                "name": "splitDescription",
+                "type": "object"
+              },
+              {
+                "name": "description",
+                "type": "richTextSimple"
+              }
+            ],
+            "name": "intro",
+            "type": "object"
+          },
+          {
+            "options": {
+              "collapsible": true,
+              "collapsed": false
+            },
+            "fields": [
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "rows": 2,
+                "name": "description",
+                "type": "text"
+              }
+            ],
+            "name": "one",
+            "type": "object",
+            "title": "Step One"
+          },
+          {
+            "options": {
+              "collapsible": true,
+              "collapsed": false
+            },
+            "fields": [
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "rows": 2,
+                "name": "description",
+                "type": "text"
+              }
+            ],
+            "name": "two",
+            "type": "object",
+            "title": "Step Two"
+          },
+          {
+            "options": {
+              "collapsible": true,
+              "collapsed": false
+            },
+            "fields": [
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "rows": 2,
+                "name": "description",
+                "type": "text"
+              }
+            ],
+            "name": "three",
+            "type": "object",
+            "title": "Step Three"
+          },
+          {
+            "options": {
+              "collapsible": true,
+              "collapsed": false
+            },
+            "fields": [
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "rows": 2,
+                "name": "description",
+                "type": "text"
+              }
+            ],
+            "name": "four",
+            "type": "object",
+            "title": "Step Four"
+          }
+        ],
+        "name": "steps",
+        "type": "object",
+        "title": "Steps Section"
+      }
+    ],
+    "name": "homePage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "readOnly": true,
+        "hidden": true,
+        "name": "orderRank",
+        "type": "string"
+      },
+      {
+        "options": {
+          "collapsible": true,
+          "collapsed": true
+        },
+        "name": "seo",
+        "type": "seo",
+        "title": "SEO Meta"
+      },
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Step 1 (Orange)",
+              "value": "one"
+            },
+            {
+              "title": "Step 2 (Green)",
+              "value": "two"
+            },
+            {
+              "title": "Step 3 (Blue)",
+              "value": "three"
+            },
+            {
+              "title": "Step 4 (Pink)",
+              "value": "four"
+            }
+          ]
+        },
+        "name": "step",
+        "type": "string"
+      },
+      {
+        "name": "featuredImage",
+        "type": "image"
+      },
+      {
+        "rows": 2,
+        "description": "The short description to be shown on the case study grid items",
+        "name": "shortDescription",
+        "type": "text"
+      },
+      {
+        "rows": 5,
+        "description": "The full description to be shown on the case study page",
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "of": [
+          {
+            "type": "quote"
+          },
+          {
+            "type": "mediaBlock",
+            "title": "Single Media"
+          },
+          {
+            "type": "textBlock"
+          },
+          {
+            "type": "diptych"
+          },
+          {
+            "type": "offsetMedia"
+          },
+          {
+            "type": "mediaCarousel"
+          }
+        ],
+        "name": "content",
+        "type": "array"
+      }
+    ],
+    "name": "caseStudy",
+    "type": "document",
+    "title": "Case Studies"
+  },
+  {
+    "fields": [
+      {
+        "options": {
+          "collapsible": true,
+          "collapsed": true
+        },
+        "name": "seo",
+        "type": "seo",
+        "title": "SEO Meta"
+      },
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "options": {
+          "dateFormat": "MMMM D, YYYY"
+        },
+        "name": "lastUpdated",
+        "type": "date"
+      },
+      {
+        "name": "content",
+        "type": "richTextLegal"
+      }
+    ],
+    "name": "legalPage",
+    "type": "document",
+    "title": "Legal Pages"
+  },
+  {
+    "fields": [
+      {
+        "options": {
+          "collapsible": true,
+          "collapsed": true
+        },
+        "name": "seo",
+        "type": "seo",
+        "title": "SEO Meta"
+      },
+      {
+        "name": "title",
+        "type": "string"
+      }
+    ],
+    "name": "teamPage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "readOnly": true,
+        "hidden": true,
+        "name": "orderRank",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "name"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "name": "role",
+        "type": "string"
+      },
+      {
+        "name": "image",
+        "type": "image"
+      },
+      {
+        "name": "bio",
+        "type": "richTextSimple"
+      }
+    ],
+    "name": "teamMember",
+    "type": "document",
+    "title": "Team Members"
+  },
+  {
+    "fields": [
+      {
+        "rows": 4,
+        "name": "text",
+        "type": "text",
+        "title": "Quote Text"
+      },
+      {
+        "name": "attribution",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Extra Small",
+              "value": "xs"
+            },
+            {
+              "title": "Small",
+              "value": "s"
+            },
+            {
+              "title": "Medium",
+              "value": "m"
+            },
+            {
+              "title": "Large",
+              "value": "l"
+            }
+          ]
+        },
+        "initialValue": "m",
+        "name": "size",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image"
+      }
+    ],
+    "name": "quote",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Full Bleed",
+              "value": "full"
+            },
+            {
+              "title": "Large",
+              "value": "large"
+            },
+            {
+              "title": "Medium",
+              "value": "medium"
+            },
+            {
+              "title": "Small",
+              "value": "small"
+            }
+          ],
+          "layout": "radio",
+          "direction": "horizontal"
+        },
+        "initialValue": "full",
+        "name": "size",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Image",
+              "value": "image"
+            },
+            {
+              "title": "Video",
+              "value": "video"
+            }
+          ],
+          "layout": "radio",
+          "direction": "horizontal"
+        },
+        "initialValue": "image",
+        "name": "mediaType",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "hidden": "conditional",
+        "name": "image",
+        "type": "image"
+      },
+      {
+        "hidden": "conditional",
+        "name": "video",
+        "type": "mux.video"
+      },
+      {
+        "initialValue": true,
+        "description": "If false, the video will autoplay and loop without controls",
+        "hidden": "conditional",
+        "name": "controls",
+        "type": "boolean",
+        "title": "With Controls?"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Thumbnail to show before video plays",
+        "hidden": "conditional",
+        "name": "videoThumbnail",
+        "type": "image"
+      },
+      {
+        "hidden": "conditional",
+        "name": "caption",
+        "type": "string"
+      }
+    ],
+    "name": "mediaBlock",
+    "type": "object",
+    "title": "Single Media"
+  },
+  {
+    "fields": [
+      {
+        "name": "headline",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "text",
+        "type": "richText"
+      },
+      {
+        "initialValue": false,
+        "name": "hasSecondColumn",
+        "type": "boolean",
+        "title": "Add Second Column"
+      },
+      {
+        "hidden": "conditional",
+        "name": "secondColumnText",
+        "type": "richText"
+      }
+    ],
+    "name": "textBlock",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "initialValue": false,
+        "description": "When reversed, the portrait media will be on the right; otherwise, it will be on the left",
+        "name": "reversed",
+        "type": "boolean",
+        "title": "Reversed Layout"
+      },
+      {
+        "fields": [
+          {
+            "options": {
+              "list": [
+                {
+                  "title": "Image",
+                  "value": "image"
+                },
+                {
+                  "title": "Video",
+                  "value": "video"
+                }
+              ],
+              "layout": "radio",
+              "direction": "horizontal"
+            },
+            "initialValue": "image",
+            "name": "mediaType",
+            "type": "string"
+          },
+          {
+            "options": {
+              "hotspot": true
+            },
+            "hidden": "conditional",
+            "name": "image",
+            "type": "image"
+          },
+          {
+            "hidden": "conditional",
+            "name": "video",
+            "type": "mux.video"
+          },
+          {
+            "initialValue": true,
+            "description": "If false, the video will autoplay and loop without controls",
+            "hidden": "conditional",
+            "name": "controls",
+            "type": "boolean",
+            "title": "With Controls?"
+          },
+          {
+            "options": {
+              "hotspot": true
+            },
+            "description": "Thumbnail to show before video plays",
+            "hidden": "conditional",
+            "name": "videoThumbnail",
+            "type": "image"
+          },
+          {
+            "name": "caption",
+            "type": "string"
+          }
+        ],
+        "name": "firstMedia",
+        "type": "object"
+      },
+      {
+        "fields": [
+          {
+            "options": {
+              "list": [
+                {
+                  "title": "Image",
+                  "value": "image"
+                },
+                {
+                  "title": "Video",
+                  "value": "video"
+                }
+              ],
+              "layout": "radio",
+              "direction": "horizontal"
+            },
+            "initialValue": "image",
+            "name": "mediaType",
+            "type": "string"
+          },
+          {
+            "options": {
+              "hotspot": true
+            },
+            "hidden": "conditional",
+            "name": "image",
+            "type": "image"
+          },
+          {
+            "hidden": "conditional",
+            "name": "video",
+            "type": "mux.video"
+          },
+          {
+            "options": {
+              "hotspot": true
+            },
+            "description": "Thumbnail to show before video plays",
+            "hidden": "conditional",
+            "name": "videoThumbnail",
+            "type": "image"
+          },
+          {
+            "name": "caption",
+            "type": "string"
+          }
+        ],
+        "name": "secondMedia",
+        "type": "object"
+      }
+    ],
+    "name": "diptych",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "fields": [
+          {
+            "options": {
+              "list": [
+                {
+                  "title": "Image",
+                  "value": "image"
+                },
+                {
+                  "title": "Video",
+                  "value": "video"
+                }
+              ],
+              "layout": "radio",
+              "direction": "horizontal"
+            },
+            "initialValue": "image",
+            "name": "mediaType",
+            "type": "string"
+          },
+          {
+            "options": {
+              "hotspot": true
+            },
+            "hidden": "conditional",
+            "name": "image",
+            "type": "image"
+          },
+          {
+            "hidden": "conditional",
+            "name": "video",
+            "type": "mux.video"
+          },
+          {
+            "initialValue": true,
+            "description": "If false, the video will autoplay and loop without controls",
+            "hidden": "conditional",
+            "name": "controls",
+            "type": "boolean",
+            "title": "With Controls?"
+          },
+          {
+            "options": {
+              "hotspot": true
+            },
+            "description": "Thumbnail to show before video plays",
+            "hidden": "conditional",
+            "name": "videoThumbnail",
+            "type": "image"
+          },
+          {
+            "name": "text",
+            "type": "richText"
+          }
+        ],
+        "name": "firstMedia",
+        "type": "object"
+      },
+      {
+        "fields": [
+          {
+            "options": {
+              "list": [
+                {
+                  "title": "Image",
+                  "value": "image"
+                },
+                {
+                  "title": "Video",
+                  "value": "video"
+                }
+              ],
+              "layout": "radio",
+              "direction": "horizontal"
+            },
+            "initialValue": "image",
+            "name": "mediaType",
+            "type": "string"
+          },
+          {
+            "options": {
+              "hotspot": true
+            },
+            "hidden": "conditional",
+            "name": "image",
+            "type": "image"
+          },
+          {
+            "hidden": "conditional",
+            "name": "video",
+            "type": "mux.video"
+          },
+          {
+            "options": {
+              "hotspot": true
+            },
+            "description": "Thumbnail to show before video plays",
+            "hidden": "conditional",
+            "name": "videoThumbnail",
+            "type": "image"
+          },
+          {
+            "name": "text",
+            "type": "richText"
+          }
+        ],
+        "name": "secondMedia",
+        "type": "object"
+      }
+    ],
+    "name": "offsetMedia",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "of": [
+          {
+            "type": "media"
+          }
+        ],
+        "name": "items",
+        "type": "array"
+      }
+    ],
+    "name": "mediaCarousel",
+    "type": "object"
+  },
+  {
+    "options": {
+      "collapsible": true,
+      "collapsed": true
+    },
+    "fields": [
+      {
+        "description": "If left blank, the global site title will be used. If left blank on a project, the project title will be used.",
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "rows": 2,
+        "description": "If left blank, the global site description will be used.",
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "description": "If left blank, the global OG Image will be used.",
+        "name": "ogImage",
+        "type": "image",
+        "title": "Open Graph Image"
+      }
+    ],
+    "name": "seo",
+    "type": "object",
+    "title": "SEO Meta"
+  },
+  {
+    "of": [
+      {
+        "marks": {
+          "annotations": [
+            {
+              "i18nTitleKey": "inputs.portable-text.annotation.link",
+              "options": {
+                "modal": {
+                  "type": "popover"
+                }
+              },
+              "fields": [
+                {
+                  "validation": [
+                    {
+                      "rules": [
+                        {
+                          "flag": "uri",
+                          "constraint": {
+                            "options": {
+                              "scheme": [
+                                "/^http$/",
+                                "/^https$/",
+                                "/^tel$/",
+                                "/^mailto$/"
+                              ],
+                              "allowRelative": true,
+                              "relativeOnly": false,
+                              "allowCredentials": false
+                            }
+                          }
+                        }
+                      ],
+                      "level": "error"
+                    }
+                  ],
+                  "description": "A valid web, email, phone, or relative link.",
+                  "name": "href",
+                  "type": "url",
+                  "title": "Link"
+                }
+              ],
+              "name": "link",
+              "type": "object"
+            }
+          ],
+          "decorators": [
+            {
+              "value": "strong",
+              "title": "Strong"
+            },
+            {
+              "value": "em",
+              "title": "Italic"
+            },
+            {
+              "value": "code",
+              "title": "Code"
+            },
+            {
+              "value": "underline",
+              "title": "Underline"
+            },
+            {
+              "value": "strike-through",
+              "title": "Strike"
+            }
+          ]
+        },
+        "lists": [
+          {
+            "value": "bullet",
+            "title": "Bulleted list"
+          },
+          {
+            "value": "number",
+            "title": "Numbered list"
+          }
+        ],
+        "styles": [
+          {
+            "value": "normal",
+            "title": "Normal"
+          },
+          {
+            "value": "h1",
+            "title": "Heading 1"
+          },
+          {
+            "value": "h2",
+            "title": "Heading 2"
+          },
+          {
+            "value": "h3",
+            "title": "Heading 3"
+          },
+          {
+            "value": "h4",
+            "title": "Heading 4"
+          },
+          {
+            "value": "h5",
+            "title": "Heading 5"
+          },
+          {
+            "value": "h6",
+            "title": "Heading 6"
+          },
+          {
+            "value": "blockquote",
+            "title": "Quote"
+          }
+        ],
+        "of": [],
+        "type": "block"
+      }
+    ],
+    "name": "richText",
+    "type": "array"
+  },
+  {
+    "of": [
+      {
+        "marks": {
+          "annotations": [
+            {
+              "fields": [
+                {
+                  "to": [
+                    {
+                      "type": "homePage"
+                    }
+                  ],
+                  "name": "to",
+                  "type": "reference"
+                }
+              ],
+              "name": "internalLink",
+              "type": "object"
+            },
+            {
+              "fields": [
+                {
+                  "validation": [
+                    {
+                      "rules": [
+                        {
+                          "flag": "uri",
+                          "constraint": {
+                            "options": {
+                              "scheme": [
+                                "/^http$/",
+                                "/^https$/",
+                                "/^mailto$/",
+                                "/^tel$/"
+                              ],
+                              "allowRelative": true,
+                              "relativeOnly": false,
+                              "allowCredentials": false
+                            }
+                          }
+                        }
+                      ],
+                      "level": "error"
+                    }
+                  ],
+                  "name": "url",
+                  "type": "url",
+                  "title": "URL"
+                }
+              ],
+              "name": "externalLink",
+              "type": "object"
+            }
+          ],
+          "decorators": [
+            {
+              "value": "em",
+              "title": "Italic"
+            },
+            {
+              "value": "strong",
+              "title": "Bold"
+            }
+          ]
+        },
+        "lists": [
+          {
+            "value": "bullet",
+            "title": "Bulleted list"
+          },
+          {
+            "value": "number",
+            "title": "Numbered list"
+          }
+        ],
+        "styles": [
+          {
+            "value": "normal",
+            "title": "Normal"
+          },
+          {
+            "value": "h2",
+            "title": "Heading"
+          }
+        ],
+        "of": [],
+        "type": "block"
+      }
+    ],
+    "name": "richTextLegal",
+    "type": "array",
+    "title": "Rich Text (Legal)"
+  },
+  {
+    "of": [
+      {
+        "marks": {
+          "annotations": [
+            {
+              "fields": [
+                {
+                  "to": [
+                    {
+                      "type": "homePage"
+                    }
+                  ],
+                  "name": "to",
+                  "type": "reference"
+                }
+              ],
+              "name": "internalLink",
+              "type": "object"
+            },
+            {
+              "fields": [
+                {
+                  "validation": [
+                    {
+                      "rules": [
+                        {
+                          "flag": "uri",
+                          "constraint": {
+                            "options": {
+                              "scheme": [
+                                "/^http$/",
+                                "/^https$/",
+                                "/^mailto$/",
+                                "/^tel$/"
+                              ],
+                              "allowRelative": true,
+                              "relativeOnly": false,
+                              "allowCredentials": false
+                            }
+                          }
+                        }
+                      ],
+                      "level": "error"
+                    }
+                  ],
+                  "name": "url",
+                  "type": "url",
+                  "title": "URL"
+                }
+              ],
+              "name": "externalLink",
+              "type": "object"
+            }
+          ],
+          "decorators": [
+            {
+              "value": "em",
+              "title": "Italic"
+            },
+            {
+              "value": "year",
+              "title": "Year"
+            }
+          ]
+        },
+        "styles": [
+          {
+            "value": "normal",
+            "title": "Normal"
+          }
+        ],
+        "of": [],
+        "type": "block"
+      }
+    ],
+    "name": "richTextSimple",
+    "type": "array",
+    "title": "Rich Text (Simple)"
+  },
+  {
+    "fields": [
+      {
+        "name": "label",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/",
+                      "/^mailto$/",
+                      "/^tel$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "url",
+        "type": "url",
+        "title": "URL"
+      }
+    ],
+    "name": "externalLink",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "name": "label",
+        "type": "string"
+      },
+      {
+        "to": [
+          {
+            "type": "homePage"
+          }
+        ],
+        "name": "to",
+        "type": "reference"
+      }
+    ],
+    "name": "internalLink",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Image",
+              "value": "image"
+            },
+            {
+              "title": "Video",
+              "value": "video"
+            }
+          ],
+          "layout": "radio",
+          "direction": "horizontal"
+        },
+        "initialValue": "image",
+        "name": "mediaType",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "hidden": "conditional",
+        "name": "image",
+        "type": "image"
+      },
+      {
+        "hidden": "conditional",
+        "name": "video",
+        "type": "mux.video"
+      },
+      {
+        "initialValue": true,
+        "description": "If false, the video will autoplay and loop without controls",
+        "hidden": "conditional",
+        "name": "controls",
+        "type": "boolean",
+        "title": "With Controls?"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Thumbnail to show before video plays",
+        "hidden": "conditional",
+        "name": "videoThumbnail",
+        "type": "image"
+      },
+      {
+        "hidden": "conditional",
+        "name": "caption",
+        "type": "string"
+      }
+    ],
+    "name": "media",
+    "type": "object"
+  }
+]
