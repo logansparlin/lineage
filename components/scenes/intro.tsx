@@ -5,7 +5,6 @@ import { useHomeStore } from "@/components/home/hooks/use-home-store";
 import { useMeshColorAnimation } from "@/hooks/use-mesh-color-animation";
 import { useFrame } from "@react-three/fiber";
 import { useLenis } from "lenis/react";
-import { useGSAP } from "@gsap/react";
 import { lerp } from "@/lib/lerp";
 import { gsap } from "gsap";
 
@@ -27,6 +26,7 @@ export const IntroScene = ({ sections }: { sections: string[] }) => {
     second: 0,
     last: 0,
     description: 0,
+    image: 0,
   })
 
   const planes = useMemo(() => Array.from({ length: 8 }, (_, i) => i + 1), []);
@@ -57,6 +57,11 @@ export const IntroScene = ({ sections }: { sections: string[] }) => {
     const lastSectionEl: HTMLElement = document.querySelector(lastSection)
     const lastSectionHeight = lastSectionEl?.scrollHeight;
 
+    const lastSectionTitle = document.querySelector('.intro-title-last .title-image')
+    const lastSectionImage = lastSectionTitle?.querySelector('img')
+    const lastSectionTitleWidth = lastSectionTitle?.clientWidth;
+    const lastSectionImageWidth = lastSectionImage?.clientWidth;
+
     const firstAnimationStart = 0;
     const firstAnimationEnd = firstAnimationStart + (firstSectionHeight * 0.6);
     const firstAnimationDuration = firstAnimationEnd - firstAnimationStart;
@@ -68,6 +73,10 @@ export const IntroScene = ({ sections }: { sections: string[] }) => {
     const lastAnimationStart = secondAnimationEnd;
     const lastAnimationEnd = lastAnimationStart + secondSectionHeight;
     const lastAnimationDuration = lastAnimationEnd - lastAnimationStart;
+
+    const lastSectionImageStart = lastAnimationEnd - (window.innerHeight * 0.8);
+    const lastSectionImageEnd = lastSectionImageStart + 300;
+    const lastSectionImageDuration = lastSectionImageEnd - lastSectionImageStart;
 
     const descriptionAnimationStart = lastSectionEl?.offsetTop - (window.innerHeight / 3);
     const descriptionAnimationEnd = descriptionAnimationStart + lastSectionHeight - (window.innerHeight * 0.7);
@@ -97,13 +106,25 @@ export const IntroScene = ({ sections }: { sections: string[] }) => {
       time: 1
     })
 
+    progressRef.current.image = lerp({
+      start: progressRef.current.image,
+      end: gsap.utils.clamp(0, 1, (currentScroll - lastSectionImageStart) / lastSectionImageDuration),
+      time: 1
+    })
+
     const firstAnimationProgress = progressRef.current.first;
     const secondAnimationProgress = progressRef.current.second;
     const lastAnimationProgress = progressRef.current.last;
     const descriptionProgress = progressRef.current.description;
+    const imageProgress = progressRef.current.image;
     
     if (description) {
       description.style.height = `${descriptionHeight * descriptionProgress}px`;
+    }
+
+    if (lastSectionImage) {
+      const offset = (lastSectionTitleWidth - lastSectionImageWidth) / 2;
+      lastSectionImage.style.transform = `translateX(${-1 * (offset * imageProgress)}px)`;
     }
     
     const meshChildren = meshRef.current?.children;
@@ -111,15 +132,16 @@ export const IntroScene = ({ sections }: { sections: string[] }) => {
     meshChildren?.forEach((child, index) => {
       const reverseIndex = planes.length - 1 - index;
       const aspectOffset = aspectRatio > 1 ? 1 : aspectRatio;
+      const isMobile = window.innerWidth < 800;
       
-      const stepOneScale = 0.3;
-      const stepTwoScale = reverseIndex * (0.7 / (planes.length - 1))
-      const stepThreeScale = (0.7 + (reverseIndex * 0.15))
+      const stepOneScale = isMobile ? 0.35 : 0.3;
+      const stepTwoScale = reverseIndex * ((1 - stepOneScale) / (planes.length - 1))
+      const stepThreeScale = ((1 - stepOneScale) + (reverseIndex * 0.15))
 
       const scaleX = (
         (firstAnimationProgress * stepOneScale) 
         + (secondAnimationProgress * stepTwoScale)
-        + (lastAnimationProgress * ((stepThreeScale - (0.525 * (1 - aspectOffset))) * aspectOffset))
+        + (lastAnimationProgress * ((stepThreeScale - (0.625 * (1 - aspectOffset))) * aspectOffset))
       );
 
       const scaleY = (

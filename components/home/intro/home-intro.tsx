@@ -78,11 +78,11 @@ export const HomeIntro = ({ titles, description }) => {
                   className={`px-20 flex flex-col items-center justify-center intro-title-${variant} ${variant !== 'first' ? 'invisible' : ''}`}
                 >
                   {title?.svg ? (
-                    <div className="max-md:w-[75%] relative py-8">
+                    <div className="title-image max-md:w-[78%] relative pb-4 md:pb-6">
                       <Image
                         image={title.svg}
                         alt={title.text}
-                        className="w-auto h-28 md:h-45"
+                        className="w-auto h-24 md:h-45 mx-auto"
                         height={100}
                         style={{
                           aspectRatio: title.svg.aspectRatio,
@@ -99,12 +99,12 @@ export const HomeIntro = ({ titles, description }) => {
 
                   {variant === 'last' && description ? (
                     <div
-                      className="home-intro-description max-md:font-medium w-[75%] md:w-full max-w-800 text-18 md:text-32 h-0 overflow-hidden will-change-auto transform-gpu"
+                      className="home-intro-description max-md:font-medium w-[78%] md:w-full max-w-800 text-18 md:text-32 h-0 overflow-hidden will-change-auto transform-gpu"
                       style={{
                         maskImage: 'linear-gradient(to top, transparent, black 80px)'
                       }}
                     >
-                      <div className="flex flex-col gap-y-[1.1em] py-30 max-md:pb-80 md:py-80">
+                      <div className="flex flex-col gap-y-[1.1em] py-30 pb-50 max-md:pb-80 md:py-80">
                         {description?.split('\n').map((line, index) => (
                           <p key={`description-line-${index}`}>{line}</p>
                         ))}
