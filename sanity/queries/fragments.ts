@@ -64,7 +64,23 @@ export const modulesFields = groq`
     text,
     attribution,
     size,
-    image
+    image {
+      ${imageFields}
+    }
+  },
+  _type == 'quoteMedia' => {
+    _type,
+    _key,
+    text,
+    attribution,
+    mediaPosition,
+    mediaType,
+    image {
+      ${imageFields}
+    },
+    video {
+      ${muxVideoFields}
+    },
   },
   _type == 'mediaBlock' => {
     _type,
@@ -110,6 +126,54 @@ export const modulesFields = groq`
       videoThumbnail,
       controls,
       caption
+    }
+  },
+  _type == 'triptych' => {
+    _type,
+    _key,
+    reversed,
+    firstMedia {
+      mediaType,
+      image {
+        ${imageFields}
+      },
+      video {
+        ${muxVideoFields}
+      },
+      videoThumbnail,
+      controls,
+      caption
+    },
+    secondMedia {
+      mediaType,
+      image {
+        ${imageFields}
+      },
+      video {
+        ${muxVideoFields}
+      },
+      videoThumbnail,
+      controls,
+      caption
+    },
+    thirdMedia {
+      mediaType,
+      image {
+        ${imageFields}
+      },
+      video {
+        ${muxVideoFields}
+      },
+      videoThumbnail,
+      controls,
+      caption
+    }
+  },
+  _type == 'mediaGrid' => {
+    _type,
+    _key,
+    items[] {
+      ${mediaFields}
     }
   },
   _type == 'offsetMedia' => {

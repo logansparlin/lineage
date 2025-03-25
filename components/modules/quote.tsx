@@ -12,9 +12,9 @@ interface QuoteProps {
 const quoteStyles = cva(['relative flex flex-col gap-y-80 text-center'], {
   variants: {
     size: {
-      xs: ['text-26/110 md:text-41/110 w-full md:w-[85%]'],
-      s: ['text-36/110 md:text-52/110 w-full md:w-[85%]'],
-      m: ['text-41/110 md:text-66/110 w-full md:w-[85%]'],
+      xs: ['text-26/110 md:text-41/110 w-full md:w-[90%]'],
+      s: ['text-36/110 md:text-52/110 w-full md:w-[90%]'],
+      m: ['text-41/110 md:text-66/110 w-full md:w-[90%]'],
       l: '',
     },
     hasImage: {
@@ -26,19 +26,19 @@ const quoteStyles = cva(['relative flex flex-col gap-y-80 text-center'], {
     {
       size: 'l',
       hasImage: false,
-      className: 'text-41/110 md:text-83/110 w-full md:w-[80%]'
+      className: 'text-41/110 md:text-83/110 w-full md:w-[85%]'
     },
     {
       size: 'l',
       hasImage: true,
-      className: 'h-full items-center justify-center text-18/110 md:text-83/110 w-full md:w-[90%] px-20 md:px-60'
+      className: 'h-full items-center justify-center text-18/110 md:text-83/110 w-full md:w-[95%] px-20 md:px-60'
     }
   ]
 })
 
 export const Quote: FC<QuoteProps> = ({ text, attribution, size, image }) => {
   return (
-    <div className="relative w-full md:w-screen h-screen flex items-center justify-center md:py-80">
+    <div className="relative w-full md:w-[92vw] h-screen flex items-center justify-center md:py-80">
       <div className={quoteStyles({ size, hasImage: !!image })}>
         <blockquote className="relative z-[1]">
           {text}

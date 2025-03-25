@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
 import { Media } from '../global/media'
 import { easings } from '@/lib/easings'
 import { IconCarouselChevron } from '../icons/icon-carousel-chevron'
-import { useWindowSize } from 'react-use'
+
 interface MediaCarouselProps {
   items: {
     _key: string
