@@ -25,8 +25,8 @@ interface OffsetMediaProps {
 const mediaStyles = cva('relative h-full w-full flex items-center gap-x-120 flex gap-y-20', {
   variants: {
     position: {
-      first: 'justify-start',
-      last: 'justify-end',
+      first: 'flex-row justify-start',
+      last: 'flex-row-reverse justify-start',
     }
   }
 })
@@ -53,7 +53,7 @@ export const OffsetMedia: FC<OffsetMediaProps> = ({
         </div>
         
         {media.text ? (
-          <div className="text-18 md:text-23 pb-40 md:pb-0 max-w-820">
+          <div className="flex-1 text-18 md:text-20 pb-40 md:pb-0 max-w-500">
             <SitePortableText value={media.text} />
           </div>
         ) : null}
@@ -62,7 +62,7 @@ export const OffsetMedia: FC<OffsetMediaProps> = ({
   }
 
   return (
-    <div className="flex flex-col gap-y-20 w-full md:min-w-screen-70 md:w-auto md:h-screen md:flex md:flex-col md:gap-y-24 lg:py-100">
+    <div className="flex flex-col gap-y-20 w-full md:min-w-screen-70 md:w-auto md:max-w-1280 md:h-screen md:flex md:flex-col md:gap-y-24 lg:py-100">
       {renderMedia(firstMedia, mediaStyles({ position: 'first' }))}
       {renderMedia(secondMedia, mediaStyles({ position: 'last' }))}
     </div>

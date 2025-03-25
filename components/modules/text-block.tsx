@@ -13,8 +13,8 @@ interface TextBlockProps {
 const textBlockStyles = cva(['md:py-120'], {
   variants: {
     hasSecondColumn: {
-      true: ['grid grid-cols-1 md:grid-cols-2 gap-40 md:gap-80'],
-      false: ['max-w-960']
+      true: 'grid grid-cols-1 md:grid-cols-2 gap-40 md:gap-80',
+      false: 'max-w-960'
     }
   }
 })
@@ -26,7 +26,7 @@ export const TextBlock: FC<TextBlockProps> = ({
   secondColumnText
 }) => {
   return (
-    <div className="case-module w-full md:w-screen md:h-screen max-w-1080 flex items-center justify-start lg:py-100">
+    <div className="case-module w-full md:w-[calc(100vw-200px)] md:h-screen flex items-center justify-start lg:py-100">
       <div className={textBlockStyles({ hasSecondColumn })}>
         <div className="flex flex-col gap-y-10 md:gap-y-24">
           {headline ? (

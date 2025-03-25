@@ -73,11 +73,14 @@ export default defineType({
       type: 'array',
       of: [
         { type: 'quote' },
+        { type: 'quoteMedia' },
         { type: 'mediaBlock' },
         { type: 'textBlock' },
         { type: 'diptych' },
+        { type: 'triptych' },
         { type: 'offsetMedia' },
         { type: 'mediaCarousel' },
+        { type: 'mediaGrid' },
       ]
     })
   ],

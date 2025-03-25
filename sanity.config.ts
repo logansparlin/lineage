@@ -6,16 +6,13 @@ import { structureTool } from 'sanity/structure'
 import { presentationTool } from 'sanity/presentation'
 import { muxInput } from 'sanity-plugin-mux-input'
 
+import { apiVersion, dataset, projectId } from './sanity/env'
 import { allTypes } from './sanity/schemaTypes'
 import { structure } from './sanity/structure'
 import { resolve } from './sanity/lib/resolve'
 
-const projectId = process.env.SANITY_STUDIO_PROJECT_ID ?? ''
-const dataset = process.env.SANITY_STUDIO_DATASET ?? ''
-const apiVersion = process.env.SANITY_STUDIO_API_VERSION ?? ''
-
 export default defineConfig({
-  // basePath: '/studio',
+  basePath: '/studio',
   projectId,
   dataset,
   title: 'Lineage',

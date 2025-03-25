@@ -30,7 +30,7 @@ export default {
     },
     {
       name: 'image',
-      title: 'Image',
+      title: 'Image Background',
       type: 'image',
       options: {
         hotspot: true
@@ -45,9 +45,15 @@ export default {
       image: 'image'
     },
     prepare({ text, size, image, attribution }) {
+      const sizeMap = {
+        xs: 'Extra Small',
+        s: 'Small',
+        m: 'Medium',
+        l: 'Large'
+      }
       return {
         title: `${text.slice(0, 50)}...`,
-        subtitle: `Quote — size: ${size}${attribution ? `, attribution: ${attribution}` : ''}`,
+        subtitle: `Quote — size: ${sizeMap[size]}${attribution ? `, attribution: ${attribution}` : ''}${image ? ' with Image Background' : ''}`,
         media: image
       }
     }

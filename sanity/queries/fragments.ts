@@ -123,6 +123,7 @@ export const modulesFields = groq`
       },
       videoThumbnail,
       controls,
+      text,
       caption
     },
     secondMedia {
@@ -133,6 +134,7 @@ export const modulesFields = groq`
       },
       videoThumbnail,
       controls,
+      text,
       caption
     }
   },

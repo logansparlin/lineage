@@ -30,12 +30,14 @@ export default {
   preview: {
     select: {
       headline: 'headline',
-      text: 'text'
+      text: 'text',
+      hasSecondColumn: 'hasSecondColumn',
     },
-    prepare({ headline, text }) {
+    prepare({ headline, text, hasSecondColumn }) {
+      const textString = text && text[0]?.children?.map(child => child.text).join('').slice(0, 50) + '...'
       return {
-        title: headline || 'Text Block',
-        subtitle: text && text[0]?.children?.map(child => child.text).join('').slice(0, 50) + '...'
+        title: headline || textString,
+        subtitle: `${hasSecondColumn ? 2 : 1} Column Text${headline ? ' – With Headline' : ''}`
       }
     }
   }

@@ -64,7 +64,7 @@ export default defineType({
       mediaType: 'mediaType',
       image: 'image',
       videoThumbnail: 'videoThumbnail',
-      playbackId: 'video.playbackId',
+      playbackId: 'video.asset.playbackId',
       caption: 'caption'
     },
     prepare({ mediaType, image, videoThumbnail, caption, playbackId }) {

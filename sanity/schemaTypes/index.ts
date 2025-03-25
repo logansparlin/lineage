@@ -37,11 +37,14 @@ import teamMember from './documents/team-member'
 
 /** Modules */
 import quote from './modules/quote'
+import quoteMedia from './modules/quote-media'
 import mediaBlock from './modules/media-block'
 import textBlock from './modules/text-block'
 import diptych from './modules/diptych'
+import triptych from './modules/triptych'
 import offsetMedia from './modules/offset-media'
 import mediaCarousel from './modules/media-carousel'
+import mediaGrid from './modules/media-grid'
 
 export const allTypes: SchemaTypeDefinition[] = [
   // Settings
@@ -58,11 +61,14 @@ export const allTypes: SchemaTypeDefinition[] = [
 
   // Modules
   quote,
+  quoteMedia,
   mediaBlock,
   textBlock,
   diptych,
+  triptych,
   offsetMedia,
   mediaCarousel,
+  mediaGrid,
   
   // Blocks
   seo,

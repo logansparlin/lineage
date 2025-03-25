@@ -22,7 +22,7 @@ export const NextCaseStudyPreview: FC<NextCaseStudyPreviewProps> = (props) => {
   const { slug, title, description, step, featuredImage } = props;
   const router = useRouter()
   const lenis = useLenis(({ progress }) => {
-    if (progress >= 1) {
+    if (progress >= 0.98) {
       router.push(`/case-study/${slug}`)
     }
   })
