@@ -3,13 +3,19 @@
 import { type FC, type ComponentProps, useMemo, useCallback } from "react";
 import { useSiteStore } from "@/stores/use-site-store";
 import { useKeyPress } from "@/hooks/use-key-press";
+import { getRelativePath } from "@/sanity/lib/links";
 import { easings } from "@/lib/easings";
 
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { useLenis } from "lenis/react";
 
-interface MainMenuProps extends ComponentProps<'div'> {}
+interface MainMenuProps extends ComponentProps<'div'> {
+  columns: {
+    _key: string;
+    links: any[];
+  }[];
+}
 
 interface Link {
   label: string;
@@ -17,43 +23,7 @@ interface Link {
   type: 'link' | 'text';
 }
 
-const menus = [
-  [
-    {
-      label: 'Case Studies',
-      url: '/#case-studies',
-      type: 'link'
-    },
-    {
-      label: 'Team',
-      url: '/team',
-      type: 'link'
-    },
-    {
-      label: 'Legal policy',
-      url: '/legal/legal-policy',
-      type: 'link'
-    }
-  ],
-  [
-    {
-      label: 'Located in LA',
-      type: 'text'
-    },
-    {
-      label: 'Instagram',
-      url: 'https://www.instagram.com/lineagedigital',
-      type: 'link'
-    },
-    {
-      label: 'LinkedIn',
-      url: 'https://www.linkedin.com/company/lineage-digital/',
-      type: 'link'
-    }
-  ]
-]
-
-export const MainMenu: FC<MainMenuProps> = ({ className }) => {
+export const MainMenu: FC<MainMenuProps> = ({ columns }) => {
   const menuOpen = useSiteStore((state) => state.menuOpen);
   const setMenuOpen = useSiteStore((state) => state.setMenuOpen);
   
@@ -79,14 +49,14 @@ export const MainMenu: FC<MainMenuProps> = ({ className }) => {
           transition={{ duration: 0.75, ease: easings.outExpo }}
         >
           <div className="flex flex-col max-md:gap-y-32 pt-100 pb-32 px-20 md:pt-0 md:pb-0 md:px-0 md:grid md:grid-cols-2 md:gap-x-72">
-            {menus?.map((menu, index) => {
+            {columns?.map((column, index) => {
               return (
                 <ul key={`menu-${index}`} className={`flex flex-col group ${index === 0 ? 'max-md:text-36 md:text-20' : 'gap-y-6 md:gap-y-0 text-20'}`}>
-                  {menu?.map((link, linkIndex) => (
+                  {column.links?.map((link, linkIndex) => (
                     <MenuItem
                       key={`menu-${index}-${linkIndex}`}
                       onClick={onLinkClick}
-                      total={menu.length}
+                      total={column.links.length}
                       index={linkIndex}
                       offset={index}
                       {...link}
@@ -102,13 +72,11 @@ export const MainMenu: FC<MainMenuProps> = ({ className }) => {
   )
 }
 
-const MenuItem = ({ label, url = undefined, type, index, onClick, total, offset }) => {
+const MenuItem = (props) => {
+  const { label, url = undefined, _type, index, onClick, total, offset, text } = props;
+
   const baseTransition = { duration: 0.75, ease: easings.outExpo }
   const lenis = useLenis();
-  
-  const isExternal = useMemo(() => {
-    return url?.includes('http')
-  }, [url])
 
   const isCaseStudiesLink = useMemo(() => {
     return url?.includes('#case-studies')
@@ -125,12 +93,12 @@ const MenuItem = ({ label, url = undefined, type, index, onClick, total, offset 
   }, [onClick, isCaseStudiesLink, lenis])
 
   const interactiveClass = useMemo(() => {
-    if (type === 'text') {
+    if (_type === 'textBlock') {
       return 'text-white'
     }
 
     return 'will-change-transform transform-gpu group-hover:text-white/30 group-hover:hover:text-white transition-colors duration-300 ease'
-  }, [type])
+  }, [_type])
 
   return (
     <motion.li
@@ -153,10 +121,10 @@ const MenuItem = ({ label, url = undefined, type, index, onClick, total, offset 
         }
       }}
     >
-      {type === 'text' ? label : ( 
+      {_type === 'textBlock' ? text : ( 
         <Link
-          href={url}
-          target={isExternal ? '_blank' : undefined}
+          href={getRelativePath({ type: _type, slug: url })}
+          target={_type == 'externalLink' ? '_blank' : '_self'}
           onClick={handleLinkClick}
           scroll={false}
           className="transform-gpu"

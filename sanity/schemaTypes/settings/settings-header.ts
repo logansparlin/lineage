@@ -6,67 +6,54 @@ export default defineType({
   type: "document",
   fields: [
     defineField({
-      name: 'links',
-      title: 'Main Links',
+      name: 'columns',
+      title: 'Columns',
       type: 'array',
       of: [
         defineArrayMember({
-          name: 'link',
-          title: 'Link',
-          type: 'internalLink'
+          name: 'column',
+          title: 'Column',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'links',
+              title: 'Links',
+              type: 'array',
+              of: [
+                defineArrayMember({
+                  name: 'internalLink',
+                  title: 'Internal Link',
+                  type: 'internalLink'
+                }),
+                defineArrayMember({
+                  name: 'externalLink',
+                  title: 'External Link',
+                  type: 'externalLink'
+                }),
+                defineArrayMember({
+                  name: 'textBlock',
+                  title: 'Text',
+                  type: 'object',
+                  fields: [
+                    defineField({
+                      name: 'text',
+                      title: 'Text',
+                      type: 'string'
+                    })
+                  ]
+                })
+              ]
+            })
+          ],
+          preview: {
+            select: {},
+            prepare: () => ({
+              title: 'Menu Column'
+            })
+          }
         })
       ],
     }),
-    defineField({
-      name: 'contact',
-      title: 'Contact',
-      type: 'object',
-      fields: [
-        defineField({
-          name: 'label',
-          title: 'Label',
-          type: 'string',
-        }),
-        defineField({
-          name: 'url',
-          title: 'Contact URL',
-          type: 'url',
-          validation: (Rule) => Rule.uri({
-            scheme: ['http', 'https', 'mailto', 'tel']
-          }),
-        }),
-        defineField({
-          name: 'content',
-          title: 'Expanded Content',
-          type: 'array',
-          of: [
-            defineField({
-              name: 'row',
-              title: 'Content Row',
-              type: 'externalLink',
-              description: 'Leave url blank for simple text'
-            })
-          ]
-        }),
-      ]
-    }),
-    defineField({
-      name: 'information',
-      title: 'Information',
-      type: 'object',
-      fields: [
-        defineField({
-          name: 'label',
-          title: 'Label',
-          type: 'string',
-        }),
-        defineField({
-          name: 'content',
-          title: 'Content',
-          type: 'richTextSimple'
-        })
-      ]
-    })
   ],
   preview: {
     select: {},

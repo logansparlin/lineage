@@ -26,7 +26,6 @@ import media from './blocks/media'
 /** Settings */
 import settingsSeo from './settings/settings-seo'
 import settingsHeader from './settings/settings-header'
-import settingsFooter from './settings/settings-footer'
 
 /** Documents */
 import homePage from './documents/home-page'
@@ -34,6 +33,7 @@ import caseStudy from './documents/case-study'
 import legalPage from './documents/legal-page'
 import teamPage from './documents/team'
 import teamMember from './documents/team-member'
+import caseStudies from './documents/case-studies'
 
 /** Modules */
 import quote from './modules/quote'
@@ -50,7 +50,6 @@ export const allTypes: SchemaTypeDefinition[] = [
   // Settings
   settingsSeo,
   settingsHeader,
-  settingsFooter,
 
   // Documents
   homePage,
@@ -58,7 +57,7 @@ export const allTypes: SchemaTypeDefinition[] = [
   legalPage,
   teamPage,
   teamMember,
-
+  caseStudies,
   // Modules
   quote,
   quoteMedia,
@@ -84,7 +83,7 @@ export const singletonTypes: SingletonType[] = [
   {
     title: 'Global Settings & Navigation',
     icon: EarthGlobeIcon,
-    types: [settingsHeader, settingsFooter, settingsSeo],
+    types: [settingsHeader, settingsSeo],
     singleton: true,
     divider: true,
   },
@@ -92,9 +91,11 @@ export const singletonTypes: SingletonType[] = [
   teamPage,
 ]
 
-export const hiddenTypes: SchemaTypeDefinition[] = []
+export const hiddenTypes: SchemaTypeDefinition[] = [
+  caseStudies,
+]
 
 export const orderableTypes: SchemaTypeDefinition[] = [
   caseStudy,
-  teamMember
+  teamMember,
 ]

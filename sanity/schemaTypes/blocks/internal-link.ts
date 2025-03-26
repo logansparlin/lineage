@@ -16,6 +16,9 @@ export default defineType({
       type: 'reference',
       to: [
         { type: 'homePage' },
+        { type: 'caseStudies' },
+        { type: 'teamPage' },
+        { type: 'legalPage' },
       ]
     })
   ]

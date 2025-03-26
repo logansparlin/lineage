@@ -16,9 +16,14 @@ import { ButtonLink } from "./button-link";
 import { MainMenu } from "./main-menu";
 import Link from "next/link";
 
-export interface HeaderProps {}
+export interface HeaderProps {
+  columns: {
+    _key: string;
+    links: any[];
+  }[];
+}
 
-export const Header: FC<HeaderProps> = (props) => {
+export const Header: FC<HeaderProps> = ({ columns }) => {
   const [hasScrolled, setHasScrolled] = useState(false);
   const publish = useSiteStore((state) => state.publish);
   const menuOpen = useSiteStore((state) => state.menuOpen);
@@ -111,7 +116,7 @@ export const Header: FC<HeaderProps> = (props) => {
       </Link>
 
       <div ref={menuRef} className="flex items-start">
-        <MainMenu />
+        <MainMenu columns={columns} />
         <div className="flex items-start justify-end gap-8 min-w-[25vw]">
           <AnimatePresence>
             {colorButtonVisible ? (

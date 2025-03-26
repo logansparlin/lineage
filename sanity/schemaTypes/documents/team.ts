@@ -11,6 +11,13 @@ export default defineType({
       type: 'seo'
     }),
     defineField({
+      name: 'hidden',
+      title: 'Hidden',
+      type: 'boolean',
+      description: 'If true, the team page will not be accessible on the site.',
+      initialValue: false,
+    }),
+    defineField({
       name: "title",
       title: "Title",
       type: "string",

@@ -37,17 +37,19 @@ export const CaseStudiesScrollItem = memo(({
   const texture = mediaType === 'video' && playbackId ? 
   useVideoTexture(`https://stream.mux.com/${playbackId}.m3u8`, {
     onVideoFrame: (now, metadata) => {
+      if (!meshRef.current || !meshRef.current.material) return;
+
       meshRef.current.material.uniforms.map.value = texture;
       meshRef.current.material.needsUpdate = true;
     }
   })
   : useTexture(img?.currentSrc ?? url, (tex) => {
-    if (tex && meshRef.current) {
-      tex.magFilter = tex.minFilter = LinearFilter
-      tex.needsUpdate = true;
+    if (!tex || !meshRef.current) return;
 
-      meshRef.current.material.uniforms.map.value = tex;
-    }
+    tex.magFilter = tex.minFilter = LinearFilter
+    tex.needsUpdate = true;
+
+    meshRef.current.material.uniforms.map.value = tex;
   })
 
   useFrame(({ viewport, camera }) => {

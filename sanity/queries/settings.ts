@@ -3,37 +3,26 @@ import { linkFields, imageFields } from "./fragments";
 
 export const settingsHeaderQuery = defineQuery(
   groq`*[_type == "settingsHeader"][0] {
-    links[] {
-      ${linkFields}
-    },
-    contact {
-      label,
-      url,
-      content[] {
-        _key,
-        _type,
-        label,
-        url
-      }
-    },
-    information {
-      label,
-      content
-    },
-    "projectCount": count(*[_type == "projectPage"])
-  }`
-)
-
-export const settingsFooterQuery = defineQuery(
-  groq`*[_type == "settingsFooter"][0] {
     columns[] {
       _key,
-      text
-    },
-    externalLinks[] {
-      _key,
-      label,
-      url
+      links[] {
+        _key,
+        _type,
+        _type == "internalLink" => {
+          label,
+          "to": to->{
+            _type,
+            "slug": slug.current
+          }
+        },
+        _type == "externalLink" => {
+          label,
+          url
+        },
+        _type == "textBlock" => {
+          text
+        }
+      }
     }
   }`
 )
@@ -66,6 +55,5 @@ export const settingsQuery = defineQuery(
   groq`{
     "seo": ${settingsSeoQuery},
     "header": ${settingsHeaderQuery},
-    "footer": ${settingsFooterQuery},
   }`
 )
