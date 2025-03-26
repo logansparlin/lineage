@@ -16,6 +16,9 @@ export const useVideoControls = (props: UseVideoControlsProps) => {
   const [isMuted, setIsMuted] = useState(false)
   const [volume, setVolume] = useState(1)
   const [timeout, setTimeoutRef] = useState<NodeJS.Timeout | null>(null)
+  const [isPreviewing, setIsPreviewing] = useState(false)
+  const [hasPreviewed, setHasPreviewed] = useState(false)
+  const [needsReset, setNeedsReset] = useState(false)
 
   const showControls = useCallback(() => {
     setControlsVisible(true);
@@ -82,13 +85,35 @@ export const useVideoControls = (props: UseVideoControlsProps) => {
   const handlePlay = useCallback((e?: any) => {
     e?.preventDefault();
     e?.stopPropagation();
-    if (playerRef.current?.paused) {
+
+    if (playerRef.current?.paused || isPreviewing) {
+      if (needsReset) {
+        playerRef.current.currentTime = 0;
+        setNeedsReset(false)
+      }
+
+      playerRef.current.muted = isMuted;
       playerRef.current?.play()
       if (!hasPlayed) {
         setHasPlayed(true)
       }
     }
-  }, [playerRef, isMuted, hasPlayed]);
+  }, [playerRef, isMuted, hasPlayed, isPreviewing, needsReset]);
+
+  const handlePreviewPlay = useCallback(() => {
+    if (hasPreviewed) return;
+    
+    setNeedsReset(true)
+    setIsPreviewing(true)
+    
+    if (playerRef.current?.paused) {
+      playerRef.current.muted = true;
+      playerRef.current.play()
+    }
+    // if (!hasPlayed) {
+    //   setHasPlayed(true)
+    // }
+  }, [setHasPlayed, playerRef, hasPlayed])
 
   const handlePause = useCallback((e?: any) => {
     e?.preventDefault();
@@ -122,8 +147,15 @@ export const useVideoControls = (props: UseVideoControlsProps) => {
 
   const handleProgress = useCallback((currentTime: number) => {
     const progressPercentage = (currentTime / playerRef.current?.duration) * 100
+
+    if (isPreviewing && currentTime >= 5) {
+      handlePause()
+      setIsPreviewing(false)
+      setHasPreviewed(true)
+    }
+
     setProgress(progressPercentage)
-  }, [playerRef]);
+  }, [playerRef, isPreviewing, setHasPreviewed, handlePause]);
 
   const handleFullscreen = useCallback(() => {
     if (document.fullscreenElement === null) {
@@ -167,9 +199,11 @@ export const useVideoControls = (props: UseVideoControlsProps) => {
     progress,
     controlsVisible,
     containerProps,
+    hasPreviewed,
     setIsPlaying,
     setVolume,
     handlePlay,
+    handlePreviewPlay,
     handlePause,
     togglePlay,
     toggleMute,

@@ -18,9 +18,6 @@ export const CaseStudiesScene = memo(({ items }: { items: any[] }) => {
   const topRef = useRef<any>(null);
   const bottomRef = useRef<any>(null);
 
-  const pointerPosition = useRef({ x: 0, y: 0 });
-  const pointerPositionTarget = useRef({ x: 0, y: 0 });
-
   const planeGeometry = new PlaneGeometry(1, 1);
 
   const mappedItems = useMemo(() => {
@@ -37,29 +34,14 @@ export const CaseStudiesScene = memo(({ items }: { items: any[] }) => {
         container,
         width: item.featuredImage?.width,
         height: item.featuredImage?.height,
+        mediaType: item.featuredMediaType,
+        playbackId: item.featuredVideo?.playbackId,
         img,
         url: urlFor(item.featuredImage).auto('format').width(1200).quality(90).url(),
         ...item
       }
     })
   }, [items])
-
-  // useEffect(() => {
-  //   if (typeof window === 'undefined') return;
-
-  //   const handlePointerMove = (event: PointerEvent) => {
-  //     const x = (event.clientX / window.innerWidth) * 2 - 1;
-  //     const y = -((event.clientY / window.innerHeight) * 2 - 1);
-      
-  //     pointerPosition.current = { x, y };
-  //   }
-
-  //   window.addEventListener('pointermove', handlePointerMove)
-
-  //   return () => {
-  //     window.removeEventListener('pointermove', handlePointerMove)
-  //   }
-  // }, [])
 
   const setSizes = useCallback((size: any) => {
     if (!size.height || !size.width) return;

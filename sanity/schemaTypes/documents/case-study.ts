@@ -46,10 +46,33 @@ export default defineType({
       group: 'overview',
     }),
     defineField({
+      name: 'featuredMediaType',
+      title: 'Featured Media Type',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Image', value: 'image' },
+          { title: 'Video', value: 'video' },
+        ],
+        layout: 'radio',
+        direction: 'horizontal',
+      },
+      initialValue: 'image',
+      group: 'overview',
+    }),
+    defineField({
       name: 'featuredImage',
       title: 'Featured Image',
       type: 'image',
       group: 'overview',
+      hidden: ({ parent }) => parent?.featuredMediaType === 'video',
+    }),
+    defineField({
+      name: 'featuredVideo',
+      title: 'Featured Video',
+      type: 'mux.video',
+      group: 'overview',
+      hidden: ({ parent }) => parent?.featuredMediaType === 'image',
     }),
     defineField({
       name: 'shortDescription',

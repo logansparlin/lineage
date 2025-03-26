@@ -7,21 +7,22 @@ import { useInView } from 'motion/react';
 
 import Link from 'next/link';
 import { Image } from '@/components/global/image';
-import { View } from '@react-three/drei';
+import { Video } from '@/components/global/video/video';
 import { useHomeStore } from '../hooks/use-home-store';
-import { CaseStudiesBackground } from '@/components/scenes/case-studies-background';
 
 interface CaseStudiesSectionProps extends ComponentProps<'div'> {
   _id: string
   title: string
   slug: string
   step: string
+  featuredMediaType: 'image' | 'video'
   featuredImage: any
+  featuredVideo: any
   shortDescription: string
   index: number
 }
 
-export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ index, title, slug, step, featuredImage, shortDescription, className = '' }) => {
+export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ index, title, slug, step, featuredMediaType, featuredImage, featuredVideo, shortDescription, className = '' }) => {
   const setCurrentStep = useHomeStore(state => state.setCurrentStep)
   const setCurrentCaseStudy = useHomeStore(state => state.setCurrentCaseStudy)
 
@@ -69,12 +70,21 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ index, ti
           <div
             className="case-image absolute inset-0 z-[2] overflow-hidden w-full h-full rounded-20 flex items-center justify-center"
           >
-            <Image
+            {featuredMediaType === 'video' && featuredVideo?.playbackId ? (
+              <Video
+                playbackId={featuredVideo?.playbackId}
+                className="case-image w-full h-full object-cover md:hidden"
+                controls={false}
+              />
+            ) : (
+              <Image
                 image={featuredImage}
                 alt={title}
                 sizes="10vw"
                 className="case-image w-full h-full object-cover md:hidden"
               />
+
+            )}
           </div>
         </Link>
 

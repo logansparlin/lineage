@@ -1,10 +1,9 @@
 import { useRef, memo } from "react";
 import { useFrame } from "@react-three/fiber";
-import { useTexture, Decal } from "@react-three/drei";
+import { useTexture, useVideoTexture, Decal } from "@react-three/drei";
 
 import { ImageShader } from "@/shaders/image-shader";
-import { MathUtils, DoubleSide, Vector2, LinearFilter } from "three";
-import { useIsomorphicLayoutEffect } from "react-use";
+import { DoubleSide, Vector2, LinearFilter } from "three";
 
 interface CaseStudiesScrollItemProps {
   url: string;
@@ -13,6 +12,8 @@ interface CaseStudiesScrollItemProps {
   container: HTMLElement;
   index?: number;
   img: HTMLImageElement;
+  playbackId: string;
+  mediaType: 'image' | 'video';
   zPosition?: number;
   startOffset?: number;
   gradientDirection?: 'up' | 'down';
@@ -23,6 +24,8 @@ export const CaseStudiesScrollItem = memo(({
   width,
   height,
   img,
+  playbackId,
+  mediaType,
   index,
   container,
   zPosition = 0,
@@ -31,13 +34,21 @@ export const CaseStudiesScrollItem = memo(({
 }: CaseStudiesScrollItemProps) => {
   const meshRef = useRef<any>(null);
 
-  const texture = useTexture(img?.currentSrc ?? url, (tex) => {
+  const texture = mediaType === 'video' && playbackId ? 
+  useVideoTexture(`https://stream.mux.com/${playbackId}.m3u8`, {
+    onVideoFrame: (now, metadata) => {
+      meshRef.current.material.uniforms.map.value = texture;
+      meshRef.current.material.needsUpdate = true;
+    }
+  })
+  : useTexture(img?.currentSrc ?? url, (tex) => {
     if (tex && meshRef.current) {
       tex.magFilter = tex.minFilter = LinearFilter
       tex.needsUpdate = true;
+
       meshRef.current.material.uniforms.map.value = tex;
     }
-  });
+  })
 
   useFrame(({ viewport, camera }) => {
     if (!meshRef.current) return;

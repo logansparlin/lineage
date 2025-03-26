@@ -5,7 +5,6 @@ import { useVideoControls } from "./use-video-controls"
 import { AnimatePresence, motion, useInView } from "motion/react"
 import dynamic from "next/dynamic"
 
-import MuxPlayer from '@mux/mux-player-react/lazy'
 import { PlayButtonOverlay } from "./play-button-overlay"
 import { VideoControls } from "./video-controls"
 
@@ -28,6 +27,26 @@ export const Video: FC<VideoProps> = (props) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const playerRef = useRef<any>(null)
 
+  const {
+    hasPlayed,
+    isPlaying,
+    isMuted,
+    volume,
+    controlsVisible,
+    containerProps,
+    progress,
+    hasPreviewed,
+    setIsPlaying,
+    setVolume,
+    handlePreviewPlay,
+    handlePlay,
+    handlePause,
+    togglePlay,
+    toggleMute,
+    handleFullscreen,
+    setProgress,
+  } = useVideoControls({ playerRef, containerRef })
+
   const isInView = useInView(containerRef, {
     amount: 0.5,
   })
@@ -40,24 +59,6 @@ export const Video: FC<VideoProps> = (props) => {
     return true;
   }, [controls])
 
-  const {
-    hasPlayed,
-    isPlaying,
-    isMuted,
-    volume,
-    controlsVisible,
-    containerProps,
-    progress,
-    setIsPlaying,
-    setVolume,
-    handlePlay,
-    handlePause,
-    togglePlay,
-    toggleMute,
-    handleFullscreen,
-    setProgress,
-  } = useVideoControls({ playerRef, containerRef })
-
   useEffect(() => {
     if (!isInView) {
       handlePause()
@@ -66,7 +67,11 @@ export const Video: FC<VideoProps> = (props) => {
     if (isInView && !withControls) {
       handlePlay()
     }
-  }, [isInView])
+
+    if (isInView && !hasPlayed && !hasPreviewed) {
+      handlePreviewPlay()
+    }
+  }, [isInView, hasPlayed, withControls, hasPreviewed])
 
   const handleLoaded = () => {
     setIsLoaded(true)

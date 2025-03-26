@@ -1,5 +1,5 @@
 import { defineQuery, groq } from "next-sanity";
-import { imageFields, seoQuery } from "./fragments";
+import { imageFields, seoQuery, muxVideoFields } from "./fragments";
 
 export const homePageQuery = defineQuery(
   groq`*[_type == "homePage"][0] {
@@ -21,8 +21,12 @@ export const homePageQuery = defineQuery(
       "slug": slug.current,
       palette,
       step,
+      featuredMediaType,
       featuredImage {
         ${imageFields}
+      },
+      featuredVideo {
+        ${muxVideoFields}
       },
       shortDescription
     },

@@ -19,7 +19,9 @@ interface CaseStudiesProps {
     title: string
     slug: string
     step: string
+    featuredMediaType: 'image' | 'video'
     featuredImage: any
+    featuredVideo: any
     shortDescription: string
     index: number
   }[]
