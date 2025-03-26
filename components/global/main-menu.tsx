@@ -73,7 +73,7 @@ export const MainMenu: FC<MainMenuProps> = ({ columns }) => {
 }
 
 const MenuItem = (props) => {
-  const { label, url = undefined, _type, index, onClick, total, offset, text } = props;
+  const { label, url = undefined, _type, index, to, onClick, total, offset, text } = props;
 
   const baseTransition = { duration: 0.75, ease: easings.outExpo }
   const lenis = useLenis();
@@ -99,6 +99,8 @@ const MenuItem = (props) => {
 
     return 'will-change-transform transform-gpu group-hover:text-white/30 group-hover:hover:text-white transition-colors duration-300 ease'
   }, [_type])
+
+  if (to?.hidden) return null;
 
   return (
     <motion.li

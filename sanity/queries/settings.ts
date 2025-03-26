@@ -12,6 +12,7 @@ export const settingsHeaderQuery = defineQuery(
           label,
           "to": to->{
             _type,
+            hidden,
             "slug": slug.current
           }
         },
