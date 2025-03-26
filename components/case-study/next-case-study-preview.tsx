@@ -1,6 +1,6 @@
 'use client'
 
-import { type FC, useCallback, useMemo, useRef } from 'react'
+import { type FC, useCallback, useMemo, useRef, useState } from 'react'
 import { getStepColorsRGB } from '@/lib/get-step-colors'
 import { useRouter } from 'next/navigation'
 import { useLenis } from 'lenis/react'
@@ -22,6 +22,7 @@ export const NextCaseStudyPreview: FC<NextCaseStudyPreviewProps> = (props) => {
   const { slug, title, description, step, featuredImage } = props;
   const router = useRouter()
   const ref = useRef<HTMLDivElement>(null)
+  const [listening, setListening] = useState(true)
 
   const handleScroll = useCallback((axis: 'x' | 'y') => {
     const rect = ref.current?.getBoundingClientRect()
@@ -32,13 +33,14 @@ export const NextCaseStudyPreview: FC<NextCaseStudyPreviewProps> = (props) => {
 
     const offset = axis === 'x' ? x : y
 
-    if (offset <= 10) {
+    if (offset <= 10 && listening) {
+      setListening(false)
       router.push(`/case-study/${slug}`, { scroll: false })
     }
   }, [slug])
 
   useLenis((lenis) => {
-    if (lenis.isSmooth) {
+    if (lenis.isSmooth && listening) {
       handleScroll('x')
     }
   })
@@ -46,7 +48,7 @@ export const NextCaseStudyPreview: FC<NextCaseStudyPreviewProps> = (props) => {
   useEvent('scroll', () => {
     if (typeof window === 'undefined') return;
 
-    if (window.innerWidth < 800) {
+    if (window.innerWidth < 800 && listening) {
       handleScroll('y')
     }
   })

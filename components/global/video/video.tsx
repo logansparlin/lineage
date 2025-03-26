@@ -118,11 +118,11 @@ export const Video: FC<VideoProps> = (props) => {
           poster={`https://image.mux.com/${playbackId}/thumbnail.webp?time=${5}`}
           preload="metadata"
           ref={playerRef}
-          muted={!withControls}
+          muted={withControls ? isMuted : false}
           className="mux-video"
           playbackId={playbackId}
           streamType="on-demand"
-          loop={!withControls}
+          loop={true}
           crossOrigin="anonymous"
           onLoadedMetadata={handleLoaded}
           onPlay={() => {
