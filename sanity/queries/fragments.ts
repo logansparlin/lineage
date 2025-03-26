@@ -88,7 +88,9 @@ export const modulesFields = groq`
     mediaType,
     size,
     caption,
-    image,
+    image {
+      ${imageFields}
+    },
     video {
       ${muxVideoFields}
     },
@@ -109,7 +111,9 @@ export const modulesFields = groq`
     reversed,
     firstMedia {
       mediaType,
-      image,
+      image {
+        ${imageFields}
+      },
       video {
         ${muxVideoFields}
       },
@@ -119,7 +123,9 @@ export const modulesFields = groq`
     },
     secondMedia {
       mediaType,
-      image,
+      image {
+        ${imageFields}
+      },
       video {
         ${muxVideoFields}
       },
@@ -181,7 +187,9 @@ export const modulesFields = groq`
     _key,
     firstMedia {
       mediaType,
-      image,
+      image {
+        ${imageFields}
+      },
       video {
         ${muxVideoFields}
       },
@@ -192,7 +200,9 @@ export const modulesFields = groq`
     },
     secondMedia {
       mediaType,
-      image,
+      image {
+        ${imageFields}
+      },
       video {
         ${muxVideoFields}
       },

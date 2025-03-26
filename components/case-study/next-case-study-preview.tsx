@@ -1,6 +1,6 @@
 'use client'
 
-import { type FC, useMemo } from 'react'
+import { type FC, useCallback, useMemo, useRef } from 'react'
 import { getStepColorsRGB } from '@/lib/get-step-colors'
 import { useRouter } from 'next/navigation'
 import { useLenis } from 'lenis/react'
@@ -21,45 +21,63 @@ interface NextCaseStudyPreviewProps {
 export const NextCaseStudyPreview: FC<NextCaseStudyPreviewProps> = (props) => {
   const { slug, title, description, step, featuredImage } = props;
   const router = useRouter()
-  const lenis = useLenis(({ progress }) => {
-    if (progress >= 0.98) {
-      router.push(`/case-study/${slug}`)
+  const ref = useRef<HTMLDivElement>(null)
+
+  const handleScroll = useCallback((axis: 'x' | 'y') => {
+    const rect = ref.current?.getBoundingClientRect()
+
+    if (!rect) return;
+
+    const { x, y } = rect
+
+    const offset = axis === 'x' ? x : y
+
+    if (offset <= 10) {
+      router.push(`/case-study/${slug}`, { scroll: false })
+    }
+  }, [slug])
+
+  useLenis((lenis) => {
+    if (lenis.isSmooth) {
+      handleScroll('x')
     }
   })
 
-  // useEvent('wheel', (e) => {
-  //   if (lenis?.progress < 1) return;
+  useEvent('scroll', () => {
+    if (typeof window === 'undefined') return;
 
-  //   const { deltaX, deltaY } = e
-  //   const delta = Math.max(deltaX, deltaY)
-
-  //   console.log(delta)
-
-  //   // if (delta > 20) {
-  //   //   router.push(`/case-study/${slug}`)
-  //   // }
-  // })
+    if (window.innerWidth < 800) {
+      handleScroll('y')
+    }
+  })
 
   const stepColorsRGB = useMemo(() => {
     return getStepColorsRGB(step)
   }, [step])
 
   return (
-    <section className="relative w-screen h-full pt-90 md:pt-0 flex flex-col md:flex-row gap-y-40 md:gap-y-0 md:gap-x-150">
+    <section ref={ref} className="relative w-screen h-screen overflow-hidden md:h-full pt-90 md:pt-0 flex flex-col md:flex-row gap-y-40 md:gap-y-0 md:gap-x-150">
       <CaseStudyIntro
         title={title}
         description={description}
         step={step}
       />
-
-      <div className="h-full md:flex-1 bg-[blue]">
-        <Image image={featuredImage} sizes="50vw" className="w-full h-full object-cover object-left" alt={title} />
+      
+      <div className="relative">
+        <div
+          className="absolute top-0 left-0 w-full md:w-auto md:h-full md:flex-1"
+          style={{
+            aspectRatio: featuredImage.aspectRatio
+          }}
+        >
+          <Image image={featuredImage} sizes="50vw" className="w-full h-full object-cover object-left" alt={title} />
+        </div>
       </div>
 
       <CurvedPlaneBackground
         inner={stepColorsRGB?.[400]}
         outer={stepColorsRGB?.[300]}
-        className="absolute inset-0 w-full h-full z-[0]"
+        className="absolute inset-0 w-full h-full z-[0] pointer-events-none"
       />
     </section>   
   )

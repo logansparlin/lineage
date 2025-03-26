@@ -1,15 +1,15 @@
-import { type FC } from 'react'
+import { useMemo, type FC } from 'react'
 import { cva } from 'class-variance-authority'
 import { Image } from '@/components/global/image'
 import { Video } from '../global/video/video'
 
-const mediaBlockStyles = cva(['relative overflow-hidden'], {
+const mediaBlockStyles = cva(['relative overflow-hidden w-full h-full aspect-[var(--aspect-ratio)] md:aspect-video'], {
   variants: {
     size: {
-      full: 'w-full md:w-fit md:h-screen aspect-video',
-      large: 'rounded-10 lg:rounded-30 border-1 border-white/30 w-full h-auto md:h-full md:w-fit aspect-video',
-      medium: 'rounded-10 lg:rounded-20 border-1 border-white/30 w-full h-auto md:h-[75%] md:w-fit aspect-video',
-      small: 'rounded-10 lg:rounded-20 border-1 border-white/30 w-full h-auto md:h-[55%] md:w-fit aspect-video',
+      full: ' md:w-fit md:h-screen',
+      large: 'rounded-10 lg:rounded-30 border-1 border-white/30 w-full h-auto md:h-full md:w-fit',
+      medium: 'rounded-10 lg:rounded-20 border-1 border-white/30 w-full h-auto md:h-[75%] md:w-fit',
+      small: 'rounded-10 lg:rounded-20 border-1 border-white/30 w-full h-auto md:h-[55%] md:w-fit',
     }
   }
 })
@@ -19,8 +19,8 @@ const mediaBlockContainerStyles = cva(['relative w-full h-auto md:h-screen'], {
     size: {
       full: 'md:w-screen',
       large: 'gap-y-12 md:gap-y-20 flex flex-col items-center justify-center px-20 md:px-0 lg:py-80 md:w-fit',
-      medium: 'gap-y-12 md:gap-y-20 flex flex-col items-center justify-center px-36 md:px-0 lg:py-80 md:w-fit',
-      small: 'gap-y-12 md:gap-y-20 flex flex-col items-center justify-center px-60 md:px-0 lg:py-80 md:w-fit',
+      medium: 'gap-y-12 md:gap-y-20 flex flex-col items-center justify-center px-40 md:px-0 lg:py-80 md:w-fit',
+      small: 'gap-y-12 md:gap-y-20 flex flex-col items-center justify-center px-70 md:px-0 lg:py-80 md:w-fit',
     }
   }
 })
@@ -43,16 +43,28 @@ export const MediaBlock: FC<FullBleedMediaProps> = ({
   mediaType,
   image,
   video,
-  videoThumbnail,
   controls,
   size = 'full',
   caption,
 }) => {
+  const aspectRatio = useMemo(() => {
+    const aspect = image?.aspectRatio ?? video?.aspectRatio?.replaceAll(':', '/')
+
+    if (!aspect) return '16/9'
+
+    return `${aspect}`
+  }, [image, video])
+
   return (
-    <div className={mediaBlockContainerStyles({ size })}>
+    <div
+      className={mediaBlockContainerStyles({ size })}
+      style={{
+        '--aspect-ratio': aspectRatio
+      } as React.CSSProperties}
+    >
       <div className={mediaBlockStyles({ size })}>
         {mediaType === 'image' && image ? (
-          <div className="w-full h-auto md:h-full md:w-auto">
+          <div className="relative w-full h-full md:h-full md:w-auto">
             <Image
               image={image}
               alt=""
@@ -63,7 +75,7 @@ export const MediaBlock: FC<FullBleedMediaProps> = ({
         ) : null}
 
         {mediaType === 'video' && video ? (
-          <div className="relative w-full h-auto md:h-full md:w-auto">
+          <div className="relative w-full h-full md:h-full md:w-auto">
             <Video {...video} className="absolute inset-0 w-full h-full" controls={controls} />
           </div>
         ) : null}

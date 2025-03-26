@@ -40,7 +40,7 @@ export const Image: FC<ImageProps> = (props) => {
       src={initialSrc}
       srcSet={srcSet}
       alt={alt}
-      className={`${className} transform-gpu`}
+      className={`${className} transform-gpu select-none pointer-events-none`}
       sizes={sizes}
       {...rest}
     />

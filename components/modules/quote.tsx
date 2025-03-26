@@ -9,16 +9,16 @@ interface QuoteProps {
   image?: any
 }
 
-const quoteStyles = cva(['relative flex flex-col gap-y-80 text-center'], {
+const quoteStyles = cva(['relative flex flex-col gap-y-20 md:gap-y-80 text-center'], {
   variants: {
     size: {
-      xs: ['text-26/110 md:text-41/110 w-full md:w-[90%]'],
-      s: ['text-36/110 md:text-52/110 w-full md:w-[90%]'],
+      xs: ['text-26/130 md:text-41/110 w-full md:w-[90%]'],
+      s: ['text-36/130 md:text-52/110 w-full md:w-[90%]'],
       m: ['text-41/110 md:text-66/110 w-full md:w-[90%]'],
       l: '',
     },
     hasImage: {
-      true: '',
+      true: 'aspect-video',
       false: '',
     }
   },
@@ -38,14 +38,14 @@ const quoteStyles = cva(['relative flex flex-col gap-y-80 text-center'], {
 
 export const Quote: FC<QuoteProps> = ({ text, attribution, size, image }) => {
   return (
-    <div className="relative w-full md:w-[92vw] h-screen flex items-center justify-center md:py-80">
+    <div className="relative w-full md:w-[92vw] md:h-screen flex items-center justify-center px-20 md:px-0 md:py-80">
       <div className={quoteStyles({ size, hasImage: !!image })}>
         <blockquote className="relative z-[1]">
           {text}
         </blockquote>
 
         {attribution ? (
-          <p className="text-23 relative z-[1]">{attribution}</p>
+          <p className="text-18 md:text-23 relative z-[1]">{attribution}</p>
         ) : null}
         
         {image ? (

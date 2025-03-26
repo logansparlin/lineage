@@ -75,7 +75,7 @@ export const Video: FC<VideoProps> = (props) => {
   return (
     <div
       ref={containerRef}
-      className={`${className} cursor-default overflow-hidden`}
+      className={`${className} cursor-default overflow-hidden ${!withControls ? 'pointer-events-none' : ''}`}
       {...containerProps}
     >
       <AnimatePresence initial={false}>

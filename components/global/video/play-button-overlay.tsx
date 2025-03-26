@@ -13,7 +13,7 @@ export const PlayButtonOverlay: FC<PlayButtonOverlayProps> = ({ hidden = false, 
     <AnimatePresence>
       {!hidden ? (
         <motion.button
-          className="cursor-pointer absolute-center w-54 md:w-120 h-36 md:h-80 border-[1.5px] md:border-2 border-white rounded-full z-[3] flex-center bg-transparent all-interactions:bg-step-200 all-interactions:border-step-200 transition-colors duration-400 ease"
+          className="cursor-pointer absolute-center w-60 md:w-120 h-40 md:h-80 border-[1.5px] md:border-2 border-white rounded-full z-[3] flex-center bg-transparent all-interactions:bg-step-200 all-interactions:border-step-200 transition-colors duration-400 ease"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
