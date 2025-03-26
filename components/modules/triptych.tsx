@@ -22,42 +22,6 @@ interface TriptychProps {
   thirdMedia: MediaItem
 }
 
-const containerOneStyles = cva('w-full h-auto relative flex flex-col gap-y-10 md:gap-y-28', {
-  variants: {
-    reversed: {
-      false: 'md:h-full md:w-auto',
-      true: 'md:h-[80%] md:w-auto',
-    }
-  }
-})
-
-const mediaOneStyles = cva('overflow-hidden rounded-10 md:rounded-30 border-1 border-white/30 w-full h-auto md:h-full md:w-auto', {
-  variants: {
-    reversed: {
-      false: 'aspect-portrait-video',
-      true: 'aspect-video',
-    }
-  }
-})
-
-const containerTwoStyles = cva('w-full h-auto relative flex flex-col gap-y-10 md:gap-y-28', {
-  variants: {
-    reversed: {
-      false: 'md:h-[80%] md:w-auto',
-      true: 'md:h-full md:w-auto',
-    }
-  }
-})
-
-const mediaTwoStyles = cva('overflow-hidden rounded-10 md:rounded-30 border-1 border-white/30 w-full h-auto md:h-full md:w-auto', {
-  variants: {
-    reversed: {
-      false: 'aspect-video',
-      true: 'aspect-portrait-video',
-    }
-  }
-})
-
 export const Triptych: FC<TriptychProps> = ({
   reversed = false,
   firstMedia,
@@ -65,9 +29,11 @@ export const Triptych: FC<TriptychProps> = ({
   thirdMedia
 }) => {
   const renderMedia = (media: MediaItem, containerClassName: string, mediaClassName: string) => {
+    if (!media) return null
+
     return (
-      <div className={containerClassName}>
-        <div className={mediaClassName}>
+      <div className={`${containerClassName} w-full relative h-auto overflow-hidden`}>
+        <div className={`${mediaClassName} rounded-10 md:rounded-30 border-1 border-white/30 overflow-hidden`}>
           {media.mediaType === 'image' && media.image ? (
             <Image
               image={media.image}
@@ -82,16 +48,21 @@ export const Triptych: FC<TriptychProps> = ({
         </div>
         
         {media.caption ? (
-          <p className="col-span-full text-18 md:text-23 text-center">{media.caption}</p>
+          <p className="w-full text-18 md:text-23 text-center">{media.caption}</p>
         ) : null}
       </div>
     )
   }
 
   return (
-    <div className="case-module w-full md:w-fit md:h-screen md:py-100 flex flex-col md:flex-row items-center gap-y-20 md:gap-y-0 gap-x-column-1">
-      {renderMedia(firstMedia, containerOneStyles({ reversed }), mediaOneStyles({ reversed }))}
-      {renderMedia(secondMedia, containerTwoStyles({ reversed }), mediaTwoStyles({ reversed }))}
+    <div className={`case-module relative w-full md:w-fit md:min-w-[70vw] md:h-screen md:py-100 flex flex-col items-center gap-y-20 md:gap-y-0 gap-x-50 ${reversed ? 'md:flex-row-reverse' : 'md:flex-row'}`}>
+      <div className={`w-full h-full md:w-[calc(40%-25px)] flex flex-col gap-y-20`}>
+        {renderMedia(firstMedia, '',  'w-full md:w-auto md:h-[46vh] aspect-square' )}
+        {renderMedia(secondMedia, 'flex-1', 'w-full h-full max-md:aspect-video' )}
+      </div>
+      <div className={`w-full md:h-full md:w-fit flex items-center`}>
+        {renderMedia(thirdMedia, '', 'w-full md:h-[80vh] md:w-fit aspect-square' )}
+      </div>
     </div>
   )
 } 

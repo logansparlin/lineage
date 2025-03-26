@@ -121,7 +121,7 @@ export default {
       ]
     },
     {
-      name: 'thirdmedia',
+      name: 'thirdMedia',
       title: 'Third Media',
       type: 'object',
       fields: [
