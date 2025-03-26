@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, type FC } from "react";
 import { useSiteStore } from "@/stores/use-site-store";
-import { useRafLoop } from 'react-use'
+import { useRafLoop, useMedia } from 'react-use'
 
 import { IconCursorMorph } from "../icons/icon-cursor-morph";
 
@@ -12,6 +12,8 @@ interface CursorProps {
 
 export const Cursor: FC<CursorProps> = () => {
   const [currentStep, setCurrentStep] = useState(1)
+  const [hasMoved, setHasMoved] = useState(false)
+  const isTouch = useMedia('(pointer: coarse)', false)
 
   const cursorHidden = useSiteStore(state => state.cursorHidden)
   
@@ -23,7 +25,7 @@ export const Cursor: FC<CursorProps> = () => {
   })
 
   useRafLoop(() => {
-    if (!cursorRef.current) return
+    if (!cursorRef.current || isTouch) return
 
     const elW = cursorRef.current?.offsetWidth
     const elH = cursorRef.current?.offsetHeight
@@ -32,16 +34,20 @@ export const Cursor: FC<CursorProps> = () => {
   })
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (!hasMoved) {
+      setHasMoved(true)
+    }
+
     cursorPos.current.target.x = e.clientX
     cursorPos.current.target.y = e.clientY
-  }, [])
+  }, [hasMoved])
 
   const handleClick = useCallback((e) => {
     setCurrentStep(prev => prev === 4 ? 1 : prev + 1)
   }, [])
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
+    if (typeof window === 'undefined' || isTouch) return
     
     window.addEventListener('mousemove', handleMouseMove)
     document.addEventListener('click', handleClick)
@@ -52,14 +58,16 @@ export const Cursor: FC<CursorProps> = () => {
       window.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('click', handleClick)
     }
-  }, [])
+  }, [isTouch])
+
+  if (isTouch) return null
 
   return (
     <div
       ref={cursorRef}
       className="will-change-transform site-cursor origin-center fixed top-0 w-40 left-0 z-[9999] pointer-events-none cursor-none text-nav hidden md:block text-center text-white"
     >
-      <div className={`relative h-20 w-auto text-off-white transition-opacity duration-300 ease ${cursorHidden ? 'opacity-0' : 'opacity-100'}`}>
+      <div className={`relative h-20 w-auto text-off-white transition-opacity duration-300 ease ${cursorHidden || !hasMoved ? 'opacity-0' : 'opacity-100'}`}>
         <IconCursorMorph step={currentStep} className="h-full w-auto" />
       </div>
     </div>
