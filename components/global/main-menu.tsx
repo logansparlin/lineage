@@ -3,7 +3,7 @@
 import { type FC, type ComponentProps, useMemo, useCallback } from "react";
 import { useSiteStore } from "@/stores/use-site-store";
 import { useKeyPress } from "@/hooks/use-key-press";
-import { getRelativePath } from "@/sanity/lib/links";
+import { getRelativePath } from "@/lib/get-relative-path";
 import { easings } from "@/lib/easings";
 
 import { AnimatePresence, motion } from "motion/react";

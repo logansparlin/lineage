@@ -1,4 +1,5 @@
 import { defineType, defineField } from "sanity";
+import { getRelativePath } from "@/lib/get-relative-path";
 
 export default defineType({
   name: 'internalLink',
@@ -21,5 +22,20 @@ export default defineType({
         { type: 'legalPage' },
       ]
     })
-  ]
+  ],
+  preview: {
+    select: {
+      label: 'label',
+      slug: 'to.slug.current',
+      type: 'to._type',
+      hidden: 'to.hidden'
+    },
+    prepare({ label, slug, type, hidden }) {
+      const path = getRelativePath({ type, slug });
+      return {
+        title: label,
+        subtitle: `${path} ${hidden ? '(hidden)' : ''}`
+      }
+    }
+  }
 })

@@ -1,5 +1,3 @@
-import { InternalLink } from "@/sanity.types"
-
 interface GetRelativePathProps {
   slug?: string,
   type?: string
@@ -8,7 +6,13 @@ interface GetRelativePathProps {
 export const getRelativePath = ({ slug, type }: GetRelativePathProps): string => {
   switch (type) {
     case 'homePage':
-      return `/`
+      return '/'
+    case 'caseStudies':
+      return '/#case-studies'
+    case 'teamPage':
+      return '/team'
+    case 'legalPage':
+      return `/legal/${slug}`
     default:
       return `/${slug}`
   }
