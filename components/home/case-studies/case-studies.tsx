@@ -80,7 +80,7 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
           }}
         >
           <div
-            className="relative w-full z-[2] pointer-events-none [--mask-image:black] md:[--mask-image:linear-gradient(to_bottom,transparent_0%,transparent_9%,black_10%,black_90%,transparent_91%,transparent_100%)]"
+            className="relative w-full z-[2] pointer-events-none [--mask-image:black] md:[--mask-image:linear-gradient(to_bottom,transparent_0%,transparent_5%,black_6%,black_85%,transparent_86%,transparent_100%)]"
             style={{
               maskImage: 'var(--mask-image)',
               maskSize: '100vw 100vh',
@@ -92,6 +92,8 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
                 <CaseStudiesSection
                   key={item._id}
                   index={index}
+                  isFirst={index === 0}
+                  isLast={index === items.length - 1}
                   {...item}
                 />
               )

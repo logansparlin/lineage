@@ -27,7 +27,7 @@ export const CaseStudiesNavigation: FC<CaseStudiesNavigationProps> = ({ items, c
     e.stopPropagation();
     
     lenis?.scrollTo(`#case-study-${index}`, {
-      offset: 45
+      offset: index === 0 ? 50 : -55
     });
   }
 

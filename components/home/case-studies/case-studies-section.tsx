@@ -20,9 +20,11 @@ interface CaseStudiesSectionProps extends ComponentProps<'div'> {
   featuredVideo: any
   shortDescription: string
   index: number
+  isFirst?: boolean
+  isLast?: boolean
 }
 
-export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ index, title, slug, step, featuredMediaType, featuredImage, featuredVideo, shortDescription, className = '' }) => {
+export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ index, title, slug, step, featuredMediaType, featuredImage, featuredVideo, shortDescription, isFirst, isLast, className = '' }) => {
   const setCurrentStep = useHomeStore(state => state.setCurrentStep)
   const setCurrentCaseStudy = useHomeStore(state => state.setCurrentCaseStudy)
 
@@ -47,7 +49,12 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ index, ti
     <div
       id={`case-study-${index}`}
       ref={caseSectionRef}
-      className={`${className} case-studies-section group card overflow-hidden px-20 md:px-0 text-center md:text-left md:min-h-screen relative py-100 md:py-[20vh]`}
+      className={`
+        ${className}
+        case-studies-section group card overflow-hidden px-20 md:px-0 text-center md:text-left relative py-100 md:py-[80px]
+        ${isFirst || isLast ? 'md:min-h-screen' : 'md:h-fit'}
+        ${isFirst ? 'md:pt-[20vh]' : ''}
+      `}
       style={{
         '--local-color-100': stepColors?.[100],
         '--local-color-200': stepColors?.[200],
