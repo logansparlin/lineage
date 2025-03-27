@@ -121,6 +121,7 @@ export const Video: FC<VideoProps> = (props) => {
           className="mux-video"
           playbackId={playbackId}
           autoPlay={muted && autoPlay}
+          startTime={1}
           streamType="on-demand"
           loop={true}
           crossOrigin="anonymous"
