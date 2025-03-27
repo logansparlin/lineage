@@ -22,7 +22,7 @@ export const ScrollContainer: FC<ScrollContainerProps> = memo(({ children, ...pr
   useGSAP(() => {
     gsap.config({ force3D: true });
 
-    ScrollTrigger.refresh();
+    // ScrollTrigger.refresh();
 
     ScrollTrigger.defaults({
       immediateRender: false,
@@ -31,12 +31,6 @@ export const ScrollContainer: FC<ScrollContainerProps> = memo(({ children, ...pr
     })
 
     gsap.config({ force3D: true });
-
-    ScrollTrigger.defaults({
-      immediateRender: false,
-      scrub: true,
-      invalidateOnRefresh: false,
-    })
     
     gsap.ticker.lagSmoothing(0);
     gsap.ticker.remove(gsap.updateRoot);

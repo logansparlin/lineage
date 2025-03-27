@@ -9,7 +9,7 @@ export const ScrollTriggerUpdate = () => {
   const lenis = useLenis(ScrollTrigger.update)
 
   useEffect(() => {
-    ScrollTrigger.refresh()
+    ScrollTrigger.update()
   }, [lenis])
 
   return null

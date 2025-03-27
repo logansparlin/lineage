@@ -20,38 +20,7 @@ interface NextCaseStudyPreviewProps {
 
 export const NextCaseStudyPreview: FC<NextCaseStudyPreviewProps> = (props) => {
   const { slug, title, description, step, featuredImage } = props;
-  const router = useRouter()
   const ref = useRef<HTMLDivElement>(null)
-  const [listening, setListening] = useState(true)
-
-  const handleScroll = useCallback((axis: 'x' | 'y') => {
-    const rect = ref.current?.getBoundingClientRect()
-
-    if (!rect) return;
-
-    const { x, y } = rect
-
-    const offset = axis === 'x' ? x : y
-
-    if (offset <= 10 && listening) {
-      setListening(false)
-      router.push(`/case-study/${slug}`, { scroll: false })
-    }
-  }, [slug])
-
-  useLenis((lenis) => {
-    if (lenis.isSmooth && listening) {
-      handleScroll('x')
-    }
-  })
-
-  useEvent('scroll', () => {
-    if (typeof window === 'undefined') return;
-
-    if (window.innerWidth < 800 && listening) {
-      handleScroll('y')
-    }
-  })
 
   const stepColorsRGB = useMemo(() => {
     return getStepColorsRGB(step)
@@ -63,16 +32,14 @@ export const NextCaseStudyPreview: FC<NextCaseStudyPreviewProps> = (props) => {
         title={title}
         description={description}
         step={step}
+        nextLink={`/case-study/${slug}`}
       />
       
-      <div className="relative">
+      <div className="flex-1 relative">
         <div
-          className="absolute top-0 left-0 w-full md:w-auto md:h-full md:flex-1"
-          style={{
-            aspectRatio: featuredImage.aspectRatio
-          }}
+          className="absolute top-0 left-0 w-full h-full md:w-auto md:h-full md:flex-1"
         >
-          <Image image={featuredImage} sizes="50vw" className="w-full h-full object-cover object-left" alt={title} />
+          <Image image={featuredImage} sizes="50vw" className="w-full h-full object-cover object-top md:object-left" alt={title} />
         </div>
       </div>
 
