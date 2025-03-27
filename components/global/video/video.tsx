@@ -125,6 +125,7 @@ export const Video: FC<VideoProps> = (props) => {
           loop={true}
           crossOrigin="anonymous"
           onLoadedMetadata={handleLoaded}
+          playsInline
           onPlay={() => {
             setIsPlaying(true)
           }}
