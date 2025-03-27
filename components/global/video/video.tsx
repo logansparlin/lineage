@@ -27,6 +27,14 @@ export const Video: FC<VideoProps> = (props) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const playerRef = useRef<any>(null)
 
+  const withControls = useMemo(() => {
+    if (controls !== null && controls === false) {
+      return false
+    }
+
+    return true;
+  }, [controls])
+
   const {
     hasPlayed,
     isPlaying,
@@ -35,7 +43,6 @@ export const Video: FC<VideoProps> = (props) => {
     controlsVisible,
     containerProps,
     progress,
-    hasPreviewed,
     setIsPlaying,
     setVolume,
     handlePreviewPlay,
@@ -45,19 +52,11 @@ export const Video: FC<VideoProps> = (props) => {
     toggleMute,
     handleFullscreen,
     setProgress,
-  } = useVideoControls({ playerRef, containerRef })
+  } = useVideoControls({ playerRef, containerRef, withControls })
 
   const isInView = useInView(containerRef, {
     amount: 0.5,
   })
-
-  const withControls = useMemo(() => {
-    if (controls !== null && controls === false) {
-      return false
-    }
-
-    return true;
-  }, [controls])
 
   useEffect(() => {
     if (!isInView) {
@@ -68,10 +67,10 @@ export const Video: FC<VideoProps> = (props) => {
       handlePlay()
     }
 
-    if (isInView && !hasPlayed && !hasPreviewed) {
+    if (isInView && !hasPlayed) {
       handlePreviewPlay()
     }
-  }, [isInView, hasPlayed, withControls, hasPreviewed])
+  }, [isInView, hasPlayed, withControls])
 
   const handleLoaded = () => {
     setIsLoaded(true)
@@ -118,7 +117,7 @@ export const Video: FC<VideoProps> = (props) => {
           poster={`https://image.mux.com/${playbackId}/thumbnail.webp?time=${5}`}
           preload="metadata"
           ref={playerRef}
-          muted={withControls ? isMuted : false}
+          muted={!withControls || !hasPlayed ? true : isMuted}
           className="mux-video"
           playbackId={playbackId}
           streamType="on-demand"

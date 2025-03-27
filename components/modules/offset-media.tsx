@@ -38,7 +38,7 @@ export const OffsetMedia: FC<OffsetMediaProps> = ({
   const renderMedia = (media: MediaItem, className: string) => {
     return (
       <div className={className}>
-        <div className={`aspect-video relative w-full md:w-auto md:h-full rounded-10 lg:rounded-30 overflow-hidden border-1 border-white/30`}>
+        <div className={`aspect-video relative w-full md:w-auto md:h-full rounded-10 lg:rounded-30 overflow-hidden border-1 border-white/30 ${media.mediaType === 'video' ? 'drop-shadow-step' : ''}`}>
           {media.mediaType === 'image' && media.image ? (
             <Image
               image={media.image}

@@ -3,10 +3,11 @@ import { type RefObject, useState, useEffect, useRef, useMemo, useCallback } fro
 interface UseVideoControlsProps {
   playerRef: RefObject<any>
   containerRef: RefObject<any>
+  withControls?: boolean
 }
 
 export const useVideoControls = (props: UseVideoControlsProps) => {
-  const { playerRef, containerRef } = props;
+  const { playerRef, containerRef, withControls = true } = props;
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
   const [controlsVisible, setControlsVisible] = useState(false)
@@ -17,7 +18,6 @@ export const useVideoControls = (props: UseVideoControlsProps) => {
   const [volume, setVolume] = useState(1)
   const [timeout, setTimeoutRef] = useState<NodeJS.Timeout | null>(null)
   const [isPreviewing, setIsPreviewing] = useState(false)
-  const [hasPreviewed, setHasPreviewed] = useState(false)
   const [needsReset, setNeedsReset] = useState(false)
 
   const showControls = useCallback(() => {
@@ -92,32 +92,41 @@ export const useVideoControls = (props: UseVideoControlsProps) => {
         setNeedsReset(false)
       }
 
-      playerRef.current.muted = isMuted;
-      playerRef.current?.play()
+      if (!withControls) {
+        playerRef.current.muted = true
+      } else {
+        playerRef.current.muted = isMuted;
+      }
+      
       if (!hasPlayed) {
         setHasPlayed(true)
       }
+      
+      requestAnimationFrame(() => {
+        playerRef.current?.play()
+      })
     }
   }, [playerRef, isMuted, hasPlayed, isPreviewing, needsReset]);
 
   const handlePreviewPlay = useCallback(() => {
-    if (hasPreviewed) return;
+    if (hasPlayed || !playerRef.current) return;
     
     setNeedsReset(true)
     setIsPreviewing(true)
     
-    if (playerRef.current?.paused) {
-      playerRef.current.muted = true;
-      playerRef.current.play()
-    }
-    // if (!hasPlayed) {
-    //   setHasPlayed(true)
-    // }
+    playerRef.current.muted = true;
+    playerRef.current.currentTime = 0;
+    requestAnimationFrame(() => {
+      playerRef.current?.play()
+    })
   }, [setHasPlayed, playerRef, hasPlayed])
 
   const handlePause = useCallback((e?: any) => {
     e?.preventDefault();
     e?.stopPropagation();
+
+    setIsPreviewing(false)
+
     if (!playerRef.current?.paused) {
       playerRef.current?.pause()
     }
@@ -149,13 +158,11 @@ export const useVideoControls = (props: UseVideoControlsProps) => {
     const progressPercentage = (currentTime / playerRef.current?.duration) * 100
 
     if (isPreviewing && currentTime >= 5) {
-      handlePause()
-      setIsPreviewing(false)
-      setHasPreviewed(true)
+      handlePreviewPlay()
     }
 
     setProgress(progressPercentage)
-  }, [playerRef, isPreviewing, setHasPreviewed, handlePause]);
+  }, [playerRef, isPreviewing, handlePause]);
 
   const handleFullscreen = useCallback(() => {
     if (document.fullscreenElement === null) {
@@ -199,7 +206,6 @@ export const useVideoControls = (props: UseVideoControlsProps) => {
     progress,
     controlsVisible,
     containerProps,
-    hasPreviewed,
     setIsPlaying,
     setVolume,
     handlePlay,

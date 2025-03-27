@@ -21,7 +21,11 @@ export const QuoteMedia: FC<QuoteMediaProps> = ({ text, attribution, image, vide
         ) : null}
       </div>
 
-      <div className={`relative w-full h-auto row-start-1 ${mediaPosition === 'left' ? 'md:col-start-1' : 'md:col-start-2'}`}>
+      <div className={`
+        relative w-full h-auto row-start-1
+        ${mediaPosition === 'left' ? 'md:col-start-1' : 'md:col-start-2'}
+        ${mediaType === 'video' ? 'drop-shadow-step' : ''}
+      `}>
         <Media
           rounded
           className="w-full h-auto"

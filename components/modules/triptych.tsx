@@ -32,8 +32,8 @@ export const Triptych: FC<TriptychProps> = ({
     if (!media) return null
 
     return (
-      <div className={`${containerClassName} w-full relative h-auto overflow-hidden`}>
-        <div className={`${mediaClassName} rounded-10 md:rounded-30 border-1 border-white/30 overflow-hidden`}>
+      <div className={`${containerClassName} w-full relative h-auto`}>
+        <div className={`${mediaClassName} rounded-10 md:rounded-30 border-1 border-white/30 overflow-hidden ${media.mediaType === 'video' ? 'drop-shadow-step' : ''}`}>
           {media.mediaType === 'image' && media.image ? (
             <Image
               image={media.image}

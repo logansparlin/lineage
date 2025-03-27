@@ -30,6 +30,10 @@ const itemStyles = cva('relative w-full flex', {
     last: {
       true: '',
       false: '',
+    },
+    type: {
+      image: '',
+      video: 'drop-shadow-step'
     }
   },
   compoundVariants: [
@@ -52,7 +56,8 @@ export const MediaGrid: FC<MediaGridProps> = ({ items }) => {
           key={item._key}
           className={itemStyles({ 
             size: items.length <= 2 ? '2' : items.length === 3 ? '3' : 'grid', hasCaption: !!item.caption,
-            last: index === items.length - 1
+            last: index === items.length - 1,
+            type: item.mediaType
           })}
         >
           <Media

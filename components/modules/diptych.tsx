@@ -64,7 +64,7 @@ export const Diptych: FC<DiptychProps> = ({
 }) => {
   const renderMedia = (media: MediaItem, containerClassName: string, mediaClassName: string) => {
     return (
-      <div className={containerClassName}>
+      <div className={`${containerClassName} ${media.mediaType === 'video' ? 'drop-shadow-step' : ''}`}>
         <div className={mediaClassName}>
           {media.mediaType === 'image' && media.image ? (
             <Image
