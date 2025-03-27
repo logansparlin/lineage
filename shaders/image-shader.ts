@@ -1,7 +1,7 @@
 'use client';
 
 import { shaderMaterial } from "@react-three/drei";
-import { Texture, Vector2 } from "three";
+import { Color, Texture, Vector2 } from "three";
 
 export const ImageShader = shaderMaterial(
   {
@@ -13,6 +13,7 @@ export const ImageShader = shaderMaterial(
     map: new Texture(),
     blurAmount: 0.0,
     gradientDirection: 0.0,
+    shadowColor: new Color('#000000'),
   },
   // Vertex Shader
   `
@@ -21,10 +22,37 @@ export const ImageShader = shaderMaterial(
     uniform vec2 imagePosition;
     uniform vec2 resolution;
     uniform vec2 scale;
+    uniform vec2 mouse;
+    
+    // Function to calculate distortion based on mouse position
+    vec3 distortPosition(vec3 position, vec2 uv, vec2 mousePos) {
+      // Since mousePos is already in -1 to 1 range, we need to match our position space
+      vec2 positionXY = position.xy;
+
+      positionXY /= scale;
+      
+      // Calculate distance from current position to mouse position
+      // Scale the distance calculation based on the scale uniform to match the UV scaling
+      float distanceToMouse = length(positionXY - mousePos);
+      
+      // Create a stronger distortion effect
+      float distortionStrength = 0.025;
+      float falloff = exp(-distanceToMouse * 0.15); // Reduced falloff rate for wider effect
+      
+      // Apply distortion in the direction away from mouse
+      vec2 direction = normalize(positionXY - mousePos);
+      
+      // Apply distortion directly to the position, but scale it inversely to the scale uniform
+      // This ensures the distortion effect is proportional to the scaled UV space
+      position.xy += direction * falloff * distortionStrength;
+      
+      return position;
+    }
 
     void main() {
       baseUv = uv;
       vUv = imagePosition + 0.5 + (uv - 0.5) / scale;
+      // vec3 distortedPosition = distortPosition(position, vUv, mouse);
       gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
     }
   `,
@@ -39,8 +67,11 @@ export const ImageShader = shaderMaterial(
     uniform float gradientDirection;
     uniform sampler2D map;
     uniform vec2 mouse;
+    uniform vec3 shadowColor;
+
     varying vec2 vUv;
     varying vec2 baseUv;
+
     float roundedBoxSDF(vec2 CenterPosition, vec2 Size, float Radius) {
       return length(max(abs(CenterPosition)-Size+Radius,0.0))-Radius;
     }
@@ -61,21 +92,6 @@ export const ImageShader = shaderMaterial(
     float rand(vec2 co){
       return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
     }
-
-    // vec3 blur(vec2 uv, sampler2D image, float blurAmount, vec2 resolution){
-    //   vec3 blurredImage = vec3(0.);
-    //   float d = 1.0;
-    //   #define repeats 40.
-    //   for (float i = 0.; i < repeats; i++) { 
-    //     vec2 q = vec2(cos(degrees((i / repeats) * 360.)), sin(degrees((i / repeats) * 360.))) * (rand(vec2(i, uv.x + uv.y)) + blurAmount); 
-    //     vec2 uv2 = uv + (q * blurAmount * d);
-    //     blurredImage += draw(image, uv2) / 2.;
-    //     q = vec2(cos(degrees((i / repeats) * 360.)), sin(degrees((i / repeats) * 360.))) * (rand(vec2(i + 2., uv.x + uv.y + 24.)) + blurAmount); 
-    //     uv2 = uv + (q * blurAmount * d);
-    //     blurredImage += draw(image, uv2) / 2.;
-    //   }
-    //   return blurredImage / repeats;
-    // }
 
     vec3 blur(vec2 uv, sampler2D image, vec2 direction, vec2 resolution) {
       vec4 color = vec4(0.0);
@@ -119,7 +135,6 @@ export const ImageShader = shaderMaterial(
 
       float scale = aspectRatio / imageAspectRatio;
 
-      // Normalize coordinates to (0, 0) - use imageUv for centering calculation
       vec2 centered = (vUv - 0.5) * resolution;
       
       float edgeSoftness = 0.01;
@@ -132,42 +147,42 @@ export const ImageShader = shaderMaterial(
       vec4 color = texture2D(map, imageUv);
 
       vec3 blurredColor = blur(imageUv, map, vec2(0.1, 0.1), resolution);
-
-      // Create a circular mask around the mouse position
-      // vec2 mousePos = vec2(0.5 + mouse.x * 0.5, 0.5 + mouse.y * 0.5); // Convert from [-1,1] to [0,1] range
-      // float mouseDist = getDistance(imageUv, mousePos);
       
-      // Parameters for the circular focus area
-      // float focusRadius = 0.1; // Size of the sharp focus area
-      // float transitionWidth = 0.35; // Width of the blur transition
-      
-      // Create a smooth transition between sharp and blurred image
-      // float focusMask = 1.0 - smoothstep(focusRadius, focusRadius + transitionWidth, mouseDist);
-      
-      // Mix the original color and the blurred color based on the mask
-      // blurredColor = mix(blurredColor, color.rgb, focusMask);
-      
-      // vec4 finalColor = vec4(blurredColor, color.a * smoothedAlpha);
-      
-      // Apply gradient based on direction
       float gradientOpacity = 1.0;
       
       if (gradientDirection != 0.0) {
-        // Create a linear gradient from bottom to top
         float gradientValue = gradientDirection > 0.0 ? baseUv.y : (1.0 - baseUv.y);
         
-        // Adjust the gradient to be more pronounced
         gradientOpacity = smoothstep(0.5, 1.0, gradientValue);
 
         color.rgb = mix(color.rgb, blurredColor, gradientOpacity);
       }
       
-      // Combine the gradient opacity with our existing alpha values
       color.a *= gradientOpacity;
 
       vec4 finalColor = vec4(color.rgb, color.a * smoothedAlpha);
+
+      if (shadowColor != vec3(0.0)) {
+        vec3 glowColor = shadowColor;
+        float glowStrength = 0.65;
+        float glowSize = 4.5;
+        
+        float glowFactor = smoothstep(glowSize, 0.0, abs(distance));
+        
+        float outsideShape = 1.0 - step(0.0, -distance);
+        
+        vec3 glowEffect = glowColor * glowStrength * glowFactor * outsideShape;
+        
+        finalColor.rgb += glowEffect;
+        
+        float glowAlpha = glowFactor * outsideShape * glowStrength;
+        finalColor.a = max(finalColor.a, glowAlpha);
+
+        if (outsideShape > 0.0 && finalColor.a <= glowAlpha) {
+          finalColor.rgb = glowColor;
+        }
+      }
       
-      // Output the final color with proper aspect ratio and rounded corners
       gl_FragColor = finalColor;
     }
   `

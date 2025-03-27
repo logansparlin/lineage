@@ -1,24 +1,56 @@
 'use client'
 
-import { memo, Suspense, useEffect, useMemo, useRef, lazy, useCallback } from "react";
+import { memo, Suspense, useMemo, useRef, useCallback } from "react";
+import { useHomeStore } from "../home/hooks/use-home-store";
 import { urlFor } from "@/sanity/lib/image";
 import { useFrame } from "@react-three/fiber";
 import { useWindowSize } from "react-use";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
 
-import { PlaneGeometry } from "three";
+import { Color, PlaneGeometry } from "three";
 import { CaseStudiesBackground } from "./case-studies-background";
 import { CaseStudiesScrollItem } from "./case-studies-scroll-item";
+import { getStepColorsRGB } from "@/lib/get-step-colors";
 
 const DEPTH = 5;
 
 export const CaseStudiesScene = memo(({ items }: { items: any[] }) => {
+  const currentStep = useHomeStore(state => state.currentStep)
   const { width } = useWindowSize();
 
+  const groupRef = useRef<any>(null);
   const backRef = useRef<any>(null);
   const topRef = useRef<any>(null);
   const bottomRef = useRef<any>(null);
 
-  const planeGeometry = new PlaneGeometry(1, 1);
+  const planeGeometry = new PlaneGeometry(1, 1, 1, 1);
+
+  const initialColor = useMemo(() => {
+    const gradient = getStepColorsRGB(currentStep)
+    return new Color(gradient?.[300]).convertLinearToSRGB()
+  }, [])
+
+  useGSAP(() => {
+    if (!backRef.current) return;
+
+    const nextGradient = getStepColorsRGB(currentStep)
+
+    const meshes = backRef.current.children;
+
+    meshes?.forEach((mesh) => {
+      const uniforms = mesh.material.uniforms as any;
+
+      gsap.to(uniforms.shadowColor.value, {
+        r: new Color(nextGradient[300]).convertLinearToSRGB().r,
+        g: new Color(nextGradient[300]).convertLinearToSRGB().g,
+        b: new Color(nextGradient[300]).convertLinearToSRGB().b,
+        duration: 0.75,
+        overwrite: true,
+        ease: 'linear',
+      })
+    })
+  }, [currentStep])
 
   const mappedItems = useMemo(() => {
     if (typeof window === 'undefined') return [];
@@ -64,16 +96,24 @@ export const CaseStudiesScene = memo(({ items }: { items: any[] }) => {
     return width < 800;
   }, [width])
 
+  const blankShadowColor = new Color('#000000')
+
   return (
     <Suspense fallback={null}>
       <CaseStudiesBackground />
       {!isMobile ? (
-        <group>
+        <group ref={groupRef}>
           <mesh ref={backRef} geometry={planeGeometry} position={[0, 0, -1 * (DEPTH / 2)]}>
             <meshBasicMaterial color="black" transparent opacity={0} />
             {mappedItems?.map((item) => {
               return (
-                <CaseStudiesScrollItem key={`back-${item._id}`} zPosition={DEPTH / 2} {...item} />
+                <CaseStudiesScrollItem
+                  shadowColor={initialColor}
+                  key={`back-${item._id}`}
+                  zPosition={DEPTH / 2}
+                  isMain
+                  {...item}
+                />
               )
             })}
           </mesh>
@@ -83,6 +123,7 @@ export const CaseStudiesScene = memo(({ items }: { items: any[] }) => {
             {mappedItems?.map((item) => {
               return (
                 <CaseStudiesScrollItem
+                  shadowColor={blankShadowColor}
                   key={`top-${item._id}`}
                   startOffset={0.8}
                   zPosition={DEPTH / 2}
@@ -99,6 +140,7 @@ export const CaseStudiesScene = memo(({ items }: { items: any[] }) => {
               return (
                 <CaseStudiesScrollItem
                   key={`bottom-${item._id}`}
+                  shadowColor={blankShadowColor}
                   startOffset={-0.8}
                   zPosition={DEPTH / 2}
                   gradientDirection="up"
@@ -112,60 +154,3 @@ export const CaseStudiesScene = memo(({ items }: { items: any[] }) => {
     </Suspense>
   )
 })
-
-{/* <mesh
-  ref={cubeRef}
-  geometry={boxGeometry}
-  position={[0, 0, -1.5]}
-> 
-  <meshStandardMaterial attach="material-1" color="black" opacity={0} transparent side={BackSide} />
-  <meshStandardMaterial attach="material-4" color="black" opacity={0} transparent side={BackSide} />
-  <meshStandardMaterial attach="material-6" color="black" opacity={0} transparent side={BackSide} />
-  
-
-  <meshStandardMaterial attach="material-2" color="black" opacity={0} transparent side={BackSide} />
-  <Decal ref={decalTopRef} position={[0, 0.01, -0.01]} rotation={[Math.PI / 2, 0, 0]} scale={[1.0, 1.0, 1]}>
-
-    <imageShader
-      map={texture}
-      side={BackSide}
-      transparent
-      polygonOffset
-      polygonOffsetFactor={-1}
-      toneMapped={false}
-    />
-  </Decal>
-  
-
-  <meshBasicMaterial attach="material-3" color="black" side={BackSide} transparent opacity={0} />
-  <Decal ref={decalBottomRef} position={[0, -0.01, 0.01]} rotation={[Math.PI / 2, 0, 0]} scale={[1.0, -1.0, 1]}>
-
-    <imageShader
-      map={texture}
-      side={BackSide}
-      transparent
-      polygonOffset
-      polygonOffsetFactor={-1}
-      toneMapped={false}
-    />
-  </Decal>
-
-
-  <meshStandardMaterial attach="material-5" color="black" opacity={0} transparent />
-  <Decal ref={decalRef} position={[0, 0, 0]} rotation={[0, 0, 0]} scale={[1, 1, 1]}>
-    <meshBasicMaterial transparent toneMapped={false} color="#ffffff" opacity={0.1}>
-      <RenderTexture attach="map">
-        <group position={[0, 0, 0]}>
-          <PerspectiveCamera ref={cameraRef} makeDefault fov={70} position={[0, 0, 1]} />
-          <group position={[0, 0, 0]}>
-            {mappedItems?.map((item) => {
-              return (
-                <CaseStudiesScrollItem key={item._id} {...item} />
-              )
-            })}
-          </group>
-        </group>
-      </RenderTexture>
-    </meshBasicMaterial>
-  </Decal>
-</mesh> */}

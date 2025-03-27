@@ -3,7 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { useTexture, useVideoTexture, Decal } from "@react-three/drei";
 
 import { ImageShader } from "@/shaders/image-shader";
-import { DoubleSide, Vector2, LinearFilter } from "three";
+import { DoubleSide, Vector2, LinearFilter, MathUtils } from "three";
 
 interface CaseStudiesScrollItemProps {
   url: string;
@@ -17,6 +17,7 @@ interface CaseStudiesScrollItemProps {
   zPosition?: number;
   startOffset?: number;
   gradientDirection?: 'up' | 'down';
+  shadowColor?: any;
 }
 
 export const CaseStudiesScrollItem = memo(({
@@ -31,8 +32,10 @@ export const CaseStudiesScrollItem = memo(({
   zPosition = 0,
   startOffset = 0,
   gradientDirection,
+  shadowColor,
 }: CaseStudiesScrollItemProps) => {
   const meshRef = useRef<any>(null);
+  
 
   const texture = mediaType === 'video' && playbackId ? 
   useVideoTexture(`https://stream.mux.com/${playbackId}.m3u8`, {
@@ -51,6 +54,16 @@ export const CaseStudiesScrollItem = memo(({
 
     meshRef.current.material.uniforms.map.value = tex;
   })
+
+  // useEvent('pointermove', (e) => {
+  //   if (typeof window === 'undefined') return;
+
+  //   const { clientX, clientY } = e;
+  //   const { width, height } = container.getBoundingClientRect();
+
+  //   pointerTarget.current.x = (clientX / width) * 2 - 1;
+  //   pointerTarget.current.y = -(clientY / height) * 2 + 1;
+  // })
 
   useFrame(({ viewport, camera }) => {
     if (!meshRef.current) return;
@@ -82,32 +95,19 @@ export const CaseStudiesScrollItem = memo(({
 
     const scrollOffset = (container.getBoundingClientRect().top / size.factor) * pixelRatio;
     
-    // meshRef.current.position.set(0, yPos + scrollOffset, 0.01)
     meshRef.current.material.uniforms.imagePosition.value.set(0, -1 * (yPos + scrollOffset));
     meshRef.current.material.uniforms.scale.value.set(planeWidth, planeHeight);
     meshRef.current.material.uniforms.resolution.value.set(size.width * planeWidth, size.height * planeHeight);
     meshRef.current.material.uniforms.imageResolution.value.set(width, height);
-    
+
+    // pointerCurrent.current.x = MathUtils.lerp(pointerCurrent.current.x, pointerTarget.current.x, 0.03);
+    // pointerCurrent.current.y = MathUtils.lerp(pointerCurrent.current.y, pointerTarget.current.y, 0.03);
+
+    // if (isMain) {
+    //   meshRef.current.material.uniforms.mouse.value.set(pointerCurrent.current.x, pointerCurrent.current.y);
+    // }
+
     meshRef.current.material.needsUpdate = true;
-
-    // const planeBounds = {
-    //   left: -planeWidth / 2,
-    //   right: planeWidth / 2,
-    //   top: -planeHeight / 2,
-    //   bottom: planeHeight / 2
-    // }
-
-    // const isInBounds = pointerPosition.current.x >= planeBounds.left && pointerPosition.current.x <= planeBounds.right && pointerPosition.current.y >= planeBounds.top && pointerPosition.current.y <= planeBounds.bottom;
-
-    // if (isInBounds) {
-    //   pointerTarget.current.x = MathUtils.lerp(pointerTarget.current.x, pointerPosition.current.x, 0.03);
-    //   pointerTarget.current.y = MathUtils.lerp(pointerTarget.current.y, pointerPosition.current.y, 0.03);
-    // } else {
-    //   pointerTarget.current.x = MathUtils.lerp(pointerTarget.current.x, 0, 0.03);
-    //   pointerTarget.current.y = MathUtils.lerp(pointerTarget.current.y, 0, 0.03);
-    // }
-
-    // meshRef.current.material.uniforms.mouse.value.set(pointerTarget.current.x * 0.25, pointerTarget.current.y * 0.25);
   })
 
   const resolution = new Vector2(1, 1);
@@ -131,7 +131,8 @@ export const CaseStudiesScrollItem = memo(({
           mouse: { value: mouse },
           scale: { value: scale },
           map: texture,
-          gradientDirection: { value: !gradientDirection ? 0 : gradientDirection === 'up' ? 1 : -1 }
+          gradientDirection: { value: !gradientDirection ? 0 : gradientDirection === 'up' ? 1 : -1 },
+          shadowColor: { value: shadowColor },
         }}
         transparent
         polygonOffset

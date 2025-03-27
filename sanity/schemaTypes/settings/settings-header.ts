@@ -46,9 +46,12 @@ export default defineType({
             })
           ],
           preview: {
-            select: {},
-            prepare: () => ({
-              title: 'Menu Column'
+            select: {
+              links: 'links'
+            },
+            prepare: ({ links }) => ({
+              title: 'Menu Column',
+              subtitle: `${Object.keys(links).length} links`
             })
           }
         })

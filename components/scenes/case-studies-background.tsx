@@ -11,17 +11,14 @@ import { BlurShader } from "@/shaders/blur-shader";
 export const CaseStudiesBackground = ({ gradientOverride }: { gradientOverride?: string }) => {
   const currentStep = useHomeStore(state => state.currentStep)
   const blurRef = useRef<any>(null)
-  
-  const [internalGradient, setInternalGradient] = useState<any>(
-    getStepColorsRGB(gradientOverride ?? currentStep)
-  )
 
   const initialColors = useMemo(() => {
+    const gradient = getStepColorsRGB(gradientOverride ?? currentStep)
     return {
-      background: new Color(internalGradient?.[400]).convertLinearToSRGB(),
-      foreground: new Color(internalGradient?.[300]).convertLinearToSRGB(),
+      background: new Color(gradient?.[400]).convertLinearToSRGB(),
+      foreground: new Color(gradient?.[300]).convertLinearToSRGB(),
     }
-  }, [internalGradient])
+  }, [])
 
   useGSAP(() => {
     if (gradientOverride || !blurRef.current) return;
