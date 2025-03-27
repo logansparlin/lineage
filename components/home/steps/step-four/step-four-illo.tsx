@@ -24,11 +24,11 @@ export const StepFourIllo = () => {
           <rect className="scaling-rect step-four-pin" x="835.623" y="323.321" width="162.473" height="162.473" rx="12.9214" transform="rotate(45 835.623 323.321)" fill="url(#paint13_linear_22_401)" fillOpacity="0.2" stroke="url(#paint14_linear_22_401)" strokeWidth="1.16111"/>
         </g>
         
-        <g className="rect-two">
+        <g className="rect-two invisible">
           <rect className="scaling-rect" x="835.623" y="252.493" width="262.639" height="262.639" rx="21.1863" transform="rotate(45 835.623 252.493)" stroke="url(#paint15_linear_22_401)" strokeWidth="1.16111"/>
         </g>
 
-        <g className="rect-three">
+        <g className="rect-three invisible">
           <rect className="scaling-rect" x="835.623" y="141.027" width="420.276" height="420.276" rx="34.1935" transform="rotate(45 835.623 141.027)" stroke="url(#paint16_linear_22_401)" strokeWidth="1.16111"/>
         </g>
 
