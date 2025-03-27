@@ -35,7 +35,7 @@ export const VolumeControls: FC<VolumeControlsProps> = ({ isMuted, volume, setVo
 
   return (
     <div 
-      className="relative"
+      className="relative max-md:hidden"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

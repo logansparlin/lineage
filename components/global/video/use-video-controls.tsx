@@ -86,6 +86,10 @@ export const useVideoControls = (props: UseVideoControlsProps) => {
     e?.preventDefault();
     e?.stopPropagation();
 
+    if (isPreviewing) {
+      setIsPreviewing(false)
+    }
+
     if (playerRef.current?.paused || isPreviewing) {
       if (needsReset) {
         playerRef.current.currentTime = 0;
@@ -177,6 +181,12 @@ export const useVideoControls = (props: UseVideoControlsProps) => {
     playerRef.current.currentTime = (playerRef.current?.duration * progress) / 100;
     setProgress(progress)
   }, [playerRef])
+
+  useEffect(() => {
+    if (!playerRef.current) return;
+
+    playerRef.current.volume = volume
+  }, [volume])
 
   useEffect(() => {
     if (!isPlaying) return;
