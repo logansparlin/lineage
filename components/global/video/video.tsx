@@ -22,7 +22,7 @@ interface VideoProps extends ComponentProps<'video'> {
 }
 
 export const Video: FC<VideoProps> = (props) => {
-  const { playbackId, duration, className = 'relative w-full h-full', controls = true } = props;
+  const { playbackId, duration, className = 'relative w-full h-full', controls = true, muted = false, autoPlay = false } = props;
   const [isLoaded, setIsLoaded] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const playerRef = useRef<any>(null)
@@ -117,9 +117,10 @@ export const Video: FC<VideoProps> = (props) => {
           poster={`https://image.mux.com/${playbackId}/thumbnail.webp?time=${5}`}
           preload="metadata"
           ref={playerRef}
-          muted={!withControls || !hasPlayed ? true : isMuted}
+          muted={!withControls || !hasPlayed || muted ? true : isMuted}
           className="mux-video"
           playbackId={playbackId}
+          autoPlay={muted && autoPlay}
           streamType="on-demand"
           loop={true}
           crossOrigin="anonymous"
