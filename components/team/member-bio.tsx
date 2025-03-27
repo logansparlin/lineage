@@ -24,7 +24,7 @@ export const MemberBio = ({ slug, bio }) => {
 
       <div className="md:hidden">
         <button
-          className={`flex items-center gap-x-4 transition-colors duration-300 ease ${isExpanded ? 'text-[var(--button-color)]' : 'text-white'}`}
+          className={`flex items-center gap-x-4 transition-colors duration-300 ease ${isExpanded ? 'text-[var(--button-color)]' : 'text-off-white'}`}
           onClick={toggleExpanded}
         >
           <span>Read bio</span>

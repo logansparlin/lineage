@@ -21,7 +21,7 @@ export const HomeScrim = () => {
         <motion.div
           key="home-scrim"
           aria-hidden="true"
-          className="fixed inset-0 w-full h-screen bg-black z-[9999] text-white"
+          className="fixed inset-0 w-full h-screen bg-black z-[9999] text-off-white"
           initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

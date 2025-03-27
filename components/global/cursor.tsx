@@ -71,7 +71,7 @@ export const Cursor: FC<CursorProps> = memo(() => {
   return (
     <div
       ref={cursorRef}
-      className="will-change-transform site-cursor origin-center fixed top-0 w-40 left-0 z-[9999] pointer-events-none cursor-none text-nav hidden md:block text-center text-white"
+      className="will-change-transform site-cursor origin-center fixed top-0 w-40 left-0 z-[9999] pointer-events-none cursor-none text-nav hidden md:block text-center text-off-white"
     >
       <audio ref={audioRef} src="/click.mp3" autoPlay={false} />
       <div className={`relative h-20 w-auto text-off-white transition-opacity duration-300 ease ${cursorHidden || !hasMoved ? 'opacity-0' : 'opacity-100'}`}>

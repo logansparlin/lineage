@@ -40,7 +40,7 @@ export const MainMenu: FC<MainMenuProps> = ({ columns }) => {
       {menuOpen ? (
         <motion.div 
           className="
-            absolute max-md:w-full max-md:bg-black max-md:left-0 z-[1] md:relative right-0 top-0 overflow-hidden
+            max-md:absolute max-md:w-full max-md:bg-black max-md:left-0 z-[1] relative right-0 top-0 overflow-hidden
             [--h-from:0px] md:[--h-from:auto]
           "
           initial={{ height: 'var(--h-from)' }}
@@ -48,7 +48,7 @@ export const MainMenu: FC<MainMenuProps> = ({ columns }) => {
           exit={{ height: 'var(--h-from)' }}
           transition={{ duration: 0.75, ease: easings.outExpo }}
         >
-          <div className="flex flex-col max-md:gap-y-32 pt-100 pb-32 px-20 md:pt-0 md:pb-0 md:px-0 md:grid md:grid-cols-2 md:gap-x-72">
+          <div className="max-md:flex max-md:flex-col max-md:gap-y-32 max-md:gap-x-0 pt-100 pb-32 px-20 md:pt-0 md:pb-0 md:px-0 grid grid-cols-2 gap-x-72">
             {columns?.map((column, index) => {
               return (
                 <ul key={`menu-${index}`} className={`flex flex-col group ${index === 0 ? 'max-md:text-36 md:text-20' : 'gap-y-6 md:gap-y-0 text-20'}`}>
@@ -73,7 +73,9 @@ export const MainMenu: FC<MainMenuProps> = ({ columns }) => {
 }
 
 const MenuItem = (props) => {
-  const { label, url = undefined, _type, index, to, onClick, total, offset, text } = props;
+  const { label, _type, index, to, onClick, total, offset, text } = props;
+
+  const url = getRelativePath({ type: to?._type, slug: to?.slug })
 
   const baseTransition = { duration: 0.75, ease: easings.outExpo }
   const lenis = useLenis();
@@ -94,10 +96,10 @@ const MenuItem = (props) => {
 
   const interactiveClass = useMemo(() => {
     if (_type === 'textBlock') {
-      return 'text-white'
+      return 'text-off-white'
     }
 
-    return 'will-change-transform transform-gpu group-hover:text-white/30 group-hover:hover:text-white transition-colors duration-300 ease'
+    return 'will-change-transform transform-gpu group-hover:text-off-white/30 group-hover:hover:text-off-white transition-colors duration-300 ease'
   }, [_type])
 
   if (to?.hidden) return null;
@@ -125,7 +127,7 @@ const MenuItem = (props) => {
     >
       {_type === 'textBlock' ? text : ( 
         <Link
-          href={getRelativePath({ type: _type, slug: url })}
+          href={url}
           target={_type == 'externalLink' ? '_blank' : '_self'}
           onClick={handleLinkClick}
           scroll={false}

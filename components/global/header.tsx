@@ -102,7 +102,7 @@ export const Header: FC<HeaderProps> = ({ columns }) => {
   }, [publish, pathname])
 
   return (
-    <header className="w-full px-20 py-12 md:px-40 md:py-24 fixed top-0 left-0 z-[500] flex items-center md:items-start justify-between">
+    <header className="w-full px-20 py-12 md:px-40 md:py-24 fixed top-0 left-0 z-[500] flex items-center md:items-start justify-between text-off-white">
       <div
         inert
         className={`

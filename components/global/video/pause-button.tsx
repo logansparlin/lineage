@@ -9,7 +9,7 @@ interface PauseButtonProps extends ComponentProps<'button'> {
 const pauseButtonStyles = cva('cursor-pointer w-20 h-20 md:w-24 md:h-24 flex-center transition-colors duration-400 ease', {
   variants: {
     isPlaying: {
-      true: 'text-white all-interactions:text-step-200',
+      true: 'text-off-white all-interactions:text-step-200',
       false: 'text-step-200'
     }
   }

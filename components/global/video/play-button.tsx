@@ -10,7 +10,7 @@ const playButtonStyles = cva('cursor-pointer w-20 h-20 md:w-24 md:h-24 flex-cent
   variants: {
     isPlaying: {
       true: 'text-step-200',
-      false: 'text-white all-interactions:text-step-200'
+      false: 'text-off-white all-interactions:text-step-200'
     }
   }
 })

@@ -61,7 +61,7 @@ export const HomeIntro = ({ titles, description }) => {
         <div ref={introRef} className="home-intro-container relative w-full h-fit z-[1]">
           <ScrollIndicator />
           
-          <div className="home-intro-main w-full h-screen sticky top-0 grid-contain z-[5] text-white place-items-center">
+          <div className="home-intro-main w-full h-screen sticky top-0 grid-contain z-[5] text-off-white place-items-center">
             <View className="absolute inset-0 w-full h-screen pointer-events-none -z-[1]">
               <IntroScene
                 sections={sectionClasses}

@@ -87,7 +87,7 @@ export default async function RootLayout({
         <Header {...settings?.header} />
         <SetVH />
         <PubSubProvider />
-        <LayoutTransition className="w-full">
+        <LayoutTransition className="w-full text-off-white bg-black">
             {children}
         </LayoutTransition>
         <SanityLive />

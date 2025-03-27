@@ -41,7 +41,7 @@ export const VideoControls: FC<VideoControlsProps> = (props) => {
     <AnimatePresence>
       {!hidden ? (
         <motion.div
-          className="absolute bottom-0 disable-cursor left-0 w-full z-[3] text-white p-12 md:p-30 h-80 md:h-130 flex items-end justify-center bg-linear-to-t from-black/100 to-black/0"
+          className="absolute bottom-0 disable-cursor left-0 w-full z-[3] text-off-white p-12 md:p-30 h-80 md:h-130 flex items-end justify-center bg-linear-to-t from-black/100 to-black/0"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
