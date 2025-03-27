@@ -80,8 +80,10 @@ export const CaseStudiesSection: FC<CaseStudiesSectionProps> = memo(({ index, ti
             {featuredMediaType === 'video' && featuredVideo?.playbackId ? (
               <Video
                 playbackId={featuredVideo?.playbackId}
-                className="case-image w-full h-full object-cover md:hidden"
+                className="case-image w-full h-full object-cover md:hidden pointer-events-none"
                 controls={false}
+                muted={true}
+                autoPlay={true}
               />
             ) : (
               <Image
