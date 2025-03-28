@@ -45,7 +45,7 @@ export const Cursor: FC<CursorProps> = memo(() => {
   const handleClick = useCallback((e) => {
     if (audioRef.current) {
       audioRef.current.currentTime = 0
-      audioRef.current.volume = 0.85
+      audioRef.current.volume = 0.5
       audioRef.current.play()
     }
 
