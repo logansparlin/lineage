@@ -7,7 +7,7 @@ export default async function LegalLayout({
 }>) {
   return (
     <ReactLenis root className="legal-layout overflow-y-auto overflow-x-hidden">
-      <div className="py-90 px-20 max-w-850 mx-auto pointer-events-none">
+      <div className="py-90 px-20 max-w-850 mx-auto">
         {children}
       </div>
     </ReactLenis>
