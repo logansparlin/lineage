@@ -3,7 +3,7 @@ import { ReactLenis } from "lenis/react";
 
 import 'lenis/dist/lenis.css'
 
-export default async function RootLayout({
+export default async function TeamLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

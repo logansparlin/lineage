@@ -7,7 +7,7 @@ import { memo } from "react";
 
 const Canvas = dynamic(() => import("@react-three/fiber").then((mod) => mod.Canvas), { ssr: false });
 
-export const LegalCanvas = memo(() => {
+export const PageCanvas = memo(() => {
   return (
     <div className="fixed inset-0 w-full h-full z-[0] pointer-events-none">
       <Canvas
@@ -35,7 +35,7 @@ export const LegalCanvas = memo(() => {
           width: '100%',
           height: '100vh',
           inset: 0,
-          zIndex: 1
+          pointerEvents: 'none'
         }}
       >
         <BackgroundTrail colors={['#FBC504', '#FF7EC5', '#01C2FF', '#00BF57']} />

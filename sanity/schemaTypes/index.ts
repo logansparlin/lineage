@@ -19,6 +19,7 @@ import seo from './blocks/seo'
 import richText from './blocks/rich-text'
 import richTextLegal from './blocks/rich-text-legal'
 import richTextSimple from './blocks/rich-text-simple'
+import richTextPage from './blocks/rich-text-page'
 import externalLink from './blocks/external-link'
 import internalLink from './blocks/internal-link'
 import media from './blocks/media'
@@ -34,6 +35,7 @@ import legalPage from './documents/legal-page'
 import teamPage from './documents/team'
 import teamMember from './documents/team-member'
 import caseStudies from './documents/case-studies'
+import page from './documents/page'
 
 /** Modules */
 import quote from './modules/quote'
@@ -56,6 +58,7 @@ export const allTypes: SchemaTypeDefinition[] = [
   caseStudy,
   legalPage,
   teamPage,
+  page,
   teamMember,
   caseStudies,
   // Modules
@@ -74,6 +77,7 @@ export const allTypes: SchemaTypeDefinition[] = [
   richText,
   richTextLegal,
   richTextSimple,
+  richTextPage,
   externalLink,
   internalLink,
   media

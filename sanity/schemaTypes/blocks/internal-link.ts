@@ -20,6 +20,7 @@ export default defineType({
         { type: 'caseStudies' },
         { type: 'teamPage' },
         { type: 'legalPage' },
+        { type: 'page' },
       ]
     })
   ],

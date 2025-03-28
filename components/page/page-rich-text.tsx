@@ -1,12 +1,14 @@
 import { type FC } from "react"
-import { PortableText } from "@portabletext/react"
 import { type PortableTextBlock } from "next-sanity"
 
-interface LegalRichTextProps {
+import { PortableText } from "@portabletext/react"
+import { ExpandableList } from "./expandable-list"
+
+interface PageRichTextProps {
   content: PortableTextBlock[]
 }
 
-export const LegalRichText: FC<LegalRichTextProps> = ({ content }) => {
+export const PageRichText: FC<PageRichTextProps> = ({ content }) => {
   return (
     <div>
       <PortableText
@@ -27,6 +29,13 @@ export const LegalRichText: FC<LegalRichTextProps> = ({ content }) => {
               </ul>
             ),
           },
+          types: {
+            expandableList: ({ value }) => (
+              <ExpandableList
+                {...value}
+              />
+            )
+          }
         }}
       />
     </div>

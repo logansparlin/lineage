@@ -13,6 +13,8 @@ export const getRelativePath = ({ slug, type }: GetRelativePathProps): string =>
       return '/team'
     case 'legalPage':
       return `/legal/${slug}`
+    case 'page':
+      return `/${slug}`
     default:
       return `/${slug}`
   }

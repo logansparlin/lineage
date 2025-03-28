@@ -157,6 +157,11 @@
   --color-step-400: var(--step-color-400);
 }
 
+::selection {
+  background-color: var(--color-off-white);
+  color: var(--color-black);
+}
+
 @layer base {
   .grid-contain {
     @apply grid grid-cols-1 grid-rows-1 *:col-span-1 *:row-span-1 *:col-start-1 *:row-start-1;
