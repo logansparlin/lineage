@@ -10,6 +10,7 @@ interface CaseStudiesScrollItemProps {
   width: number;
   height: number;
   container: HTMLElement;
+  aspectRatio: number;
   index?: number;
   img: HTMLImageElement;
   playbackId: string;
@@ -24,6 +25,7 @@ export const CaseStudiesScrollItem = memo(({
   url,
   width,
   height,
+  aspectRatio,
   img,
   playbackId,
   mediaType,
@@ -54,16 +56,6 @@ export const CaseStudiesScrollItem = memo(({
 
     meshRef.current.material.uniforms.map.value = tex;
   })
-
-  // useEvent('pointermove', (e) => {
-  //   if (typeof window === 'undefined') return;
-
-  //   const { clientX, clientY } = e;
-  //   const { width, height } = container.getBoundingClientRect();
-
-  //   pointerTarget.current.x = (clientX / width) * 2 - 1;
-  //   pointerTarget.current.y = -(clientY / height) * 2 + 1;
-  // })
 
   useFrame(({ viewport, camera }) => {
     if (!meshRef.current) return;
@@ -98,7 +90,12 @@ export const CaseStudiesScrollItem = memo(({
     meshRef.current.material.uniforms.imagePosition.value.set(0, -1 * (yPos + scrollOffset));
     meshRef.current.material.uniforms.scale.value.set(planeWidth, planeHeight);
     meshRef.current.material.uniforms.resolution.value.set(size.width * planeWidth, size.height * planeHeight);
-    meshRef.current.material.uniforms.imageResolution.value.set(width, height);
+
+    if (aspectRatio > 1) {
+      meshRef.current.material.uniforms.imageResolution.value.set(width, width * aspectRatio);
+    } else {
+      meshRef.current.material.uniforms.imageResolution.value.set(width, height);
+    }
 
     // pointerCurrent.current.x = MathUtils.lerp(pointerCurrent.current.x, pointerTarget.current.x, 0.03);
     // pointerCurrent.current.y = MathUtils.lerp(pointerCurrent.current.y, pointerTarget.current.y, 0.03);

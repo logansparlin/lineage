@@ -6,6 +6,8 @@ interface UseVideoControlsProps {
   withControls?: boolean
 }
 
+const previewStartTime = 1;
+
 export const useVideoControls = (props: UseVideoControlsProps) => {
   const { playerRef, containerRef, withControls = true } = props;
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
@@ -119,7 +121,7 @@ export const useVideoControls = (props: UseVideoControlsProps) => {
     setIsPreviewing(true)
     
     playerRef.current.muted = true;
-    playerRef.current.currentTime = 0;
+    playerRef.current.currentTime = previewStartTime;
     requestAnimationFrame(() => {
       playerRef.current?.play()
     })
@@ -161,7 +163,7 @@ export const useVideoControls = (props: UseVideoControlsProps) => {
   const handleProgress = useCallback((currentTime: number) => {
     const progressPercentage = (currentTime / playerRef.current?.duration) * 100
 
-    if (isPreviewing && currentTime >= 5) {
+    if (isPreviewing && currentTime >= (previewStartTime + 5)) {
       handlePreviewPlay()
     }
 

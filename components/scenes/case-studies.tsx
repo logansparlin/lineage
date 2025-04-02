@@ -60,6 +60,8 @@ export const CaseStudiesScene = memo(({ items }: { items: any[] }) => {
     return items?.map((item, index) => {
       const el = document.getElementById(`case-study-${index}`)
       const img = el?.querySelector('.case-image-container .case-image')
+      const videoAspect = item.featuredVideo?.aspectRatio?.split(':').map(Number).reduce((acc, curr) => acc > 0 ? acc / curr : curr, 0)
+      const aspectRatio = item.featuredMediaType === 'video' ? videoAspect : item.featuredImage?.aspectRatio
 
       return {
         index,
@@ -67,6 +69,7 @@ export const CaseStudiesScene = memo(({ items }: { items: any[] }) => {
         width: item.featuredImage?.width,
         height: item.featuredImage?.height,
         mediaType: item.featuredMediaType,
+        aspectRatio,
         playbackId: item.featuredVideo?.playbackId,
         img,
         url: urlFor(item.featuredImage).auto('format').width(1200).quality(90).url(),

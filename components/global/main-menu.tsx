@@ -73,9 +73,11 @@ export const MainMenu: FC<MainMenuProps> = ({ columns }) => {
 }
 
 const MenuItem = (props) => {
-  const { label, _type, index, to, onClick, total, offset, text } = props;
+  const { label, _type, url, index, to, onClick, total, offset, text } = props;
 
-  const url = getRelativePath({ type: to?._type, slug: to?.slug })
+  const href = useMemo(() => {
+    return _type === 'externalLink' ? url : getRelativePath({ type: to?._type, slug: to?.slug })
+  }, [_type, url, to])
 
   const baseTransition = { duration: 0.75, ease: easings.outExpo }
   const lenis = useLenis();
@@ -127,7 +129,7 @@ const MenuItem = (props) => {
     >
       {_type === 'textBlock' ? text : ( 
         <Link
-          href={url}
+          href={href}
           target={_type == 'externalLink' ? '_blank' : '_self'}
           onClick={handleLinkClick}
           scroll={false}

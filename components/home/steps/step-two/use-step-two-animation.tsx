@@ -107,8 +107,8 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
 
       mainTl.to(illo, {
         scale: 0.5,
-        duration: 0.5,
-      }, '>-=0.5')
+        duration: 1.0,
+      }, '>-=1.2')
 
       // mainTl.to(icon, {
       //   y: () => -1,

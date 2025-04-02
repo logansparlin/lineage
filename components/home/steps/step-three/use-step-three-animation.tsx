@@ -42,12 +42,12 @@ export const useStepThreeAnimation = (stepThreeRef: RefObject<HTMLDivElement>) =
       duration: 1,
     }, 0)
 
-    mainTl.to(boxLeftHighlight, {
+    mainTl.to(boxRightHighlight, {
       opacity: 1,
       duration: 1,
     }, '>')
 
-    mainTl.to(boxRightHighlight, {
+    mainTl.to(boxLeftHighlight, {
       opacity: 1,
       duration: 1,
     }, '>-=0.5')
