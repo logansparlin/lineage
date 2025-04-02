@@ -29,7 +29,7 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
       const pinRect = mobilePin.getBoundingClientRect();
       const iconSvg = icon.querySelector('svg');
 
-      const scale = ((pinRect.height + 2) * pinScale) / icon.clientHeight
+      const scale = ((pinRect.height + (2 / pinScale)) * pinScale) / icon.clientHeight
       
       return scale;
     }
@@ -43,7 +43,7 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
 
       const positionBetween = getPositionBetween(mobilePin, icon);
 
-      return -1 * positionBetween - pinRect.height;
+      return -1 * positionBetween - pinRect.height - 1;
     }
 
     const getIconPosition = () => () => {
