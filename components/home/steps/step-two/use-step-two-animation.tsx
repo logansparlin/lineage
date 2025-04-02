@@ -108,6 +108,7 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
       mainTl.to(illo, {
         scale: 0.5,
         duration: 1.0,
+        ease: 'none',
       }, '>-=1.2')
 
       // mainTl.to(icon, {
@@ -117,6 +118,8 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
 
       mainTl.to(icon, {
         scale: getMobileIconScale(0.5),
+        ease: 'none',
+        duration: 1.0,
       }, '<')
     } else {
       mainTl.to(icon, {
@@ -128,6 +131,7 @@ export const useStepTwoAnimation = (stepTwoRef: RefObject<HTMLDivElement>) => {
       mainTl.to(icon, {
         scale: getIconScale(),
         duration: 0.75,
+        ease: 'none',
       }, 0)
   
       mainTl.to({}, {}, '>')
