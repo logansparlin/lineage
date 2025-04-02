@@ -83,11 +83,14 @@ const MenuItem = (props) => {
   const lenis = useLenis();
 
   const isCaseStudiesLink = useMemo(() => {
-    return url?.includes('#case-studies')
-  }, [url])
+    return href?.includes('#case-studies')
+  }, [href])
 
-  const handleLinkClick = useCallback(() => {
+  const handleLinkClick = useCallback((e: any) => {
     if (isCaseStudiesLink) {
+      e.preventDefault();
+      e.stopPropagation();
+
       lenis?.scrollTo('#case-studies', {
         offset: 0
       })
