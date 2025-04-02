@@ -1,4 +1,4 @@
-import { useRef, memo } from "react";
+import { useRef, memo, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useTexture, useVideoTexture, Decal } from "@react-three/drei";
 
@@ -91,12 +91,6 @@ export const CaseStudiesScrollItem = memo(({
     meshRef.current.material.uniforms.scale.value.set(planeWidth, planeHeight);
     meshRef.current.material.uniforms.resolution.value.set(size.width * planeWidth, size.height * planeHeight);
 
-    if (aspectRatio > 1) {
-      meshRef.current.material.uniforms.imageResolution.value.set(width, width * aspectRatio);
-    } else {
-      meshRef.current.material.uniforms.imageResolution.value.set(width, height);
-    }
-
     // pointerCurrent.current.x = MathUtils.lerp(pointerCurrent.current.x, pointerTarget.current.x, 0.03);
     // pointerCurrent.current.y = MathUtils.lerp(pointerCurrent.current.y, pointerTarget.current.y, 0.03);
 
@@ -107,8 +101,14 @@ export const CaseStudiesScrollItem = memo(({
     meshRef.current.material.needsUpdate = true;
   })
 
+  const imageDimensions = useMemo(() => {
+    const baseSize = 2000;
+
+    return [baseSize * aspectRatio, baseSize];
+  }, [aspectRatio])
+
   const resolution = new Vector2(1, 1);
-  const imageResolution = new Vector2(1, 1);
+  const imageResolution = new Vector2(...imageDimensions);
   const imagePosition = new Vector2(0, 0);
   const mouse = new Vector2(0, 0);
   const scale = new Vector2(1, 1);
