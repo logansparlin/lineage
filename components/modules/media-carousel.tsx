@@ -53,7 +53,7 @@ export const MediaCarousel: FC<MediaCarouselProps> = ({
   return (
     <div className="w-full md:w-screen md:h-full">
       <div className="relative w=full md:w-[calc(100vw-160px)] h-full mx-auto py-60 md:py-100 flex flex-col justify-between items-center gap-y-40 md:gap-y-32">
-        <div className="w-full relative">
+        <div className="w-full relative flex-1">
           <div 
             ref={emblaRef} 
             className="
@@ -101,7 +101,7 @@ export const MediaCarousel: FC<MediaCarouselProps> = ({
             </button>
           </div>
         </div>
-        <div className="case-module w-full md:w-[85%] flex-1 flex items-end">
+        <div className="case-module w-full md:w-[85%] flex items-end">
           <div className="w-full h-4 bg-white/30 rounded-full">
             <motion.div
               className="h-full bg-step-200"
