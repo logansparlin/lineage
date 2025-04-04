@@ -11,7 +11,7 @@ export const Footer: FC<FooterProps> = () => {
             boxShadow: '0 0 140px 180px rgba(0, 0, 0, 1)'
           }}
         />
-      <div className="w-full h-screen relative flex items-center justify-center text-32 lg:text-58 font-medium z-[2] bg-black">
+      <div className="w-full h-screen relative flex items-center justify-center text-32 lg:text-58 font-medium z-[2] bg-black pointer-events-none">
         <span className="relative z-[2]">Be real</span>
       </div>
     </footer>

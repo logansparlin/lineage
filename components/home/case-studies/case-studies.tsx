@@ -63,7 +63,7 @@ export const CaseStudies: FC<CaseStudiesProps> = ({ items }) => {
   return (
     <>
       <TransitionScene mode="enter" gradientOverride={firstItemGradient} className="-mt-screen-50" />
-      <div ref={caseStudiesRef} className="relative">
+      <div ref={caseStudiesRef} className="relative z-[6]">
         <CurrentColorProvider container={caseStudiesRef} />
         <div id="case-studies-scroll" className="pointer-events-none w-full h-screen sticky top-0 z-[1] flex items-center justify-center">
           <CaseStudiesNavigation items={items} />

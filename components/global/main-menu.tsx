@@ -5,6 +5,7 @@ import { useSiteStore } from "@/stores/use-site-store";
 import { useKeyPress } from "@/hooks/use-key-press";
 import { getRelativePath } from "@/lib/get-relative-path";
 import { easings } from "@/lib/easings";
+import { usePathname } from "next/navigation";
 
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
@@ -74,6 +75,7 @@ export const MainMenu: FC<MainMenuProps> = ({ columns }) => {
 
 const MenuItem = (props) => {
   const { label, _type, url, index, to, onClick, total, offset, text } = props;
+  const pathname = usePathname();
 
   const href = useMemo(() => {
     return _type === 'externalLink' ? url : getRelativePath({ type: to?._type, slug: to?.slug })
@@ -87,7 +89,7 @@ const MenuItem = (props) => {
   }, [href])
 
   const handleLinkClick = useCallback((e: any) => {
-    if (isCaseStudiesLink) {
+    if (isCaseStudiesLink && pathname === '/') {
       e.preventDefault();
       e.stopPropagation();
 
