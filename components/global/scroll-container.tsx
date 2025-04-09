@@ -64,9 +64,9 @@ export const ScrollContainer: FC<ScrollContainerProps> = memo(({ children, ...pr
         easing: (t) => Math.min(1,1.001-Math.pow(2,-10*t)),
         infinite: true,
         autoRaf: false,
-        syncTouchLerp: 0.075,
+        syncTouchLerp: 0.07,
         touchMultiplier: 1,
-        touchInertiaMultiplier: 35
+        touchInertiaMultiplier: 30
       }}
     >
       <ScrollTriggerUpdate />
